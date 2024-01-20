@@ -6,11 +6,16 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: ["class"],
   theme: {
     extend: {
       backgroundColor: {
+        "white-bg": "rgb(254,255,254)",
+        "dark-bg": "rgb(15, 15, 15)",
         "blur-black": "rgba(15, 15, 15, 0.4)",
-        "content-header": "#1B1A1E",
+        "blur-white": "rgba(255, 255, 255, 0.4)",
+        "content-header-black": "#1B1A1E",
+        "content-header-white": "#F2F6FF",
       },
       width: {
         "276": "68rem",
