@@ -27,6 +27,12 @@ const config: Config = {
         "gradient-start": "#93A1F7",
         "gradient-end": "#52C7C6",
       },
+      borderWidth: {
+        "1": "1px",
+      },
+      maxWidth: {
+        "276": "68rem",
+      },
     },
   },
   plugins: [],

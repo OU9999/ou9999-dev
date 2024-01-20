@@ -1,25 +1,11 @@
+import Tag from "@/components/Tag";
 import { hoverGradient } from "@/components/styles";
 import Link from "next/link";
-
-interface ITagProps {
-  tag: string;
-}
-const Tag = ({ tag }: ITagProps) => {
-  return (
-    <>
-      <Link href={`/tags/${tag}`}>
-        <p className="cursor-pointer text-gradient-end dark:text-gradient-start hover:underline">
-          {tag}
-        </p>
-      </Link>
-    </>
-  );
-};
 
 const PostBox = () => {
   return (
     <>
-      <div className="shadow-md w-full flex-col rounded-lg p-5 bg-content-header-white dark:bg-content-header-black">
+      <div className="w-full flex-col p-5 border-b-1 border-slate-300 dark:border-slate-700">
         <div className="w-full">
           <Link href={"/p/완벽하지-않았기에-소중했던-순간들"}>
             <p
