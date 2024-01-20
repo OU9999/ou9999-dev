@@ -7,7 +7,7 @@ const Tag = ({ tag }: ITagProps) => {
   return (
     <>
       <Link href={`/tags/${tag}`}>
-        <p className="cursor-pointer text-gradient-end dark:text-gradient-start hover:underline">
+        <p className="text-xs sm:text-sm md:text-md cursor-pointer text-gradient-end dark:text-gradient-start hover:underline">
           {tag}
         </p>
       </Link>

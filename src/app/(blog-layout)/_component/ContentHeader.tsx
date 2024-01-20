@@ -10,13 +10,13 @@ interface IContentHeaderProps {
 
 const ContentHeader = ({ title, text, img, tags }: IContentHeaderProps) => {
   return (
-    <div className="shadow-sm mt-20 w-full flex flex-col justify-center items-center bg-content-header-white dark:bg-content-header-black">
-      <div className="w-276 py-10 flex space-x-10">
-        <div className="w-96 h-64 relative overflow-hidden rounded-xl ">
+    <div className="shadow-sm mt-14 md:mt-20 w-full flex flex-col justify-center items-center bg-content-header-white dark:bg-content-header-black">
+      <div className="w-full flex max-w-276 px-5 xl:px-0 py-10 flex-col justify-center items-center md:flex-row md:justify-start md:items-start md:space-x-10">
+        <div className="w-64 h-40 md:w-96 md:h-64 relative overflow-hidden rounded-xl ">
           <Image alt="modern-js" src={img} fill />
         </div>
-        <div className="flex flex-col ">
-          <p className="font-bold text-3xl bg-gradient-to-r from-gradient-start to-gradient-end dark:from-white dark:to-white inline-block text-transparent bg-clip-text">
+        <div className="mt-5 flex flex-col justify-center items-center md:justify-start md:items-start ">
+          <p className="font-bold text-md sm:text-xl md:text-3xl bg-gradient-to-r from-gradient-start to-gradient-end dark:from-white dark:to-white inline-block text-transparent bg-clip-text">
             {title}
           </p>
           {tags && (
@@ -25,7 +25,7 @@ const ContentHeader = ({ title, text, img, tags }: IContentHeaderProps) => {
               <Tag tag="회고" />
             </div>
           )}
-          <p className="mt-3 text-xl text-slate-500 dark:text-slate-400">
+          <p className="mt-1 md:mt-3 text-sm md:text-xl text-slate-500 dark:text-slate-400">
             {text}
           </p>
         </div>
