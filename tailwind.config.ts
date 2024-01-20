@@ -13,7 +13,6 @@ const config: Config = {
         "content-header": "#1B1A1E",
       },
       width: {
-        "128": "32rem",
         "276": "68rem",
       },
       height: {
