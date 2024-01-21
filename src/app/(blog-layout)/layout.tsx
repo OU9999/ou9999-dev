@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Header from "./_component/Header";
 import TagsBox from "./_component/TagsBox";
+import Footer from "./_component/Footer";
 
 interface BlogLayoutProps {
   children: ReactNode;
@@ -9,7 +10,7 @@ interface BlogLayoutProps {
 
 const BlogLayout = ({ children, headSection }: BlogLayoutProps) => {
   return (
-    <div className="w-dvw relative">
+    <div className="w-dvw h-auto relative">
       <Header />
       <div className="w-full flex flex-col justify-center items-center">
         {headSection}
@@ -20,6 +21,7 @@ const BlogLayout = ({ children, headSection }: BlogLayoutProps) => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
