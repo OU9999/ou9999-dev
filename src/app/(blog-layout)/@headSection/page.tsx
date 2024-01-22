@@ -1,4 +1,4 @@
-import ContentHeader from "../_component/ContentHeader";
+import ContentHeader from "@/components/headSection/ContentHeader";
 
 const HeadSection = () => {
   return (

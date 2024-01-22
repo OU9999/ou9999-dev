@@ -1,4 +1,4 @@
-import Tag from "@/components/Tag";
+import Tag from "@/components/common/Tag";
 import Image from "next/image";
 
 interface IContentHeaderProps {

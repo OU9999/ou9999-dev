@@ -1,4 +1,4 @@
-import ContentHeader from "@/app/(blog-layout)/_component/ContentHeader";
+import ContentHeader from "@/components/headSection/ContentHeader";
 
 const PostHeadSection = () => {
   return (

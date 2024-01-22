@@ -1,7 +1,7 @@
+import Footer from "@/components/nav/Footer";
+import Header from "@/components/nav/Header";
+import TagsBox from "@/components/rightSection/TagsBox";
 import { ReactNode } from "react";
-import Header from "./_component/Header";
-import TagsBox from "./_component/TagsBox";
-import Footer from "./_component/Footer";
 
 interface BlogLayoutProps {
   children: ReactNode;

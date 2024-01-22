@@ -1,6 +1,6 @@
-import ModeToggle from "@/components/ModeToggle";
-import PopoverButton from "@/components/nav/PopoverButton";
 import Link from "next/link";
+import ModeToggle from "./header/ModeToggle";
+import PopoverButton from "./PopoverButton";
 
 const Header = () => {
   return (

@@ -1,5 +1,5 @@
-import Tag from "@/components/Tag";
-import { hoverGradient } from "@/components/styles";
+import Tag from "@/components/common/Tag";
+import { hoverGradient } from "@/components/common/styles";
 import Link from "next/link";
 
 const PostBox = () => {
