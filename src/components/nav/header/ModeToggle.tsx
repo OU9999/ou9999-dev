@@ -9,17 +9,15 @@ const ModeToggle = () => {
     <>
       <button
         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        className="border rounded-md w-8 h-8 flex items-center justify-center hover:bg-slate-500 hover:dark:bg-slate-400"
+        className="w-8 h-8 flex items-center justify-center fill-inherit hover:fill-gradient-end hover:group group"
       >
-        <span className="sr-only">Toggle mode</span>
         {theme !== "dark" ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-4 h-4"
+            className="w-6 h-6 group-hover:stroke-gradient-end"
           >
             <path
               strokeLinecap="round"
@@ -34,7 +32,7 @@ const ModeToggle = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-4 h-4"
+            className="w-6 h-6 group-hover:stroke-gradient-start"
           >
             <path
               strokeLinecap="round"
