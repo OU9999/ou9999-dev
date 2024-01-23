@@ -1,12 +1,21 @@
 import ContentHeader from "@/components/headSection/ContentHeader";
+import { getPostFromParamsBySlug } from "@/utils/postUtil";
 
-const PostHeadSection = () => {
+interface IPostHeadSectionProps {
+  params: {
+    title: string;
+  };
+}
+
+const PostHeadSection = async ({ params }: IPostHeadSectionProps) => {
+  const post = await getPostFromParamsBySlug(params);
+
   return (
     <ContentHeader
-      title="[23년 회고] 완벽하지 않았기에 소중했던 순간들"
-      text="노력과 고민을 담아서"
-      img="/modern-react.PNG"
-      tags={["Essay", "회고"]}
+      title={post?.title!}
+      text={post?.description!}
+      img={post?.thumbnail!}
+      tags={post?.tags!}
     />
   );
 };

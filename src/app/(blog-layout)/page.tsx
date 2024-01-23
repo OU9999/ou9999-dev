@@ -1,5 +1,6 @@
 import Tag from "@/components/common/Tag";
 import { hoverGradient } from "@/components/common/styles";
+import { formatDateToString } from "@/utils/dateUtil";
 import { allPosts } from "contentlayer/generated";
 import { compareDesc } from "date-fns";
 import Link from "next/link";
@@ -19,7 +20,7 @@ const PostBox = ({ title, tags, description, date, slug }: IPostBoxProps) => {
         <div className="w-full">
           <Link href={`/p/${slug}`}>
             <p
-              className={`text-xl sm:text-2xl md:text-3xl font-semibold cursor-pointer ${hoverGradient}`}
+              className={`text-xl sm:text-2xl md:text-3xl font-semibold cursor-pointer inline-block ${hoverGradient}`}
             >
               {title}
             </p>
@@ -34,7 +35,7 @@ const PostBox = ({ title, tags, description, date, slug }: IPostBoxProps) => {
           <p>{description}</p>
         </div>
         <div className="w-full mt-10 sm:mt-12 md:mt-14 text-xs sm:text-sm md:text-md text-slate-500 dark:text-slate-400">
-          <p>{date}</p>
+          <p>{formatDateToString(date)}</p>
         </div>
       </div>
     </>
