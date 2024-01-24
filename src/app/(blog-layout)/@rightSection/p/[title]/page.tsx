@@ -1,7 +1,5 @@
-import TagsBox from "@/components/rightSection/TagsBox";
-
 const PostRightSection = () => {
-  return <TagsBox />;
+  return <p>this is toc</p>;
 };
 
 export default PostRightSection;

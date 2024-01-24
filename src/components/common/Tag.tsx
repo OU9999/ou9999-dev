@@ -8,7 +8,7 @@ const Tag = ({ tag }: ITagProps) => {
     <>
       <Link href={`/tags/${tag}`}>
         <p className="text-xs sm:text-sm md:text-md cursor-pointer text-gradient-end dark:text-gradient-start hover:underline">
-          {tag}
+          {tag.toUpperCase()}
         </p>
       </Link>
     </>

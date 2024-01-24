@@ -1,3 +1,4 @@
+import PostBox from "@/components/mainSection/PostBox";
 import { getPostFromParamsByTag } from "@/utils/postUtil";
 import { allPosts } from "contentlayer/generated";
 
@@ -23,10 +24,16 @@ const TagPage = async ({ params }: ITagPageProps) => {
   const posts = await getPostFromParamsByTag(params);
 
   return (
-    <div className="flex flex-col w-full">
-      <p>this is slug {decodeURI(params.tag)}</p>
+    <div className="w-full flex flex-col space-y-5">
       {posts.map((post) => (
-        <p key={"TAG" + post.title}>{post.title}</p>
+        <PostBox
+          key={"post" + post._id}
+          title={post.title}
+          tags={post.tags}
+          description={post.description}
+          date={post.date}
+          slug={post.slugAsParams}
+        />
       ))}
     </div>
   );

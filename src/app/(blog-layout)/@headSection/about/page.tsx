@@ -5,7 +5,7 @@ const AboutPageHeadSection = () => {
     <ContentHeader
       title="This is About"
       text="노력과 고민을 담아서"
-      img="/modern-js.PNG"
+      img="modern-js.webp"
     />
   );
 };

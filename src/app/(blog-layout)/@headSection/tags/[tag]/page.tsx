@@ -1,10 +1,16 @@
 import ContentHeader from "@/components/headSection/ContentHeader";
 
-const TagsHeadSection = () => {
+interface ITagHeadSectionProps {
+  params: {
+    tag: string;
+  };
+}
+
+const TagsHeadSection = async ({ params }: ITagHeadSectionProps) => {
   return (
     <ContentHeader
-      title="오유진﹒OU9999 TAGS"
-      text="노력과 고민을 담아서"
+      title={`TAG : ${decodeURI(params.tag).toUpperCase()}`}
+      text=""
       img="modern-js.webp"
     />
   );
