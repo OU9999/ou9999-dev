@@ -2,8 +2,9 @@
 
 import XIcon from "@/components/svg/XIcon";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ModeToggle from "./ModeToggle";
+import { TagCount, getTagsCount } from "@/utils/postUtil";
 
 interface ILinkButtonProps {
   text: string;
@@ -62,6 +63,17 @@ interface IMobilePopoverProps {
 }
 
 const MobilePopover = ({ setIsOpen }: IMobilePopoverProps) => {
+  const [tagsCount, setTagsCount] = useState<TagCount[] | null>(null);
+
+  const init = async () => {
+    const data = await getTagsCount();
+    setTagsCount(data);
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <div className="fixed top-0 left-0 right-0 bottom-0 z-50 w-dvw h-dvh overflow-y-auto bg-white-bg dark:bg-dark-bg">
       <div className="w-full h-2vh flex flex-col justify-start items-center relative">
@@ -81,8 +93,14 @@ const MobilePopover = ({ setIsOpen }: IMobilePopoverProps) => {
         </div>
         <p className="mt-20 mb-7 font-bold text-4xl">Tag</p>
         <div className="flex flex-col justify-center items-center space-y-3 ">
-          <TagItem title="Essay" count={42} setIsOpen={setIsOpen} />
-          <TagItem title="회고" count={10} setIsOpen={setIsOpen} />
+          {tagsCount?.map((tag) => (
+            <TagItem
+              key={"POPOVERTAGITEM" + tag.tag}
+              title={tag.tag}
+              count={tag.count}
+              setIsOpen={setIsOpen}
+            />
+          ))}
         </div>
       </div>
     </div>

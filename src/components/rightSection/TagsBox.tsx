@@ -1,34 +1,5 @@
-import { allPosts } from "contentlayer/generated";
+import { getTagsCount } from "@/utils/postUtil";
 import Link from "next/link";
-
-interface TagCount {
-  tag: string;
-  count: number;
-}
-
-const getTagsCount = async (): Promise<TagCount[]> => {
-  const tagsCount: { [key: string]: number } = {};
-  allPosts.forEach((post) => {
-    post.tags.forEach((tag) => {
-      if (tagsCount[tag]) {
-        tagsCount[tag] += 1;
-      } else {
-        tagsCount[tag] = 1;
-      }
-    });
-  });
-
-  const tagsCountArray: TagCount[] = Object.entries(tagsCount).map(
-    ([tag, count]) => ({
-      tag,
-      count: Number(count),
-    })
-  );
-
-  tagsCountArray.sort((a, b) => b.count - a.count);
-
-  return tagsCountArray;
-};
 
 interface ITagItemProps {
   title: string;
