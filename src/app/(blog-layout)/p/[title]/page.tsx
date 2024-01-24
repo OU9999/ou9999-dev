@@ -23,7 +23,7 @@ const PostPage = async ({ params }: IPostPageProps) => {
   }
 
   return (
-    <article className="py-6 prose dark:prose-invert">
+    <article className="w-full">
       <Mdx code={post.body.code} />
     </article>
   );
