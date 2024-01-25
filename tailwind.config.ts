@@ -21,7 +21,7 @@ const config: Config = {
         "276": "68rem",
       },
       height: {
-        "2vh": "200vh",
+        "2vh": "120dvh",
       },
       colors: {
         "gradient-start": "#93A1F7",

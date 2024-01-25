@@ -16,6 +16,7 @@ const PostHeadSection = async ({ params }: IPostHeadSectionProps) => {
       text={post?.description!}
       img={post?.thumbnail!}
       tags={post?.tags!}
+      date={post?.date!}
     />
   );
 };

@@ -12,7 +12,7 @@ const components = {
     </div>
   ),
   p: (props: any) => (
-    <p {...props} className="text-md my-1 text-slate-700 dark:text-slate-300" />
+    <p {...props} className="my-1 text-slate-700 dark:text-slate-300" />
   ),
   h1: (props: any) => <h1 {...props} className="text-3xl font-semibold my-5" />,
   h2: (props: any) => <h2 {...props} className="text-2xl font-semibold my-5" />,

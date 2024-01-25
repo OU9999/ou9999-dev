@@ -29,10 +29,10 @@ const PostBox = ({ title, tags, description, date, slug }: IPostBoxProps) => {
             <Tag key={"tag" + idx} tag={tag} />
           ))}
         </div>
-        <div className="w-full mt-5 text-sm sm:text-md md:text-lg">
+        <div className="w-full mt-5 text-sm sm:text-base md:text-lg text-slate-500 dark:text-slate-400">
           <p>{description}</p>
         </div>
-        <div className="w-full mt-10 sm:mt-12 md:mt-14 text-xs sm:text-sm md:text-md text-slate-500 dark:text-slate-400">
+        <div className="w-full mt-10 sm:mt-12 md:mt-14 text-xs sm:text-sm md:text-base text-slate-500 dark:text-slate-400">
           <p>{formatDateToString(date)}</p>
         </div>
       </div>

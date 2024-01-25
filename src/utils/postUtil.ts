@@ -1,4 +1,5 @@
 import { allPosts } from "contentlayer/generated";
+import { compareDesc } from "date-fns";
 
 interface PostProps {
   params: {
@@ -31,7 +32,11 @@ export const getPostFromParamsByTag = async (params: TagProps["params"]) => {
     null;
   }
 
-  return post;
+  const posts = post.sort((a, b) =>
+    compareDesc(new Date(a.date), new Date(b.date))
+  );
+
+  return posts;
 };
 
 export interface TagCount {
