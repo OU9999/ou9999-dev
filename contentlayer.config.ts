@@ -3,6 +3,9 @@ import {
   defineDocumentType,
   makeSource,
 } from "contentlayer/source-files";
+import rehypePrism from "rehype-prism-plus";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 
 const computedFields: ComputedFields = {
   slug: {
@@ -44,4 +47,8 @@ export const Post = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "./content",
   documentTypes: [Post],
+  mdx: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeSlug, [rehypePrism, { ignoreMissing: true }]],
+  },
 });
