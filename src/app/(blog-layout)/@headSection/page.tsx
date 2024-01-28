@@ -5,7 +5,7 @@ const HeadSection = () => {
     <ContentHeader
       title="오유진﹒OU9999"
       text="노력과 고민을 담아서"
-      img="modern-js"
+      img="ovo3"
     />
   );
 };
