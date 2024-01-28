@@ -11,7 +11,7 @@ const TagsHeadSection = async ({ params }: ITagHeadSectionProps) => {
     <ContentHeader
       title={`TAG : ${decodeURI(params.tag).toUpperCase()}`}
       text=""
-      img="modern-js.webp"
+      img="modern-js"
     />
   );
 };

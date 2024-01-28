@@ -1,5 +1,3 @@
-import Footer from "@/components/nav/Footer";
-import Header from "@/components/nav/Header";
 import { ReactNode } from "react";
 
 interface BlogLayoutProps {
@@ -15,7 +13,6 @@ const BlogLayout = ({
 }: BlogLayoutProps) => {
   return (
     <div className="w-dvw h-auto relative">
-      <Header />
       <div className="w-full flex flex-col justify-center items-center">
         {headSection}
         <div className=" mt-5 sm:mt-7 md:mt-10 w-full max-w-276 h-full flex space-x-5 relative">
@@ -25,7 +22,6 @@ const BlogLayout = ({
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

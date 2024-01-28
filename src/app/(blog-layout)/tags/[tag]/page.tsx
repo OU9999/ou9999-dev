@@ -9,7 +9,7 @@ interface ITagPageProps {
 }
 
 export const generateStaticParams = async () => {
-  const params: any = [];
+  const params: ITagPageProps["params"][] = [];
 
   allPosts.forEach((post) => {
     post.tags.forEach((tag) => {

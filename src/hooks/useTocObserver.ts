@@ -2,6 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 
+interface IHeadingElement {
+  id: string;
+  nodeName: string;
+  textContent: string | null;
+}
+
 const observerOption = {
   threshold: 0.4,
   rootMargin: "-200px 0px 0px",
@@ -9,7 +15,7 @@ const observerOption = {
 
 export const useTocObserver = () => {
   const [currentId, setCurrentId] = useState<string>("");
-  const [headingEls, setHeadingEls] = useState<any[]>([]);
+  const [headingEls, setHeadingEls] = useState<IHeadingElement[]>([]);
   const dirRef = useRef<string>("");
   const prevYpos = useRef<number>(0);
 
