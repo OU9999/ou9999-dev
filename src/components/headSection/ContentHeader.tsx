@@ -8,6 +8,7 @@ interface IContentHeaderProps {
   img: string;
   tags?: string[];
   date?: string;
+  main?: boolean;
 }
 
 const ContentHeader = ({
@@ -16,12 +17,16 @@ const ContentHeader = ({
   img,
   tags,
   date,
+  main,
 }: IContentHeaderProps) => {
   return (
     <div className="shadow-sm mt-14 md:mt-20 w-full flex flex-col justify-center items-center bg-content-header-white dark:bg-content-header-black">
       <div className="w-full flex max-w-276 px-5 xl:px-0 py-10 flex-col justify-center items-center md:flex-row md:justify-start md:items-start md:space-x-10">
         <div
-          className={`w-64 h-40 md:w-96 md:h-64 relative overflow-hidden rounded-xl bg-gradient-to-t from-gray-700 via-gray-900 to-black dark:from-gray-100 dark:via-gray-300 dark:to-gray-400`}
+          className={`w-64 h-40 md:w-96 md:h-64 relative overflow-hidden rounded-xl ${
+            main &&
+            "bg-gradient-to-t from-gray-700 via-gray-900 to-black dark:from-gray-100 dark:via-gray-300 dark:to-gray-400"
+          }`}
         >
           <Image alt="modern-js" src={`/imgs/header/${img}.webp`} fill />
         </div>

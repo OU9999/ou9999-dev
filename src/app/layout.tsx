@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "@/css/tailwind.css";
 import "@/css/prism.css";
-import { defaultOpenGraph } from "@/lib/metaData";
+import { defaultOpenGraph, defaultTwitter } from "@/constant/metaData";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Header from "@/components/nav/Header";
 import Footer from "@/components/nav/Footer";
@@ -10,6 +10,7 @@ import Footer from "@/components/nav/Footer";
 const notoSans = Noto_Sans_KR({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("http://localhost:3000"), // 도메인 사면 바꾸셈
   title: "ou.dev",
   description: "OU9999's blog",
   icons: {
@@ -17,6 +18,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     ...defaultOpenGraph,
+  },
+  twitter: {
+    ...defaultTwitter,
   },
 };
 

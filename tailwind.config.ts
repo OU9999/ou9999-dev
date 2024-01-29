@@ -31,6 +31,7 @@ const config: Config = {
         "1": "1px",
       },
       maxWidth: {
+        "138": "38rem",
         "276": "68rem",
       },
     },
