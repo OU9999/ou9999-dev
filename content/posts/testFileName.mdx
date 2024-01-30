@@ -1,0 +1,89 @@
+---
+title: testTitle
+description: testDesc
+date: "2024-01-22"
+tags:
+  - test
+  - javascript
+  - typescript
+  - 회고
+thumbnail: modern-react
+---
+
+# this is h1
+
+## this is h2
+
+### this is h3
+
+#### this is h4
+
+this is normal text1.
+
+this is normal text2.
+
+this is normal text3.
+
+this is very long text.this is very long text.this is very long text.this is very long text.this is very long text.this is very long text.this is very long text.this is very long text.this is very long text.this is very long text.
+
+this is newLine text\
+this is newLine text\
+this is newLine text\
+this is newLine text\
+this is newLine text\
+this is newLine text\
+this is newLine text
+
+**this is bold**
+
+- 123
+- 234
+- 456
+
+<Image
+  src="/imgs/header/essay.webp"
+  width="500"
+  height="500"
+  alt="THIS IS FUCKING ALT"
+/>
+
+| Syntax    | Description |
+| --------- | ----------- |
+| Header    | Title       |
+| Paragraph | Text        |
+
+- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media
+
+```ts
+// ts
+export const formatDateToString = (dateString: string) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더해줍니다.
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}년 ${month}월 ${day}일`;
+};
+```
+
+```js
+// js
+const solution = (n) => {
+  let first = 0;
+  let second = 1;
+  let nTarget = 0;
+  for (let i = 2; i <= n; i++) {
+    nTarget = (first + second) % 1234567;
+    first = second;
+    second = nTarget;
+  }
+
+  return nTarget;
+};
+
+const n = 123;
+const result = solution(n);
+console.log("RESULT >>>", result);
+```

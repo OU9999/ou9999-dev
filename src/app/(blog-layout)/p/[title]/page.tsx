@@ -48,7 +48,7 @@ const PostPage = async ({ params }: IPostPageProps) => {
 
   return (
     <>
-      <article className="w-full max-w-full prose dark:prose-invert prose-img:my-0 prose-headings:font-semibold prose-headings:my-5">
+      <article className="w-full max-w-full prose dark:prose-invert prose-img:my-0 prose-headings:font-semibold prose-headings:my-5 prose-blockquote:not-italic prose-blockquote:font-normal">
         <Mdx code={post.body.code} />
       </article>
       <div className="w-full mt-10">
