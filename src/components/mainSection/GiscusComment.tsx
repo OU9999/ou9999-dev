@@ -17,7 +17,7 @@ const GiscusComment = () => {
     scriptElem.async = true;
     scriptElem.crossOrigin = "anonymous";
 
-    scriptElem.setAttribute("data-repo", "OU9999/simple-blog");
+    scriptElem.setAttribute("data-repo", "OU9999/ou9999-dev");
     scriptElem.setAttribute("data-repo-id", "R_kgDOLGbLOA");
     scriptElem.setAttribute("data-category", "General");
     scriptElem.setAttribute("data-category-id", "DIC_kwDOLGbLOM4Ccupn");

@@ -7,7 +7,9 @@ const components = {
     <div className="relative flex flex-col justify-center items-center">
       <Image {...props} className="rounded-lg" />
       {props.alt && (
-        <p className="my-0 text-gray-400 dark:text-gray-600">{props.alt}</p>
+        <p className="my-1 text-gray-400 dark:text-gray-600 text-sm ">
+          {props.alt}
+        </p>
       )}
     </div>
   ),
