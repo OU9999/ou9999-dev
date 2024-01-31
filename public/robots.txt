@@ -1,0 +1,4 @@
+User-agent: *
+disallow: /imgs
+allow: /
+sitemap: https://ou9999-dev.com/sitemap.xml

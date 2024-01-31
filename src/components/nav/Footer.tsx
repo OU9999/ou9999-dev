@@ -31,7 +31,7 @@ const Footer = () => {
         <div className="flex space-x-4 md:space-x-5">
           <IconBox link="mailto:omh232323@gmail.com" icon={<MailIcon />} />
           <IconBox link="https://github.com/OU9999" icon={<GithubIcon />} />
-          <IconBox link="/" icon={<RssIcon />} />
+          <IconBox link="/feed.xml" icon={<RssIcon />} />
         </div>
       </div>
     </div>
