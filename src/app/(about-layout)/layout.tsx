@@ -1,8 +1,13 @@
+import { Metadata } from "next";
 import { ReactNode } from "react";
 
 interface AboutLayoutProps {
   children: ReactNode;
 }
+
+export const metadata: Metadata = {
+  title: "ABOUT | ou9999.dev",
+};
 
 const AboutLayout = ({ children }: AboutLayoutProps) => {
   return (

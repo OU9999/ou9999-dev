@@ -8,6 +8,15 @@ interface ITagPageProps {
   };
 }
 
+export const generateMetadata = async ({ params }: ITagPageProps) => {
+  const slug = decodeURI(params.tag);
+  const title = `${slug.toUpperCase()} | ou9999.dev`;
+
+  return {
+    title,
+  };
+};
+
 export const generateStaticParams = async () => {
   const params: ITagPageProps["params"][] = [];
 

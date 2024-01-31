@@ -1,7 +1,7 @@
 import { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 import { Twitter } from "next/dist/lib/metadata/types/twitter-types";
 
-const defaultTitle = "ou.dev";
+const defaultTitle = "ou9999.dev";
 const defaultDescription = "OU9999's blog";
 
 export const defaultOpenGraph: OpenGraph = {

@@ -17,7 +17,7 @@ export const generateMetadata = async ({ params }: IPostPageProps) => {
     return {};
   }
 
-  const title = `${post.title} | ou.dev`;
+  const title = `${post.title} | ou9999.dev`;
   const thumbnail = `/openGraph/${post.thumbnail}.png`;
 
   return {
@@ -48,7 +48,7 @@ const PostPage = async ({ params }: IPostPageProps) => {
 
   return (
     <>
-      <article className="w-full max-w-full prose dark:prose-invert prose-img:mb-0 prose-headings:font-semibold prose-blockquote:not-italic prose-blockquote:font-normal prose-a:text-gradient-end dark:prose-a:text-gradient-start prose-quoteless">
+      <article className="w-full max-w-full prose dark:prose-invert prose-img:mb-0 prose-headings:font-semibold prose-blockquote:not-italic prose-blockquote:font-normal prose-a:text-gradient-end dark:prose-a:text-gradient-start prose-quoteless prose-blockquote:border-gradient-end dark:prose-blockquote:border-gradient-start">
         <Mdx code={post.body.code} />
       </article>
       <div className="w-full mt-10">
