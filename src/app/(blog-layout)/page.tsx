@@ -1,11 +1,8 @@
 import PostBox from "@/components/mainSection/PostBox";
-import { allPosts } from "contentlayer/generated";
-import { compareDesc } from "date-fns";
+import { getAllPosts } from "@/utils/postUtil";
 
 const HomePage = () => {
-  const posts = allPosts.sort((a, b) =>
-    compareDesc(new Date(a.date), new Date(b.date))
-  );
+  const posts = getAllPosts();
 
   return (
     <div className="w-full flex flex-col space-y-5">

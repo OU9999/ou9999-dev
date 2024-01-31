@@ -1,4 +1,4 @@
-import { getTagsCount } from "@/utils/postUtil";
+import { getTagsFromPosts } from "@/utils/postUtil";
 import Link from "next/link";
 
 interface ITagItemProps {
@@ -22,7 +22,7 @@ const TagItem = ({ title, count }: ITagItemProps) => {
 };
 
 const TagsBox = async () => {
-  const tagsCount = await getTagsCount();
+  const tagsCount = await getTagsFromPosts();
 
   return (
     <div className="shadow-md w-full h-auto p-3 sticky top-32 rounded-lg bg-content-header-white dark:bg-content-header-black">

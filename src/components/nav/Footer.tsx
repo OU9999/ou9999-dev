@@ -19,8 +19,8 @@ const IconBox = ({ link, icon }: IIconBoxProps) => {
 
 const Footer = () => {
   return (
-    <div className="w-full mt-20 flex justify-center">
-      <div className="w-full max-w-276 border-t-1 border-slate-300 dark:border-slate-700 pt-10 pb-5 flex flex-col justify-center items-center">
+    <div className="w-full mt-20 flex justify-center border-t-1 border-slate-300 dark:border-slate-700">
+      <div className="w-full max-w-276  pt-10 pb-5 flex flex-col justify-center items-center">
         <div className="flex space-x-5">
           <IconBox link="mailto:omh232323@gmail.com" icon={<MailIcon />} />
           <IconBox link="https://github.com/OU9999" icon={<GithubIcon />} />

@@ -1,5 +1,13 @@
-import { allPosts } from "contentlayer/generated";
+import { Post, allPosts } from "contentlayer/generated";
 import { compareDesc } from "date-fns";
+
+export const getAllPosts = (): Post[] => {
+  const posts = allPosts.sort((a, b) =>
+    compareDesc(new Date(a.date), new Date(b.date))
+  );
+
+  return posts;
+};
 
 interface PostProps {
   params: {
@@ -24,7 +32,7 @@ interface TagProps {
   };
 }
 
-export const getPostFromParamsByTag = async (params: TagProps["params"]) => {
+export const getPostsFromParamsByTag = async (params: TagProps["params"]) => {
   const slug = decodeURI(params.tag);
   const post = allPosts.filter((post) => post.tags.includes(slug));
 
@@ -44,7 +52,7 @@ export interface TagCount {
   count: number;
 }
 
-export const getTagsCount = async (): Promise<TagCount[]> => {
+export const getTagsFromPosts = async (): Promise<TagCount[]> => {
   const tagsCount: { [key: string]: number } = {};
   allPosts.forEach((post) => {
     post.tags.forEach((tag) => {
@@ -63,7 +71,12 @@ export const getTagsCount = async (): Promise<TagCount[]> => {
     })
   );
 
-  tagsCountArray.sort((a, b) => b.count - a.count);
+  tagsCountArray.sort((a, b) => {
+    if (b.count === a.count) {
+      return a.tag.localeCompare(b.tag);
+    }
+    return b.count - a.count;
+  });
 
   return tagsCountArray;
 };

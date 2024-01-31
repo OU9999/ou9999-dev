@@ -4,7 +4,7 @@ import XIcon from "@/components/svg/XIcon";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ModeToggle from "./ModeToggle";
-import { TagCount, getTagsCount } from "@/utils/postUtil";
+import { TagCount, getTagsFromPosts } from "@/utils/postUtil";
 
 interface ILinkButtonProps {
   text: string;
@@ -66,7 +66,7 @@ const MobilePopover = ({ setIsOpen }: IMobilePopoverProps) => {
   const [tagsCount, setTagsCount] = useState<TagCount[] | null>(null);
 
   const init = async () => {
-    const data = await getTagsCount();
+    const data = await getTagsFromPosts();
     setTagsCount(data);
   };
 

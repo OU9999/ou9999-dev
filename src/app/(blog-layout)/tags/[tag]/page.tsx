@@ -1,5 +1,5 @@
 import PostBox from "@/components/mainSection/PostBox";
-import { getPostFromParamsByTag } from "@/utils/postUtil";
+import { getPostsFromParamsByTag } from "@/utils/postUtil";
 import { allPosts } from "contentlayer/generated";
 
 interface ITagPageProps {
@@ -21,7 +21,7 @@ export const generateStaticParams = async () => {
 };
 
 const TagPage = async ({ params }: ITagPageProps) => {
-  const posts = await getPostFromParamsByTag(params);
+  const posts = await getPostsFromParamsByTag(params);
 
   return (
     <div className="w-full flex flex-col space-y-5">
