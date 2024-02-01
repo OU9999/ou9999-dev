@@ -9,7 +9,7 @@ interface ITagHeadSectionProps {
 const TagsHeadSection = async ({ params }: ITagHeadSectionProps) => {
   return (
     <ContentHeader
-      title={`TAG : ${decodeURI(params.tag).toUpperCase()}`}
+      title={`TAG : ${decodeURIComponent(params.tag).toUpperCase()}`}
       text=""
       img="ovo3"
       main

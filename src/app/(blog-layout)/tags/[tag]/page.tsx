@@ -22,7 +22,7 @@ export const generateStaticParams = async () => {
 
   allPosts.forEach((post) => {
     post.tags.forEach((tag) => {
-      params.push({ tag: encodeURI(tag) });
+      params.push({ tag: encodeURIComponent(tag) });
     });
   });
 
