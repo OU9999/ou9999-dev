@@ -11,7 +11,7 @@ import { myDomain } from "@/constant/domain";
 const notoSans = Noto_Sans_KR({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(myDomain), // 도메인 사면 바꾸셈
+  metadataBase: new URL(myDomain),
   title: "ou9999.dev",
   description: "OU9999's blog",
   icons: {
