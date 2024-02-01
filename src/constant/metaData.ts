@@ -9,7 +9,7 @@ export const defaultOpenGraph: OpenGraph = {
   title: defaultTitle,
   description: defaultDescription,
   images: {
-    url: "/openGraph/ovo3.png",
+    url: "/imgs/openGraph/ovo3.png",
     width: 1200,
     height: 630,
   },
@@ -20,5 +20,5 @@ export const defaultTwitter: Twitter = {
   site: "@OU9999",
   title: defaultTitle,
   description: defaultDescription,
-  images: ["/openGraph/ovo3.png"],
+  images: ["/imgs/openGraph/ovo3.png"],
 };

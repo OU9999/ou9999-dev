@@ -18,7 +18,7 @@ export const generateMetadata = async ({ params }: IPostPageProps) => {
   }
 
   const title = `${post.title} | ou9999.dev`;
-  const thumbnail = `/openGraph/${post.thumbnail}.png`;
+  const thumbnail = `/imgs/openGraph/${post.thumbnail}.png`;
 
   return {
     title,
