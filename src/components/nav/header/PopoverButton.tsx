@@ -49,7 +49,7 @@ const TagItem = ({ title, count, setIsOpen }: ITagItemProps) => {
       onClick={handleClick}
     >
       <p className="cursor-pointer text-gradient-end dark:text-gradient-start hover:underline">
-        {title}
+        {title.toUpperCase()}
       </p>
       <p className="text-slate-500 dark:text-slate-400 text-xs">
         &nbsp;({count})
@@ -116,6 +116,7 @@ const PopoverButton = () => {
           type="button"
           className="text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
           onClick={() => setIsOpen(true)}
+          aria-label="open-pop-over"
         >
           <svg width="24" height="24">
             <path

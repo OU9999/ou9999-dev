@@ -11,7 +11,7 @@ const TagItem = ({ title, count }: ITagItemProps) => {
     <Link href={`/tags/${title}`}>
       <div className="w-full flex rounded-md py-1 px-3 items-center">
         <p className="cursor-pointer text-gradient-end dark:text-gradient-start hover:underline">
-          {title}
+          {title.toUpperCase()}
         </p>
         <p className="text-slate-500 dark:text-slate-400 text-xs">
           &nbsp;({count})
