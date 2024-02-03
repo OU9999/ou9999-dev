@@ -10,7 +10,10 @@ interface IIconBoxProps {
 const IconBox = ({ link, icon }: IIconBoxProps) => {
   return (
     <Link href={link}>
-      <div className="w-4 h-4 md:w-5 md:h-5 cursor-pointer fill-black dark:fill-white hover:fill-gradient-end hover:dark:fill-gradient-start">
+      <div
+        aria-label={`link-for-${link}`}
+        className="w-4 h-4 md:w-5 md:h-5 cursor-pointer fill-black dark:fill-white hover:fill-gradient-end hover:dark:fill-gradient-start"
+      >
         {icon}
       </div>
     </Link>

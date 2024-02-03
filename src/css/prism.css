@@ -45,7 +45,6 @@ pre[class*="language-"] {
 .token.punctuation {
   color: #ccc;
 }
-.token.attr-name,
 .token.deleted,
 .token.namespace,
 .token.tag {
@@ -54,6 +53,7 @@ pre[class*="language-"] {
 .token.function-name {
   color: #6196cc;
 }
+.token.attr-name,
 .token.boolean,
 .token.function,
 .token.number {

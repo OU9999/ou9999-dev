@@ -39,6 +39,11 @@ const config: Config = {
           css: {
             "blockquote p:first-of-type::before": { content: "none" },
             "blockquote p:first-of-type::after": { content: "none" },
+            "p code::before": { content: "none" },
+            "p code::after": { content: "none" },
+            "p code": {
+              color: "rgb(249,204,117)",
+            },
           },
         },
       },
