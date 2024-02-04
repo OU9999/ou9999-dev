@@ -1,6 +1,6 @@
 # ou9999-dev
 
-https://www.ou9999-dev.com/
+https://ou9999-dev.com
 
 # Dependencies
 
