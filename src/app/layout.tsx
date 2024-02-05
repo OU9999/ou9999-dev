@@ -32,6 +32,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <meta
+        name="google-site-verification"
+        content="c08fG67rRWvc_6yY5wNMLhl__pmClidB0MxV4N-GLIw"
+      />
       <body
         className={`bg-white-bg dark:bg-dark-bg text-slate-900 dark:text-slate-50 ${notoSans.className}`}
       >
