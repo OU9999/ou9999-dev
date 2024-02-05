@@ -1,5 +1,4 @@
-import { withContentlayer } from "next-contentlayer";
-import withPlaiceholder from "@plaiceholder/next";
+const { withContentlayer } = require("next-contentlayer");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -11,4 +10,4 @@ const nextConfig = {
   swcMinify: true,
 };
 
-export default withPlaiceholder(withContentlayer(nextConfig));
+module.exports = withContentlayer(nextConfig);

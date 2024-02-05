@@ -1,6 +1,6 @@
 import Tag from "@/components/common/Tag";
 import { formatDateToString } from "@/utils/dateUtil";
-import ImageWithBlur from "./image-with-blur";
+import Image from "next/image";
 
 interface IContentHeaderProps {
   title: string;
@@ -28,11 +28,7 @@ const ContentHeader = ({
             "bg-gradient-to-t from-gray-700 via-gray-900 to-black dark:from-gray-100 dark:via-gray-300 dark:to-gray-400"
           }`}
         >
-          <ImageWithBlur
-            alt="modern-js"
-            src={`/imgs/header/${img}.webp`}
-            fill
-          />
+          <Image alt="modern-js" src={`/imgs/header/${img}.webp`} fill />
         </div>
         <div className="mt-5 flex flex-col justify-center items-center md:justify-start md:items-start ">
           <p className="font-bold text-base sm:text-xl md:text-3xl bg-gradient-to-r from-gradient-start to-gradient-end dark:from-white dark:to-white inline-block text-transparent bg-clip-text">
