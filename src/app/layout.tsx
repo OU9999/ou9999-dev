@@ -36,6 +36,10 @@ export default function RootLayout({
         name="google-site-verification"
         content="c08fG67rRWvc_6yY5wNMLhl__pmClidB0MxV4N-GLIw"
       />
+      <meta
+        name="naver-site-verification"
+        content="064760e130b51b3bf3bd7c0f24aa0d3892199f1f"
+      />
       <body
         className={`bg-white-bg dark:bg-dark-bg text-slate-900 dark:text-slate-50 ${notoSans.className}`}
       >
