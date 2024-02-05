@@ -9,6 +9,11 @@ const nextConfig = {
   },
   reactStrictMode: true,
   swcMinify: true,
+  webpack5: true,
+  webpack: (config, options) => {
+    config.cache = false;
+    return config;
+  },
 };
 
 export default withPlaiceholder(withContentlayer(nextConfig));
