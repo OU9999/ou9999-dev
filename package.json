@@ -3,7 +3,9 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
+    "predev": "node makeBase64.js",
     "dev": "next dev",
+    "prebuild": "node makeBase64.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

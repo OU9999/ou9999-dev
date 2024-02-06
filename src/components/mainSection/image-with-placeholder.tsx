@@ -1,0 +1,3 @@
+const ImageWithPlaceholder = () => {
+  return null;
+};
