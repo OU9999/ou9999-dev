@@ -17,8 +17,16 @@ const getDirNames = () => {
 };
 
 const processImages = (dir) => {
-  const inputDir = path.join(process.cwd(), "public", "imgs", dir);
-  const outputDir = path.join(process.cwd(), "public", "imgs", "base64", dir);
+  const isDev = process.env.NODE_ENV !== "production";
+  const publicFolder = isDev ? "public" : "";
+  const inputDir = path.join(process.cwd(), publicFolder, "imgs", dir);
+  const outputDir = path.join(
+    process.cwd(),
+    publicFolder,
+    "imgs",
+    "base64",
+    dir
+  );
 
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
