@@ -4,7 +4,7 @@ const sharp = require("sharp");
 
 // get header + posts/${title}
 const getDirNames = () => {
-  const inputDir = path.join(__dirname, "content/posts");
+  const inputDir = path.join(process.cwd(), "content/posts");
   const files = fs.readdirSync(inputDir);
 
   const mdxFiles = files.filter((file) => path.extname(file) === ".mdx");
@@ -17,8 +17,8 @@ const getDirNames = () => {
 };
 
 const processImages = (dir) => {
-  const inputDir = path.join(__dirname, "public", "imgs", dir);
-  const outputDir = path.join(__dirname, "public", "imgs", "base64", dir);
+  const inputDir = path.join(process.cwd(), "public", "imgs", dir);
+  const outputDir = path.join(process.cwd(), "public", "imgs", "base64", dir);
 
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
