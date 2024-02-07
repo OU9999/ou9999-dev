@@ -1,7 +1,7 @@
 import { getBase64 } from "@/utils/base64Util";
 import Image, { ImageProps } from "next/image";
 
-const ImageWithPlaceholder: React.FC<ImageProps> = async (props) => {
+const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
   const base64Data = getBase64(props.src as string);
 
   return (
