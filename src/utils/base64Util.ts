@@ -14,3 +14,8 @@ export const getBase64 = (src: string): Base64Data => {
   const base64JSON = require(`../scripts/output/${dirSrc}/${titleSrc}/base64.json`);
   return base64JSON[imgSrc];
 };
+
+export const getBase64Header = (imgSrc: string): Base64Data => {
+  const base64JSON = require(`../scripts/output/header/base64.json`);
+  return base64JSON[imgSrc];
+};
