@@ -3,14 +3,13 @@ import { ReactNode } from "react";
 
 interface AboutLayoutProps {
   children: ReactNode;
-  popover: ReactNode;
 }
 
 export const metadata: Metadata = {
   title: "ABOUT | ou9999.dev",
 };
 
-const AboutLayout = ({ children, popover }: AboutLayoutProps) => {
+const AboutLayout = ({ children }: AboutLayoutProps) => {
   return (
     <>
       <div className="w-dvw h-auto min-h-dvh relative">
@@ -20,7 +19,6 @@ const AboutLayout = ({ children, popover }: AboutLayoutProps) => {
           </div>
         </div>
       </div>
-      {popover}
     </>
   );
 };
