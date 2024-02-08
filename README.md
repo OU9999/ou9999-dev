@@ -12,7 +12,7 @@ https://ou9999-dev.com
 - next-contentlayer
 - vercel
 
----
+# Document Type
 
 ```bash
 title: Awesome title
@@ -22,6 +22,5 @@ tags:
   - javascript
   - typescript
 thumbnail: picture
+published: true
 ```
-
----
