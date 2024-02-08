@@ -2,7 +2,8 @@ import { Post, allPosts } from "contentlayer/generated";
 import { compareDesc } from "date-fns";
 
 export const getAllPosts = (): Post[] => {
-  const posts = allPosts.sort((a, b) =>
+  const filterPosts = allPosts.filter((post) => post.published);
+  const posts = filterPosts.sort((a, b) =>
     compareDesc(new Date(a.date), new Date(b.date))
   );
 
@@ -17,7 +18,8 @@ interface PostProps {
 
 export const getPostFromParamsBySlug = async (params: PostProps["params"]) => {
   const slug = params.title;
-  const post = allPosts.find((post) => post.slugAsParams === slug);
+  const filterPosts = allPosts.filter((post) => post.published);
+  const post = filterPosts.find((post) => post.slugAsParams === slug);
 
   if (!post) {
     null;
@@ -34,13 +36,16 @@ interface TagProps {
 
 export const getPostsFromParamsByTag = async (params: TagProps["params"]) => {
   const slug = decodeURI(params.tag);
-  const post = allPosts.filter((post) => post.tags.includes(slug));
+  const filterPosts = allPosts.filter((post) => post.published);
+  const includeSlugPosts = filterPosts.filter((post) =>
+    post.tags.includes(slug)
+  );
 
-  if (!post) {
+  if (!includeSlugPosts) {
     null;
   }
 
-  const posts = post.sort((a, b) =>
+  const posts = includeSlugPosts.sort((a, b) =>
     compareDesc(new Date(a.date), new Date(b.date))
   );
 
@@ -54,7 +59,9 @@ export interface TagCount {
 
 export const getTagsFromPosts = async (): Promise<TagCount[]> => {
   const tagsCount: { [key: string]: number } = {};
-  allPosts.forEach((post) => {
+  const filterPosts = allPosts.filter((post) => post.published);
+
+  filterPosts.forEach((post) => {
     post.tags.forEach((tag) => {
       if (tagsCount[tag]) {
         tagsCount[tag] += 1;
