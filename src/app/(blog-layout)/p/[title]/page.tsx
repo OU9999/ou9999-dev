@@ -1,6 +1,6 @@
 import GiscusComment from "@/components/mainSection/GiscusComment";
 import { Mdx } from "@/components/mainSection/mdx-components";
-import { getPostFromParamsBySlug } from "@/utils/postUtil";
+import { getAllPosts, getPostFromParamsBySlug } from "@/utils/postUtil";
 import { allPosts } from "contentlayer/generated";
 import { notFound } from "next/navigation";
 
@@ -34,7 +34,8 @@ export const generateMetadata = async ({ params }: IPostPageProps) => {
 };
 
 export const generateStaticParams = async () => {
-  return allPosts.map((page) => ({
+  const posts = await getAllPosts();
+  return posts.map((page) => ({
     title: page.slugAsParams,
   }));
 };
