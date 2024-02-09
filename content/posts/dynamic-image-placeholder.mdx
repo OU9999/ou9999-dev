@@ -8,4 +8,28 @@ thumbnail: next
 published: false
 ---
 
-123 1213213
+## 개요
+
+<Image
+  src="/imgs/post/dynamic-image-placeholder/dynamic.gif"
+  width="800"
+  height="350"
+  alt={"동적 이미지 플레이스홀더 적용 화면"}
+/>
+
+최근에 Discord를 사용하다가 흥미로운 부분을 확인할 수 있었습니다.\
+이미지 공간에 플레이스홀더를 넣어서 이미지가 로딩되기전에 그 이미지에 알맞은 블러 이미지를 보여줘서\
+제 블로그에도 적용하고싶다는 생각이 들었습니다.
+Next.js의 서버컴포넌트라면 이론적으로 구현이 가능할것같다는 생각이 들었습니다.
+
+## 구현
+
+12312331
+
+### Dependencies
+
+- next@14.1.0
+- sharp@0.33.2
+
+> 1. sharp 라이브러리를 최신 버전으로 사용하시려면 next버전을 14.1.0 이상 버전으로 업데이트해야 vercel 배포 환경에서 오류가 나지 않습니다. [Next.js 14.1](https://nextjs.org/blog/next-14-1)
+> 2. node.js 라이브러리를 사용하기때문에 서버컴포넌트에서만 작동합니다.

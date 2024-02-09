@@ -13,6 +13,7 @@ const generateAllBase64 = async (dir) => {
       file.endsWith(".jpg") ||
       file.endsWith(".jpeg") ||
       file.endsWith(".png") ||
+      file.endsWith(".gif") ||
       file.endsWith(".webp")
     );
   });

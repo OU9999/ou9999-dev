@@ -33,6 +33,7 @@ const AboutPage = () => {
           부모님은 아들을 평가하시기보다는 감상하셨다. 나는 감상을 우선으로 받고
           자랐기에, 있는 그대로의 세상을 사랑하는 건 어쩌면 당연했던 것 같다.
         </p>
+        d b
       </div>
 
       <p className="mt-16 md:mt-20 text-md md:text-lg text-center">
