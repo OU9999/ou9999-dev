@@ -1,34 +1,83 @@
 ---
 title: 가상화 하여 더 나은 무한스크롤 구현하기
-description: 무한스크롤 최적화 구현 과정 및 후기
+description: 오늘의집과 같은 무한스크롤 구현 과정과 후기
 date: "2024-02-28"
 tags:
   - react
+  - react-query
+  - react-virtuoso
 thumbnail: infinite
 published: false
 ---
 
 ## 개요
 
-오늘의집 무한스
+<Image
+  src="/imgs/post/better-infinite-scroll/cat.webp"
+  width="500"
+  height="350"
+  alt={`캣!`}
+/>
+
+무한스크롤 페이지를 개발하면서 겪었던 문제점과 해결법을 공유하려고합니다.\
+
+과연 많은 유저들을 끌어모아 서비스 하고있는 오늘의집은 어떤식으로 무한스크롤을 구현했는지 알아볼 예정입니다.
+
+## 문제점
+
+제가 구현했던 무한 스크롤은
+
+스크롤이 길어질수록, DOM 요소는 계속해서 추가될것이고
 
 ## 가상화
 
-## React-Virtuoso
+<Video
+  src="/imgs/post/better-infinite-scroll/bucketplace.webm"
+  width="700"
+  height="350"
+  ariaLabel={`테스트 비디오`}
+/>
+
+Not Rendered
+
+Not Rendered
+
+Rendered
+
+Rendered
+
+Not Rendered
+
+Not Rendered
+
+## 구현
+
+### React-Virtuoso
 
 선택이유
 
 1. 개발자의 다양한 상황을 고려한 다양한 프로퍼티
 
-## React-Query
-
-## Server Action
-
-## 스크롤 유지
+### 스크롤 유지
 
 가상화의 과정을 이해하셨다면, 이 부분이 문제가 될것이라고 생각하셨을겁니다.\
 무한 스크롤 페이지에서 다른 페이지로 이동했다가 다시 무한 스크롤 페이지로 뒤로 가기하거나 새로 링크를 타고 무한 스크롤 페이지로 진입했을때
 
+새로고침시 세션 스토리지를 초기화 시키지 않으면 오류가 발생합니다.
+
+### SEO
+
+오늘의집은
+
 ## 마치며
 
-사실, 무한 스크롤 보다는 페이지네이션으로 설계하는게 SSR의 이점을 가져다 준다고 생각합니다.\
+사실, 무한 스크롤 보다는 페이지네이션으로 설계하는게 SSR의 이점을 가져다 준다고 생각합니다.
+SSR이 꼭
+
+> 참조
+>
+> - [kdy1.dev](https://kdy1.dev/)
+> - [spf13](https://spf13.com/)
+> - [evan-moon](https://evan-moon.github.io/)
+> - [timegambit](https://www.timegambit.com/)
+> - [bepyan](https://bepyan.github.io/)
