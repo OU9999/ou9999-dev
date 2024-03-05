@@ -41,11 +41,11 @@ const AboutPage = () => {
       <div className="mt-1 flex space-x-1">
         <IconBox icon={<MailIcon />} link="mailto:omh232323@gmail.com" />
         <IconBox icon={<GithubIcon />} link="https://github.com/OU9999" />
-        <IconBox
+        {/* <IconBox
           icon={<NotionIcon />}
           link="https://easy-track-3bf.notion.site/FrontEnd-Developer-f9840bf97cea48cda316d5c91274a418"
           subText="resume"
-        />
+        /> */}
       </div>
     </div>
   );
