@@ -1,7 +1,6 @@
 import GiscusComment from "@/components/mainSection/GiscusComment";
 import { Mdx } from "@/components/mainSection/mdx-components";
 import { getAllPosts, getPostFromParamsBySlug } from "@/utils/postUtil";
-import { allPosts } from "contentlayer/generated";
 import { notFound } from "next/navigation";
 
 interface IPostPageProps {
