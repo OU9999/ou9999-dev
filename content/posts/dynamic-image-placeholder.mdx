@@ -22,7 +22,16 @@ published: true
 Gatsby를 활용해 블로그를 만들었다면 **gatsby-image** 플러그인을 통해 자동으로 적용 가능했지만,\
 Next.js에서 제가 가진 개발 지식으로 직접 구현해보고 싶었습니다.
 
-## 구현
+## 설계
+
+```js
+loading = "lazy"; // {lazy} | {eager}
+blurDataUrl = "~~"; // base64로 인코딩된 이미지만 가능
+```
+
+next의 Image 컴포넌트는 **loading** 과 **blurDataUrl** 이라는 props 를 가지고있습니다.\
+제가 원하는 LazyLoading 기능과 로딩될때 보여주는 Placeholder 기능을 Next.js 에서 간편하게 제공하고있으니,\
+이제는 **blurDataUrl**에 필요한 동적인 base64 데이터를 구할 차례입니다.
 
 서버에서 로직을 처리하고 사용자에게 결과 UI만 보여주는 서버 컴포넌트의 장점과,\
 static export(SSG)의 장점을 살린 설계를 하고싶었습니다.
@@ -44,6 +53,8 @@ Plaiceholder 라이브러리를 사용하려면 **sharp** 라이브러리를 같
 이미 라이브러리 개발자가 여러 고민을 거쳐서 출시한것이겠지만, **sharp**를 어차피 사용해야한다면,\
 직접 설계를 해서 그것이 올바른 설계인지 시행착오를 겪고 싶었습니다.
 
+## 구현
+
 ### Dependencies
 
 - next.js@14.1.0
@@ -52,17 +63,6 @@ Plaiceholder 라이브러리를 사용하려면 **sharp** 라이브러리를 같
 > 1. sharp 라이브러리를 최신 버전으로 사용하시려면 next버전을 14.1.0 이상 버전으로 업데이트해야 vercel 배포 환경에서 오류가 나지 않습니다. [Next.js 14.1](https://nextjs.org/blog/next-14-1)
 > 2. node.js 라이브러리를 사용하기때문에 서버컴포넌트에서만 작동합니다.
 > 3. Next.js app router static export 를 기준으로 설계했습니다.
-
-### Image 컴포넌트
-
-```js
-loading = "lazy"; // {lazy} | {eager}
-blurDataUrl = "~~"; // base64로 인코딩된 이미지만 가능
-```
-
-next의 Image 컴포넌트는 **loading** 과 **blurDataUrl** 이라는 Advanced Props 를 가지고있습니다.\
-제가 원하는 LazyLoading 기능과 로딩될때 보여주는 Placeholder 기능을 Next.js 에서 간편하게 제공하고있으니,\
-이제는 **blurDataUrl**에 필요한 동적인 base64 데이터를 구할 차례입니다.
 
 ### 동적인 blurData(base64) 생성
 
