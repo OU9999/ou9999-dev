@@ -1,0 +1,49 @@
+.prose pre > code {
+  display: grid;
+}
+
+.prose pre::-webkit-scrollbar {
+  display: none;
+}
+.prose pre {
+  scrollbar-width: none;
+}
+
+.prose pre span[data-line] {
+  @apply inline-block px-2 py-0.5 leading-snug;
+}
+
+.prose code[data-line-numbers] {
+  counter-reset: line;
+}
+
+.prose code[data-line-numbers] > span[data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+
+  display: inline-block;
+  width: 0.75rem;
+  margin-right: 1.25rem;
+  text-align: right;
+  color: gray;
+}
+
+.prose code[data-line-numbers-max-digits="2"] > span[data-line]::before {
+  width: 1.25rem;
+}
+.prose code[data-line-numbers-max-digits="3"] > span[data-line]::before {
+  width: 1.75rem;
+}
+
+.prose code span[data-highlighted-line] {
+  @apply bg-opacity-10  bg-indigo-400;
+}
+
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  display: none;
+}
+
+.prose :not(pre) > code {
+  @apply dark:bg-gray-900 bg-gray-200 border border-gray-300 dark:border-gray-700 text-sm font-normal align-middle py-0.5 px-1 rounded;
+}
