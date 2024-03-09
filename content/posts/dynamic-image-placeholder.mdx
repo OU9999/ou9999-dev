@@ -19,7 +19,7 @@ published: true
 
 최근에 Discord를 사용하다가 흥미로운 부분을 확인할 수 있었습니다.\
 이미지 공간에 동적인 플레이스홀더를 넣어 사용자 경험을 향상시켜줬고, 저는 이것을 블로그에도 적용 시키고 싶었습니다.\
-Gatsby를 활용해 블로그를 만들었다면 **gatsby-image** 플러그인을 통해 자동으로 적용 가능했지만,\
+Gatsby를 활용해 블로그를 만들었다면 `gatsby-image` 플러그인을 통해 자동으로 적용 가능했지만,\
 Next.js에서 제가 가진 개발 지식으로 직접 구현해보고 싶었습니다.
 
 ## 설계
@@ -29,9 +29,9 @@ loading = "lazy"; // {lazy} | {eager}
 blurDataUrl = "~~"; // base64로 인코딩된 이미지만 가능
 ```
 
-next의 Image 컴포넌트는 **loading** 과 **blurDataUrl** 이라는 props 를 가지고있습니다.\
+next의 Image 컴포넌트는 `loading` 과 `blurDataUrl` 이라는 props 를 가지고있습니다.\
 제가 원하는 LazyLoading 기능과 로딩될때 보여주는 Placeholder 기능을 Next.js 에서 간편하게 제공하고있으니,\
-이제는 **blurDataUrl**에 필요한 동적인 base64 데이터를 구할 차례입니다.
+이제는 `blurDataUrl`에 필요한 동적인 base64 데이터를 구할 차례입니다.
 
 서버에서 로직을 처리하고 사용자에게 결과 UI만 보여주는 서버 컴포넌트의 장점과,\
 static export(SSG)의 장점을 살린 설계를 하고싶었습니다.
@@ -42,15 +42,15 @@ static export(SSG)의 장점을 살린 설계를 하고싶었습니다.
 2. 해당 이미지의 base64 데이터를 생성한다.
 3. 생성된 base64 데이터는 json 파일로 저장하여 컴포넌트에서 정적 참조를 한다.
 
-위 역할을 해내기 위해 node.js 환경에서 사용하는, 파일 시스템에 액세스 할수있는 **fs** 라이브러리와,\
-이미지를 처리하는 **sharp** 라이브러리를 이용하여 코드를 구현하겠습니다.
+위 역할을 해내기 위해 node.js 환경에서 사용하는, 파일 시스템에 액세스 할수있는 `fs` 라이브러리와,\
+이미지를 처리하는 `sharp` 라이브러리를 이용하여 코드를 구현하겠습니다.
 
 > For dynamic images, you must provide the blurDataURL property. Solutions such as Plaiceholder can help with base64 generation.\
 > [Next.js docs](https://nextjs.org/docs/app/api-reference/components/image#placeholder)
 
 사실 Next.js Image 문서에서는 동적인 blurData 프로퍼티를 가져오고싶으면 Plaiceholder 라는 라이브러리를 사용하라고 추천 해줍니다.\
-Plaiceholder 라이브러리를 사용하려면 **sharp** 라이브러리를 같이 설치해줘야합니다.\
-이미 라이브러리 개발자가 여러 고민을 거쳐서 출시한것이겠지만, **sharp**를 어차피 사용해야한다면,\
+Plaiceholder 라이브러리를 사용하려면 `sharp` 라이브러리를 같이 설치해줘야합니다.\
+이미 라이브러리 개발자가 여러 고민을 거쳐서 출시한것이겠지만, `sharp`를 어차피 사용해야한다면,\
 직접 설계를 해서 그것이 올바른 설계인지 시행착오를 겪고 싶었습니다.
 
 ## 구현
@@ -68,7 +68,7 @@ Plaiceholder 라이브러리를 사용하려면 **sharp** 라이브러리를 같
 
 > 아래 코드는 브라우저에서 작동시 제한적이거나 작동하지 않을수도 있습니다.
 
-```JS
+```js
 // generateBase64Image.mjs
 import { readdir, readFile, writeFile, mkdir } from "fs/promises";
 import sharp from "sharp";

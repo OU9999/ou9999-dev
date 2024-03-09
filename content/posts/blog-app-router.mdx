@@ -81,7 +81,7 @@ export default function Home({ notesArr }: IHomeProps) {
 }
 ```
 
-**isDesktopView** 로 기기의 크기를 파악하고 모바일일 경우 동적 import를 사용하여 모바일 컴포넌트를 로드합니다.\
+`isDesktopView` 로 기기의 크기를 파악하고 모바일일 경우 동적 import를 사용하여 모바일 컴포넌트를 로드합니다.\
 CSR이라면 문제가 될게 없지만, 이는 Next.js 의 이점인 SSR과 SSG를 전혀 살리지 못하는 잘못된 설계입니다.
 
 기존 블로그는 SSG 방식으로 설계를 했습니다. 그렇다는건 서버에서 정적인 html을 미리 생성하여 사용자에게 전달하는 것입니다.
@@ -187,7 +187,7 @@ const HomePage = () => {
 새로운 블로그는 심플을 추구하였는데, [Parallel Routes](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes)가 정말 유용하게 사용됐습니다.\
 심플하게, 페이지가 변해도 기본적인 레이아웃이 변하지 않게 설계할 수 있습니다.
 
-```bash
+```
 app/
 ├── (about-layout)/
 │   ├── about/
@@ -206,7 +206,7 @@ app/
 또한 한가지 레이아웃을 강제해야 하는게 아닌,\
 소괄호로 (폴더)를 감싸서 페이지별로 다른 레이아웃을 구성할수 있습니다.
 
-다만 파일 이름을 **page.tsx**, **layout.tsx** 와 같이 고정적으로 해줘야했기 때문에,\
+다만 파일 이름을 `page.tsx`, `layout.tsx` 와 같이 고정적으로 해줘야했기 때문에,\
 코드 에디터에 여러개의 창이 같은 이름으로 띄어져 있어서 불편할 수도 있다고 느꼈습니다.
 
 ### 그 외
