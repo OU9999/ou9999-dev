@@ -19,6 +19,11 @@ const Header = () => {
         </Link>
 
         <div className="hidden space-x-10 md:flex">
+          <Link href={"/"}>
+            <p className=" text-lg font-semibold hover:text-slate-500 hover:dark:text-slate-400">
+              Home
+            </p>
+          </Link>
           <Link href={"/about"}>
             <p className=" text-lg font-semibold hover:text-slate-500 hover:dark:text-slate-400">
               About
