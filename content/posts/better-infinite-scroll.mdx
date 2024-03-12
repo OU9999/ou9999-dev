@@ -224,10 +224,6 @@ useEffect(() => {
   handleIndex();
   const clearSessionStorage = () => sessionStorage.clear();
   window.addEventListener("beforeunload", clearSessionStorage); // 새로고침시 세션 스토리지 초기화
-
-  return () => {
-    window.removeEventListener("beforeunload", clearSessionStorage);
-  };
 }, []);
 
 return (
