@@ -96,11 +96,12 @@ Not Rendered
 
 React 에서 가상화를 구현하기 위한 `react-window`, `react-virtualized`, `react-virtuoso` 3가지 라이브러리가 있습니다. 각 라이브러리를 간단하게 비교해 봤을때 다음과 같습니다.
 
-1. 패키지 크기: react-window(6.4KiB), react-virtualized(27.4KiB), react-virtuoso(15.5KiB)
-2. 유지 보수(03.02 기준): react-window(3개월 전), react-virtualized(10개월 전), react-virtuoso(일주일 전)
-3. 기본 제공 기능: react-virtualized 와 react-virtuoso 는 무한 스크롤 프로젝트에서 필요로 할 수 있는 기능을 기본적으로 제공합니다. 하지만 react-window에서는 기능을 얻기 위해 라이브러리를 추가로 설치 해야 합니다.
-4. 구성: react-window에서는 itemSize, style 등의 필수적인 props가 필요합니다. react-virtuoso는 매우 적은 props가 필요하며 구성이 더 간단합니다.
-5. 공식 문서(주관적 느낌): react-virtuoso의 문서가 가장 좋았습니다. 상세하고 다양한 예제를 통해 설명해줍니다.
+|                       |    react-window     |  react-virtualized  |        react-virtuoso         |
+| :-------------------: | :-----------------: | :-----------------: | :---------------------------: |
+|      패키지 크기      |       6.4KiB        |       27.4KiB       |            15.5KiB            |
+| 업데이트 (03.02 기준) |      3개월 전       |      10개월 전      |  일주일 전 (업데이트 활발함)  |
+|    기본 제공 기능     |  기본 기능만 제공   |   많은 기능 제공    |        많은 기능 제공         |
+|         구성          | 필수적인 props 많음 | 필수적인 props 많음 | 적은 필수 props (간단한 구성) |
 
 저는 업데이트가 활발하고, 공식 문서가 가장 좋았던 `react-virtuoso`를 선택했습니다.
 
