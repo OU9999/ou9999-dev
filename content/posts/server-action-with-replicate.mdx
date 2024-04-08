@@ -1,0 +1,111 @@
+---
+title: NEXT.JS 서버 액션으로 AI TEXT-TO-IMAGE 구현하기
+description: Replicate + next.js 서버 액션 프로젝트 구현 과정과 후기
+date: "2024-04-05"
+tags:
+  - next.js
+  - replicate
+
+thumbnail: next
+published: false
+---
+
+## 개요
+
+<Image
+  src="/imgs/post/server-action-with-replicate/dc.png"
+  width="500"
+  height="350"
+  alt={"디시인사이드 AI 이미지"}
+/>
+
+모니터를 비교하고 구매하기 위해, 관련 정보를 디시인사이드 모니터갤러리 에서 찾다가 흥미로운것을 발견했습니다.\
+예전에는 없던 AI 이미지 생성 기능이 생긴것입니다.\
+그렇게, 호기심이 생겨서 next.js 프로젝트로 직접 구현한 과정과 후기를 공유하려고 합니다.
+
+## Replicate
+
+디시인사이드에서는 이미지 생성 모델인 `stability-ai`를 WEB-UI 로 사용할 수 있는\
+[AUTOMATIC1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui)로 AI 이미지 생성 기능을 구현하였습니다.
+
+하지만 로컬에서 NVIDIA GPU를 통해 생성하는 AUTOMATIC1111은 저의 상황에 어울리지 않았습니다.\
+그렇게, 저에게 필요한 `stability-ai`를 클라우드로 제공해주는 Replicate 서비스를 찾았습니다.
+
+이미지
+
+Replicate 서비스를 사용하면 머신러닝 모델을 클라우드를 통해 쉽게 실행할 수 있습니다.\
+다양한 오픈 소스 모델을 실행하고, 엄청난 고수라면 자신의 모델을 배포할 수 있습니다.\
+저는 이미지 생성 모델인 `stability-ai`의 `stable-diffusion`과 `sdxl` 모델을 사용하여 구현했습니다.\
+
+## 구현
+
+### Dependencies
+
+- next.js@14.1.3
+- replicate@^0.29.1
+
+### 서버 액션
+
+[Replicate next.js 공식문서](https://replicate.com/docs/get-started/nextjs)
+
+공식문서에서는 Route Handlers를 통해 백엔드 api 코드를 작성하는 예시를 보여줍니다.\
+저는 `next.js@14` 부터 안정화된 서버액션을 통해 직관적이고 알아보기 쉽게 백엔드 코드를 작성할것입니다.
+
+우선, [Replicate](https://replicate.com/) 사이트에 접속하여 API token을 발급받습니다.\
+그 뒤 `replicate` 라이브러리를 통해 간단하게 Replicate 클라우드에 접근할 수 있습니다.
+
+```ts {1} title="action/replicate-action.ts"
+"use server";
+import Replicate from "replicate";
+
+type ReplicateOutPut = (
+  prompt: string,
+  model: `${string}/${string}` | `${string}/${string}:${string}`
+) => Promise<string | string[]>;
+
+export const getReplicateOutput: ReplicateOutPut = async (prompt, model) => {
+  try {
+    const replicate = new Replicate({
+      auth: process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN,
+    });
+
+    const input = {
+      prompt: prompt,
+      width: 512,
+      height: 512,
+    };
+
+    const output = await replicate.run(model, {
+      input,
+    });
+
+    return output;
+  } catch (err) {
+    console.log(err);
+    return String(err);
+  }
+};
+```
+
+### Replicate(code)
+
+방구
+
+<Image
+  src="/imgs/post/server-action-with-replicate/intro.png"
+  width="800"
+  height="350"
+  alt={"text-to-image"}
+/>
+
+## pricing
+
+### recapthca
+
+### form
+
+### nsfw
+
+## 마치며
+
+[프로젝트 링크](https://ou-playground.com/detail/ai-tti)
