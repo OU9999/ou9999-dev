@@ -36,7 +36,7 @@
 }
 
 .prose code span[data-highlighted-line] {
-  @apply bg-opacity-10  bg-indigo-400 rounded-md;
+  @apply bg-opacity-10  bg-indigo-400  rounded-sm;
 }
 
 .prose :not(pre) > code::before,

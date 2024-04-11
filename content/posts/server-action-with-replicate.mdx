@@ -1,7 +1,7 @@
 ---
 title: NEXT.JS 서버 액션으로 AI TEXT-TO-IMAGE 구현하기
 description: Replicate + next.js 서버 액션 프로젝트 구현 과정과 후기
-date: "2024-04-05"
+date: "2024-04-11"
 tags:
   - next.js
   - replicate
@@ -29,13 +29,13 @@ published: false
 [AUTOMATIC1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui)로 AI 이미지 생성 기능을 구현하였습니다.
 
 하지만 로컬에서 NVIDIA GPU를 통해 생성하는 AUTOMATIC1111은 저의 상황에 어울리지 않았습니다.\
-그렇게, 저에게 필요한 `stability-ai`를 클라우드로 제공해주는 Replicate 서비스를 찾았습니다.
+그렇게, 저의 상황에 더 적절한 `stability-ai`를 클라우드로 제공해주는 Replicate 서비스를 찾았습니다.
 
 이미지
 
 Replicate 서비스를 사용하면 머신러닝 모델을 클라우드를 통해 쉽게 실행할 수 있습니다.\
 다양한 오픈 소스 모델을 실행하고, 엄청난 고수라면 자신의 모델을 배포할 수 있습니다.\
-저는 이미지 생성 모델인 `stability-ai`의 `stable-diffusion`과 `sdxl` 모델을 사용하여 구현했습니다.\
+저는 이미지 생성 모델인 `stability-ai`의 `stable-diffusion`과 `sdxl` 모델을 사용하여 구현했습니다.
 
 ## 구현
 
@@ -43,8 +43,11 @@ Replicate 서비스를 사용하면 머신러닝 모델을 클라우드를 통�
 
 - next.js@14.1.3
 - replicate@^0.29.1
+- react-hook-form@^7.51.2
+- zod@^3.22.4
+- react-google-recaptcha@^3.1.0
 
-### 서버 액션
+### 서버 액션 / Replicate
 
 [Replicate next.js 공식문서](https://replicate.com/docs/get-started/nextjs)
 
@@ -53,6 +56,66 @@ Replicate 서비스를 사용하면 머신러닝 모델을 클라우드를 통�
 
 우선, [Replicate](https://replicate.com/) 사이트에 접속하여 API token을 발급받습니다.\
 그 뒤 `replicate` 라이브러리를 통해 간단하게 Replicate 클라우드에 접근할 수 있습니다.
+
+아래는 간단한 서버액션 예제입니다.
+
+```tsx {5} title="app/page.tsx"
+// 서버 컴포넌트
+const ServerComponent = () => {
+  // 서버 액션
+  const handleSubmit = async (formData) => {
+    "use server";
+    console.log(formData.get("title")); // 이 console은 서버에서만 보입니다.
+  };
+
+  return (
+    <form action={handleSubmit}>
+      <input type="text" name="title" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default ServerComponent;
+```
+
+서버 액션으로 사용할 함수 내부 첫번째 줄에 `"use server"`를 작성해주시면 컴파일할때 서버 api로 만들어집니다.\
+위 코드를 실행시키면 클라이언트 브라우저에서는 `console.log`의 내용을 확인할 수 없습니다.
+
+> Server Actions are not limited to `<form>` and can be invoked from event handlers, useEffect, third-party libraries, and other form elements like `<button>`. \
+> [Next.js docs](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#server-components)
+
+참고로, `next.js` 공식 문서에서는 서버 액션은 `<form>` 말고도 `useEffect`, `onClick` 이벤트를 통해 서버 액션을 호출할 수 있다고 했지만 현재 제 버전인 `next@14.1.3` 에서는 원인불명 오류를 많이 일으켰습니다.\
+`<form>`의 `action` 또는 `submit` 을 통해 서버 액션을 호출하는것을 추천드립니다.
+
+서버 액션에 대해 파악했으니, `replicate` 라이브러리를 알아볼 차례입니다.
+
+```ts title="replicate-example.js"
+import Replicate from "replicate";
+
+const replicate = new Replicate({
+  auth: process.env.REPLICATE_API_TOKEN, // 발급받은 API 토큰
+});
+
+const output = await replicate.run(
+  // 실행시킬 ai 모델
+  "stability-ai/stable-diffusion:d70beb400d223e6432425a5299910329c6050c6abcf97b8c70537d6a1fcb269a",
+  {
+    input: {
+      prompt: "multicolor hyperspace", // input 프롬프트
+    },
+  }
+);
+console.log(output);
+```
+
+출력 결과 이미지
+
+위 코드를 node.js 를 통해 실행시킨다면, output이 string 배열의 결과물을 return 하는걸 확인할 수 있습니다.\
+간단한 코드로 쉽게 Replicate 클라우드에 접근할 수 있는것입니다.
+
+위 코드를 봤을때 필수적인 요소는 실행시킬 ai 모델과 사용자가 입력할 prompt 라는것을 확인할 수 있습니다.\
+필요한것을 파악했으니, 동적인 props를 받아 서버에서 실행시키는 서버 액션 코드를 작성하겠습니다.
 
 ```ts {1} title="action/replicate-action.ts"
 "use server";
@@ -71,8 +134,7 @@ export const getReplicateOutput: ReplicateOutPut = async (prompt, model) => {
 
     const input = {
       prompt: prompt,
-      width: 512,
-      height: 512,
+      // width,height,negative prompt 등 ai 모델에 따라 다양한 옵션 넣기가능
     };
 
     const output = await replicate.run(model, {
@@ -87,25 +149,201 @@ export const getReplicateOutput: ReplicateOutPut = async (prompt, model) => {
 };
 ```
 
-### Replicate(code)
+> 서버 액션을 모듈화하여 사용하면 클라이언트 컴포넌트에서도 사용 가능합니다.
 
-방구
+prompt 와 model을 동적으로 받는 코드를 작성했습니다.\
+또한, ai 모델에따라 다양한 input option을 제공하니, 해당 모델 문서를 참조해주시길 바랍니다.
+
+백엔드 코드는 작성됐으니, 이제는 프론트엔드 코드를 작성할것입니다.
+
+### 프론트엔드 코드
+
+위에서 설명했듯이, 서버 액션은 form을 통해 호출해야합니다.\
+간결하고 쉬운 통합을 위해 `react-hook-form` 을 사용하여 코드를 작성할것입니다.
+
+```tsx title="components/replicate-form.tsx"
+import { useForm } from "react-hook-form";
+
+const ReplicateForm = ({ submitFn }: ReplicateFormProps) => {
+  const form = useForm();
+  const onSubmit = form.handleSubmit(submitFn);
+
+  return (
+    <Form {...form}>
+      <form onSubmit={onSubmit}>
+        <Input name="prompt" placeholder="robot, cat, rainbow" />
+        <Select name="select" placeholder="AI 모델을 선택해주세요." />
+        <Button type="submit">실행</Button>
+      </form>
+    </Form>
+  );
+};
+
+export default ReplicateForm;
+```
+
+prompt를 입력받를 text input과, 모델을 선택할 select input을 사용합니다.\
+버튼의 타입을 `submit`으로 하여야 `onSubmit` 함수가 작동합니다.
+
+```tsx title="app/page.tsx"
+"use client";
+import { getReplicateOutput } from "@/action/replicate-action";
+
+const ReplicatePage = () => {
+  const [imgSrc, setImgSrc] = useState<string[] | null>(null);
+
+  const getReplicateData = async (formData: FormCustomData) => {
+    const promptValue = formData.prompt;
+    const model = formData.select;
+
+    // 서버 액션 prompt와 model을 받음
+    const output = await getReplicateOutput(promptValue, model);
+    setImgSrc(output);
+  };
+
+  return (
+    <GridBox>
+      <ReplicateForm submitFn={getReplicateData} />
+      {imgSrc && <Image alt="ai-image" src={imgSrc[0]} />}
+    </GridBox>
+  );
+};
+
+export default ReplicatePage;
+```
+
+서버 액션으로 `output`을 받으면 `imgSrc` 상태에 set 합니다.
 
 <Image
   src="/imgs/post/server-action-with-replicate/intro.png"
   width="800"
   height="350"
-  alt={"text-to-image"}
+  alt={"출력 결과"}
 />
 
-## pricing
+form을 통해 입력한 결과, 정상적으로 사진이 나오는것을 확인할 수 있습니다.
 
-### recapthca
+### 클라이언트 에러 처리
 
-### form
+사진 불필요한 요청 에러 처리
 
-### nsfw
+TEXT-TO-IMAGE 기능이 정상적으로 나오지만 아직 추가적으로 세팅해야할것이 많습니다.\
+Replicate api는 유료입니다. 봇으로 단기간에 너무 많은 요청을 시도한다던가, 부적절한 프롬프트를 넣는\
+의도치 않은 요청을 클라이언트에서 막아야 서버의 부담을 줄일 수 있습니다.
+
+우선, api에 접근하기전에 `zod`를 통해 form에서 의도치 않은 요청을 막을것입니다.
+
+```tsx title="components/replicate-form.tsx"
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const FormSchema = z.object({
+  prompt: z
+    .string({
+      required_error: "프롬프트는 빈칸일 수 없습니다.", // 프롬프트 작성 필수
+    })
+    .min(1, { message: "프롬프트는 빈칸일 수 없습니다." }) // 빈 프롬프트 방지
+    .regex(/^[a-zA-Z\s,]*$/, {
+      message: "영단어, 공백, 쉼표만 사용 가능합니다.", // 영단어, 공백, 쉼표만 가능
+    }),
+  select: z.string({
+    required_error: "ai 모델을 선택해야 합니다.", // ai 선택 필수
+  }),
+});
+
+type FormZodType = typeof FormSchema;
+
+const ReplicateForm = ({ submitFn }: ReplicateFormProps) => {
+  const form = useForm<z.infer<FormZodType>>({
+    resolver: zodResolver(FormSchema),
+  });
+  // ...
+};
+```
+
+위 코드는 다음과 같습니다.
+
+1. 빈 프롬프트를 방지합니다.
+2. 영단어만 사용 가능합니다.
+3. 프롬프트간 구분은 쉼표로 합니다.
+4. ai 모델은 필수로 선택합니다.
+
+동영상
+
+위와 같이 `zod` 설정을 통해 클라이언트 측에서 불필요하거나 잘못된 요청을 사전에 차단할 수 있으며,\
+UI에서 피드백을 쉽게 제공할 수 있습니다.
+
+### 봇 접근 방지
+
+이제는 봇 접근과 개인이 너무 많이 접근하는걸 막을 차례입니다.\
+봇 접근은 구글 리캡챠를 이용하여 막을것입니다. 우선, [reCAPTCHA 공식문서](https://www.google.com/recaptcha/about/)에서 개인키를 발급받아야 합니다.
+
+> reCAPTCHA v2는 클라이언트에서 간단하게 봇 체크를 할때 유용하지만, \
+> 그림을 맞추는 형식이기 때문에 사용자 경험이 떨어질수 있습니다.\
+> v3 버전을 사용하면 서비스 워커로 작동하기때문에 사용자 경험이 좋아지지만,\
+> 개발자 설정이 복잡해지고 v2에 비하면 보안이 약해질것입니다.
+
+저는 간단한 구현을 위해 reCAPTCHA v2를 사용할 것이고,\
+`react-google-recaptcha` 라이브러리로 쉽게 reCAPTCHA v2를 사용할 수 있습니다.
+
+```tsx title="components/re-captcha.tsx"
+"use client";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const sitekey = String(process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY);
+
+interface ReCaptchaProps {
+  onChange: () => void;
+}
+
+const ReCaptcha = ({ onChange }: ReCaptchaProps) => {
+  return <ReCAPTCHA theme="dark" sitekey={sitekey} onChange={onChange} />;
+};
+
+export default ReCaptcha;
+```
+
+발급받은 개인키를 넣어주면 쉽게 사용할 수 있습니다.
+
+```tsx title="app/page.tsx"
+"use client";
+import ReCaptcha from "@/components/re-captcha";
+
+const ReplicatePage = () => {
+  // 나머지 코드
+  const [isCertification, setIsCertification] = useState<boolean>(false);
+
+  const setCertificationSuccess = () => {
+    setIsCertification(true);
+    sessionStorage.setItem("certification", String(true)); // 세션 스토리지 설정
+  };
+
+  useEffect(() => {
+    setIsCertification(
+      Boolean(sessionStorage.getItem("certification")) || false // 진입시 세션 스토리지 접근
+    );
+  }, []);
+
+  return (
+    <GridBox>
+      {/* 나머지 코드 */}
+      {!certification && <ReCaptcha onChange={certificationSuccess} />}
+    </GridBox>
+  );
+};
+
+export default ReplicatePage;
+```
+
+`isCertification` 상태를 선언하여 `ReCaptcha` 인증을 받았는지 파악합니다. \
+그리고 세션 스토리지에 상태를 저장하여 이미 인증받은 사용자에게 중복해서 인증을 받는것을 방지합니다.
+
+이제는 한명이 짧은시간에 너무 많은 요청을 할때입니다.
 
 ## 마치며
 
-[프로젝트 링크](https://ou-playground.com/detail/ai-tti)
+[프로젝트 링크](https://ou-playground.com)
+
+```
+
+```

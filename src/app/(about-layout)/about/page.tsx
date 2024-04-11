@@ -1,6 +1,5 @@
 import GithubIcon from "@/components/svg/GithubIcon";
 import MailIcon from "@/components/svg/MailIcon";
-import NotionIcon from "@/components/svg/NotionIcon";
 import Link from "next/link";
 
 interface IIconBoxProps {
