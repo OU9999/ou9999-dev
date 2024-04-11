@@ -7,7 +7,7 @@ tags:
   - replicate
 
 thumbnail: next
-published: false
+published: true
 ---
 
 ## 개요
@@ -31,7 +31,12 @@ published: false
 하지만 로컬에서 NVIDIA GPU를 통해 생성하는 AUTOMATIC1111은 저의 상황에 어울리지 않았습니다.\
 그렇게, 저의 상황에 더 적절한 `stability-ai`를 클라우드로 제공해주는 Replicate 서비스를 찾았습니다.
 
-이미지
+<Image
+  src="/imgs/post/server-action-with-replicate/replicate-service.png"
+  width="800"
+  height="350"
+  alt={"Replicate 서비스의 다양한 AI 모델들"}
+/>
 
 Replicate 서비스를 사용하면 머신러닝 모델을 클라우드를 통해 쉽게 실행할 수 있습니다.\
 다양한 오픈 소스 모델을 실행하고, 엄청난 고수라면 자신의 모델을 배포할 수 있습니다.\
@@ -109,7 +114,12 @@ const output = await replicate.run(
 console.log(output);
 ```
 
-출력 결과 이미지
+<Image
+  src="/imgs/post/server-action-with-replicate/out-0.webp"
+  width="500"
+  height="350"
+  alt={"replicate-example.js output 결과"}
+/>
 
 위 코드를 node.js 를 통해 실행시킨다면, output이 string 배열의 결과물을 return 하는걸 확인할 수 있습니다.\
 간단한 코드로 쉽게 Replicate 클라우드에 접근할 수 있는것입니다.
@@ -152,7 +162,7 @@ export const getReplicateOutput: ReplicateOutPut = async (prompt, model) => {
 > 서버 액션을 모듈화하여 사용하면 클라이언트 컴포넌트에서도 사용 가능합니다.
 
 prompt 와 model을 동적으로 받는 코드를 작성했습니다.\
-또한, ai 모델에따라 다양한 input option을 제공하니, 해당 모델 문서를 참조해주시길 바랍니다.
+또한, AI 모델에따라 다양한 input option을 제공하니, 해당 모델 문서를 참조해주시길 바랍니다.
 
 백엔드 코드는 작성됐으니, 이제는 프론트엔드 코드를 작성할것입니다.
 
@@ -218,16 +228,21 @@ export default ReplicatePage;
   src="/imgs/post/server-action-with-replicate/intro.png"
   width="800"
   height="350"
-  alt={"출력 결과"}
+  alt={"form을 통한 출력 결과"}
 />
 
 form을 통해 입력한 결과, 정상적으로 사진이 나오는것을 확인할 수 있습니다.
 
 ### 클라이언트 에러 처리
 
-사진 불필요한 요청 에러 처리
+<Image
+  src="/imgs/post/server-action-with-replicate/replicate-error.png"
+  width="800"
+  height="350"
+  alt={"클라이언트에서 에러를 잡지 않고 요청을 보낸 결과"}
+/>
 
-TEXT-TO-IMAGE 기능이 정상적으로 나오지만 아직 추가적으로 세팅해야할것이 많습니다.\
+TEXT-TO-IMAGE 기능이 정상적으로 작동하지만 아직 추가적으로 세팅해야할것이 많습니다.\
 Replicate api는 유료입니다. 봇으로 단기간에 너무 많은 요청을 시도한다던가, 부적절한 프롬프트를 넣는\
 의도치 않은 요청을 클라이언트에서 막아야 서버의 부담을 줄일 수 있습니다.
 
@@ -266,9 +281,20 @@ const ReplicateForm = ({ submitFn }: ReplicateFormProps) => {
 1. 빈 프롬프트를 방지합니다.
 2. 영단어만 사용 가능합니다.
 3. 프롬프트간 구분은 쉼표로 합니다.
-4. ai 모델은 필수로 선택합니다.
+4. AI 모델은 필수로 선택합니다.
 
-동영상
+`zod`로 실시간 에러를 잡았다면, 요청을 보내기전에 체크해야하는 에러도 있습니다.\
+NSFW(Not Safe For Work) 단어들을 필터링해야합니다.\
+[List of NSFW Words github source](https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words)
+링크에서 부적절한 단어들(en)을 가져와서 요청을 보내기전\
+프롬프트를 쉼표 단위로 구분하여 부적절한 단어가 포함됐는지 확인합니다.
+
+<Video
+  src="/imgs/post/server-action-with-replicate/zod.mp4"
+  width="800"
+  height="350"
+  ariaLabel={`클라이언트 에러 처리 UI`}
+/>
 
 위와 같이 `zod` 설정을 통해 클라이언트 측에서 불필요하거나 잘못된 요청을 사전에 차단할 수 있으며,\
 UI에서 피드백을 쉽게 제공할 수 있습니다.
@@ -338,12 +364,41 @@ export default ReplicatePage;
 `isCertification` 상태를 선언하여 `ReCaptcha` 인증을 받았는지 파악합니다. \
 그리고 세션 스토리지에 상태를 저장하여 이미 인증받은 사용자에게 중복해서 인증을 받는것을 방지합니다.
 
-이제는 한명이 짧은시간에 너무 많은 요청을 할때입니다.
+이제는 "짧은시간에 너무 많은 요청을 보내는 상황"을 방지할것입니다.\
+봇이 아니더라도, 사람이 짧은시간에 반복적으로 많은 요청을 보내는건 문제가 있습니다.
+
+저는 로컬 스토리지를 이용하여 10번이상 요청을 보낸 사람한테 30분동안 요청을 막을것입니다.
+
+<Image
+  src="/imgs/post/server-action-with-replicate/storage.png"
+  width="800"
+  height="350"
+  alt={"짧은시간 반복 요청 막기"}
+/>
+
+로컬 스토리지와 `Date` 객체로 시간을 비교하여 반복적인 요청을 막는 코드 흐름입니다.
+
+> 이 코드는 로직은 간단하지만 작성 내용은 길기 때문에 블로그 글에 작성하지 않고 간단한 코드 흐름만 적어두겠습니다.\
+> 코드는 [github source](https://github.com/OU9999/ou9999-playground) 링크를 확인바랍니다.
+
+<Image
+  src="/imgs/post/server-action-with-replicate/many-request.png"
+  width="800"
+  height="350"
+  alt={"에러 UI"}
+/>
+
+UI 에러 상태 코드를 작성하여 정상적으로 작동하는것을 확인할 수 있습니다.
 
 ## 마치며
 
-[프로젝트 링크](https://ou-playground.com)
+<Image
+  src="/imgs/post/server-action-with-replicate/playground.png"
+  width="800"
+  height="350"
+  alt={"https://ou-playground.com"}
+/>
 
-```
-
-```
+[PLAYGROUND](https://ou-playground.com) 링크를 통해 결과물을 확인하실 수 있습니다.\
+사실, AI TEXT-TO-IMAGE 토이 프로젝트를 구현하려고 했지만 하다보니까 너무 재밌어졌기에,\
+흥미로웠던 UI들이나 프론트 엔지니어링을 직접 구현하는 사이드 프로젝트로 바꿨습니다.
