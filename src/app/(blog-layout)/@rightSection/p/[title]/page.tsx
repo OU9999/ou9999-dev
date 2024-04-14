@@ -1,4 +1,4 @@
-import TOCList from "@/components/rightSection/TOCList";
+import TOCList from "@/components/rightSection/toc-iist";
 
 const PostRightSection = () => {
   return (

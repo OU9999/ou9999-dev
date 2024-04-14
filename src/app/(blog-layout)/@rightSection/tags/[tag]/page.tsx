@@ -1,4 +1,4 @@
-import TagsBox from "@/components/rightSection/TagsBox";
+import TagsBox from "@/components/rightSection/tags-box";
 
 const TagsRightSection = () => {
   return <TagsBox />;

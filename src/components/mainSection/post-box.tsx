@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { hoverGradient } from "../common/styles";
-import Tag from "../common/Tag";
+import Tag from "../common/tag-link";
 import { formatDateToString } from "@/utils/dateUtil";
 
-interface IPostBoxProps {
+interface PostBoxProps {
   title: string;
   tags: string[];
   description: string;
@@ -11,7 +11,7 @@ interface IPostBoxProps {
   slug: string;
 }
 
-const PostBox = ({ title, tags, description, date, slug }: IPostBoxProps) => {
+const PostBox = ({ title, tags, description, date, slug }: PostBoxProps) => {
   return (
     <>
       <div className="w-full flex flex-col p-5 border-b-1 border-slate-300 dark:border-slate-700">

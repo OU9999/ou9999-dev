@@ -1,4 +1,4 @@
-import PostBox from "@/components/mainSection/PostBox";
+import PostBox from "@/components/mainSection/post-box";
 import { getAllPosts } from "@/utils/postUtil";
 
 const HomePage = () => {

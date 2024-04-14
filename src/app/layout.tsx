@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "@/css/tailwind.css";
 import "@/css/prettyCode.css";
-import { defaultOpenGraph, defaultTwitter } from "@/constant/metaData";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import Header from "@/components/nav/Header";
+import { defaultOpenGraph, defaultTwitter } from "@/constant/meta-data";
+import { ThemeProvider } from "@/components/theme-provider";
 import Footer from "@/components/nav/Footer";
 import { myDomain } from "@/constant/domain";
+import Header from "@/components/nav/Header";
 
 const notoSans = Noto_Sans_KR({ subsets: ["latin"] });
 

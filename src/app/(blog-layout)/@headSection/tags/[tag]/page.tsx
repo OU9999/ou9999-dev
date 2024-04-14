@@ -1,4 +1,4 @@
-import ContentHeader from "@/components/headSection/ContentHeader";
+import ContentHeader from "@/components/headSection/content-header";
 
 interface ITagHeadSectionProps {
   params: {

@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-interface ITagProps {
+interface TagProps {
   tag: string;
 }
-const Tag = ({ tag }: ITagProps) => {
+const Tag = ({ tag }: TagProps) => {
   return (
     <>
       <Link href={`/tags/${tag}`}>

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import RssIcon from "../svg/RssIcon";
-import MailIcon from "../svg/MailIcon";
-import GithubIcon from "../svg/GithubIcon";
+import RssIcon from "../svg/rss-icon";
+import MailIcon from "../svg/mail-icon";
+import GithubIcon from "../svg/github-icon";
 
 interface IIconBoxProps {
   link: string;

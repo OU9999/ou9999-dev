@@ -1,4 +1,4 @@
-import GiscusComment from "@/components/mainSection/GiscusComment";
+import GiscusComment from "@/components/mainSection/giscus-comment";
 import { Mdx } from "@/components/mainSection/mdx-components";
 import { getAllPosts, getPostFromParamsBySlug } from "@/utils/postUtil";
 import { notFound } from "next/navigation";

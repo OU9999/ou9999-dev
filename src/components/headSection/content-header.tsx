@@ -1,9 +1,8 @@
-import Tag from "@/components/common/Tag";
+import Tag from "@/components/common/tag-link";
 import { formatDateToString } from "@/utils/dateUtil";
-import Image from "next/image";
 import ImageWithPlaceholderHeader from "./image-with-placeholder-header";
 
-interface IContentHeaderProps {
+interface ContentHeaderProps {
   title: string;
   text: string;
   img: string;
@@ -19,7 +18,7 @@ const ContentHeader = ({
   tags,
   date,
   main,
-}: IContentHeaderProps) => {
+}: ContentHeaderProps) => {
   return (
     <div className="shadow-sm mt-14 md:mt-20 w-full flex flex-col justify-center items-center bg-content-header-white dark:bg-content-header-black">
       <div className="w-full flex max-w-276 px-5 xl:px-0 py-10 flex-col justify-center items-center md:flex-row md:justify-start md:items-start md:space-x-10">

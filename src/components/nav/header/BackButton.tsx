@@ -1,6 +1,6 @@
 "use client";
 
-import XIcon from "@/components/svg/XIcon";
+import XIcon from "@/components/svg/x-icon";
 import { useRouter } from "next/navigation";
 
 const BackButton = () => {

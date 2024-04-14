@@ -1,6 +1,6 @@
 import AboutMe from "@/components/mainSection/about-me";
-import GithubIcon from "@/components/svg/GithubIcon";
-import MailIcon from "@/components/svg/MailIcon";
+import GithubIcon from "@/components/svg/github-icon";
+import MailIcon from "@/components/svg/mail-icon";
 import Link from "next/link";
 
 interface IIconBoxProps {

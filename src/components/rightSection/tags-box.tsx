@@ -1,12 +1,12 @@
 import { getTagsFromPosts } from "@/utils/postUtil";
 import Link from "next/link";
 
-interface ITagItemProps {
+interface TagItemProps {
   title: string;
   count: number;
 }
 
-const TagItem = ({ title, count }: ITagItemProps) => {
+const TagItem = ({ title, count }: TagItemProps) => {
   return (
     <Link href={`/tags/${title}`}>
       <div className="w-full flex rounded-md py-1 px-3 items-center">
