@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "-": "^0.0.1",
+    "clsx": "^2.1.0",
     "contentlayer": "^0.3.4",
     "date-fns": "^3.3.1",
     "g": "^2.0.1",
@@ -26,7 +27,8 @@
     "remark-gfm": "^3.0.1",
     "rss": "^1.2.2",
     "sharp": "^0.33.2",
-    "shiki": "^1.1.7"
+    "shiki": "^1.1.7",
+    "tailwind-merge": "^2.2.2"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
