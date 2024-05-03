@@ -32,6 +32,7 @@ const config: Config = {
       },
       maxWidth: {
         "138": "38rem",
+        "186": "50rem",
         "276": "68rem",
       },
       typography: {

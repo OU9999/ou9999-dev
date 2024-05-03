@@ -1,39 +1,67 @@
 import AboutMe from "@/components/mainSection/about-me";
-import PortfolioCard from "@/components/ui/card";
-import { redirect } from "next/navigation";
+import LinkIcon from "@/components/svg/link-icon";
+import XIcon from "@/components/svg/x-icon";
+import Link from "next/link";
+
+interface ContactLinkProps {
+  title: string;
+  link: string;
+  linkText: string;
+}
+
+const ContactLink = ({ title, link, linkText }: ContactLinkProps) => {
+  return (
+    <div className="w-full flex">
+      <p className="w-2/12 text-slate-500 dark:text-slate-400">{title}</p>
+
+      <div className="w-10/12 flex justify-start items-center space-x-[0.5px]">
+        <Link href={link}>
+          <p className="cursor-pointer hover:underline">{linkText}</p>
+        </Link>
+        <div className="w-3 h-3 fill-black dark:fill-white stroke-black dark:stroke-white">
+          <LinkIcon />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const PortfolioPage = () => {
-  const arr = new Array(4).fill(1);
-
   return (
     <>
       <AboutMe />
-
-      <div className="w-full flex flex-col">
-        <p className="text-xl">경험</p>
-        <p>FactorLabs</p>
-        <p>Front-End Developer</p>
-        <p>2023.05 ~ 2023.10</p>
-        <p>
-          개발팀 내 유일한 프론트엔드 개발자로 주도적으로 문제를 발견하고 스스로
-          해결해 나가는 경험과 서비스에 대한 오너십 형성
-        </p>
-        <p>서비스를 무에서 유까지, 초기단계에서 개발</p>
-        <p>
-          블록체인 네트워크에서 발생하는 정보를 시각적으로 검색하고 볼 수 있게
-          해주는 탐색기 개발
-        </p>
-        <p>탈중앙화 형태 블록체인 지갑 크롬 익스텐션 앱 개발</p>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-1">
-        {arr.map((_, idx) => (
-          <PortfolioCard
-            key={"cardd" + idx}
-            className="w-auto h-auto flex flex-col"
-          >
-            <p>ou9999-dev.com</p>
-          </PortfolioCard>
-        ))}
+      <div className="mt-10 w-full flex justify-center">
+        <div className="w-full max-w-138 flex flex-col relative">
+          <Link href={"/about"}>
+            <div className="absolute cursor-pointer top-0 right-0 w-5 h-5 fill-black dark:fill-white">
+              <XIcon />
+            </div>
+          </Link>
+          <p className="text-lg mb-5">Contact</p>
+          <div className="space-y-4">
+            <ContactLink title="Blog" linkText="ou9999-dev.com" link="/" />
+            <ContactLink
+              title="PG"
+              linkText="ou-playground.com"
+              link="https://ou-playground.com"
+            />
+            <ContactLink
+              title="Github"
+              linkText="github.com/OU9999"
+              link="https://github.com/OU9999"
+            />
+            <ContactLink
+              title="Email"
+              linkText="omh232323@gmail.com"
+              link="mailto:omh232323@gmail.com"
+            />
+            <ContactLink
+              title="Age"
+              linkText="25 (1999.03.12)"
+              link="https://superkts.com/cal/age/ymd/19990312"
+            />
+          </div>
+        </div>
       </div>
     </>
   );
