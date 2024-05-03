@@ -1,45 +1,23 @@
 import AboutMe from "@/components/mainSection/about-me";
-import GithubIcon from "@/components/svg/github-icon";
-import MailIcon from "@/components/svg/mail-icon";
-import OwlIcon from "@/components/svg/owl-icon";
 import Link from "next/link";
-
-interface IIconBoxProps {
-  link: string;
-  icon: JSX.Element;
-  owl?: boolean;
-  subText?: string;
-}
-
-const IconBox = ({ link, icon, owl, subText }: IIconBoxProps) => {
-  return (
-    <Link href={link}>
-      <div className="cursor-pointer flex justify-center p-2 rounded-md items-center space-x-1 hover:bg-gray-200 hover:dark:bg-gray-700">
-        <div
-          className={`w-5 h-5 fill-black dark:${
-            owl ? "fill-black" : "fill-white"
-          }`}
-        >
-          {icon}
-        </div>
-        {subText && <p className="font-xs relative top-[-2px] ">{subText}</p>}
-      </div>
-    </Link>
-  );
-};
 
 const AboutPage = () => {
   return (
     <>
-      <AboutMe
-        child={
-          <div className="mt-1 flex space-x-1">
-            <IconBox icon={<MailIcon />} link="mailto:omh232323@gmail.com" />
-            <IconBox icon={<GithubIcon />} link="https://github.com/OU9999" />
-            <IconBox icon={<OwlIcon />} link="https://ou-playground.com/" owl />
-          </div>
-        }
-      />
+      <AboutMe />
+      <div className="w-full flex justify-center mt-10">
+        <Link href={"/portfolio"}>
+          <button className="bg-gradient-to-r from-gradient-start to-gradient-end font-semibold rounded-md p-[1px] cursor-pointer hover:group group">
+            <div className="flex justify-center items-center w-full bg-content-header-white dark:bg-content-header-black rounded-md px-3 py-1">
+              <p
+                className={`inline-block bg-gradient-to-r from-gradient-start to-gradient-end dark:from-white dark:to-white text-transparent bg-clip-text group-hover:from-violet-500 group-hover:to-teal-500 group-hover:dark:from-gradient-start group-hover:dark:to-gradient-end`}
+              >
+                Portfolio
+              </p>
+            </div>
+          </button>
+        </Link>
+      </div>
     </>
   );
 };

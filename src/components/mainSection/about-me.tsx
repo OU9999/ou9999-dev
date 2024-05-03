@@ -1,8 +1,33 @@
-interface AboutMeProps {
-  child?: JSX.Element;
+import Link from "next/link";
+import MailIcon from "../svg/mail-icon";
+import GithubIcon from "../svg/github-icon";
+import OwlIcon from "../svg/owl-icon";
+
+interface IconBoxProps {
+  link: string;
+  icon: JSX.Element;
+  owl?: boolean;
+  subText?: string;
 }
 
-const AboutMe = ({ child }: AboutMeProps) => {
+const IconBox = ({ link, icon, owl, subText }: IconBoxProps) => {
+  return (
+    <Link href={link}>
+      <div className="cursor-pointer flex justify-center p-2 rounded-md items-center space-x-1 hover:bg-gray-200 hover:dark:bg-gray-700">
+        <div
+          className={`w-5 h-5 fill-black dark:${
+            owl ? "fill-black" : "fill-white"
+          }`}
+        >
+          {icon}
+        </div>
+        {subText && <p className="font-xs relative top-[-2px] ">{subText}</p>}
+      </div>
+    </Link>
+  );
+};
+
+const AboutMe = () => {
   return (
     <div className="w-full mt-14 md:mt-20 flex flex-col justify-center items-center">
       <div className="w-full max-w-138 flex flex-col mt-10 space-y-10 text-xs md:text-sm text-slate-500 dark:text-slate-400">
@@ -20,7 +45,11 @@ const AboutMe = ({ child }: AboutMeProps) => {
       <p className="mt-16 md:mt-20 text-md md:text-lg text-center">
         오유진﹒FrontEnd Developer
       </p>
-      {child}
+      <div className="mt-1 flex space-x-1">
+        <IconBox icon={<MailIcon />} link="mailto:omh232323@gmail.com" />
+        <IconBox icon={<GithubIcon />} link="https://github.com/OU9999" />
+        <IconBox icon={<OwlIcon />} link="https://ou-playground.com/" owl />
+      </div>
     </div>
   );
 };
