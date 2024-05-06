@@ -20,9 +20,22 @@ const PortfolioContent = ({ className, ...props }: PortfolioContentProps) => {
 interface ProjectLayoutProps {
   dateFrom: string;
   dateTo: string;
+  projectTitle: string;
+  projectType: "Side Project" | "FactorLabs";
+  link: string;
+  imgs: string[];
+  children: React.ReactNode;
 }
 
-const ProjectLayout = ({ dateFrom, dateTo }: ProjectLayoutProps) => {
+const ProjectLayout = ({
+  dateFrom,
+  dateTo,
+  projectTitle,
+  projectType,
+  link,
+  imgs,
+  children,
+}: ProjectLayoutProps) => {
   return (
     <div className="w-full flex">
       <div className="flex flex-col md:flex-row w-3/12 text-slate-500 dark:text-slate-400">
@@ -32,16 +45,17 @@ const ProjectLayout = ({ dateFrom, dateTo }: ProjectLayoutProps) => {
 
       <div className="w-9/12 flex flex-col justify-start">
         <div className="w-full flex justify-start items-center space-x-[0.5px]">
-          <Link href={"/"}>
-            <p className="cursor-pointer hover:underline">ou-playground.com</p>
+          <Link href={link}>
+            <p className="cursor-pointer hover:underline">{projectTitle}</p>
           </Link>
           <div className="w-3 h-3 fill-black dark:fill-white stroke-black dark:stroke-white">
             <LinkIcon />
           </div>
         </div>
         <div className="w-full flex flex-col justify-start text-slate-500 dark:text-slate-400">
-          <p>Side Project</p>
-          <Carousel />
+          <p>{projectType}</p>
+          <Carousel imgs={imgs} />
+          {children}
         </div>
       </div>
     </div>

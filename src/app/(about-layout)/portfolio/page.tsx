@@ -47,8 +47,67 @@ const PortfolioPage = () => {
           </PortfolioContent>
 
           <PortfolioTitle text="Project" />
-          <PortfolioContent>
-            <ProjectLayout dateFrom="2024.04" dateTo="Now" />
+          <PortfolioContent className="space-y-14">
+            <ProjectLayout
+              dateFrom="2024.04"
+              dateTo="Now"
+              projectTitle="ou-playground.com"
+              projectType="Side Project"
+              link="https://ou-playground.com"
+              imgs={["default", "pg-1", "pg-2", "pg-3"]}
+            >
+              <div className="flex flex-col">
+                <p>
+                  인상적인 UI나 흥미로운 웹 기술을 직접 구현해보기 위해 만든
+                  프로젝트입니다.
+                </p>
+              </div>
+            </ProjectLayout>
+            <ProjectLayout
+              dateFrom="2024.01"
+              dateTo="Now"
+              projectTitle="ou9999-dev.com"
+              projectType="Side Project"
+              link="/"
+              imgs={["blog"]}
+            >
+              <div className="flex flex-col">
+                <p>
+                  짧고 쉽게 찾을수 있는 글 보다는, 직접 탐구하고 겪었던 문제점과
+                  개선점을 공유하는 글을 작성하는 블로그입니다.
+                </p>
+              </div>
+            </ProjectLayout>
+            <ProjectLayout
+              dateFrom="2023.09"
+              dateTo="2023.10"
+              projectTitle="Factor Explorer"
+              projectType="FactorLabs"
+              link="https://explorer.gipc.app/"
+              imgs={["ex-1", "ex-2"]}
+            >
+              <div className="flex flex-col">
+                <p>
+                  Factor 블록체인 정보를 시각적으로 검색하고 볼 수 있게 해주는
+                  서비스입니다.
+                </p>
+              </div>
+            </ProjectLayout>
+            <ProjectLayout
+              dateFrom="2023.06"
+              dateTo="2023.08"
+              projectTitle="Factor Wallet"
+              projectType="FactorLabs"
+              link="https://chromewebstore.google.com/detail/factor-wallet/bpkgfjmgpodhnfoioccefnkjilfjfjnp?hl=ko"
+              imgs={["wa-1", "wa-2", "wa-3"]}
+            >
+              <div className="flex flex-col">
+                <p>
+                  개인키 계정 관리, 코인 전송, 채굴 정보 기능을 가진 크롬
+                  익스텐션 앱입니다.
+                </p>
+              </div>
+            </ProjectLayout>
           </PortfolioContent>
         </div>
       </div>
