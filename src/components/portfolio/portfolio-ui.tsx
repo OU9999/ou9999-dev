@@ -21,9 +21,9 @@ interface ProjectLayoutProps {
   dateFrom: string;
   dateTo: string;
   projectTitle: string;
-  projectType: "Side Project" | "FactorLabs";
-  link: string;
-  imgs: string[];
+  projectType: "Side Project" | "FactorLabs" | string;
+  link?: string;
+  imgs?: string[];
   children: React.ReactNode;
 }
 
@@ -45,16 +45,22 @@ const ProjectLayout = ({
 
       <div className="w-9/12 flex flex-col justify-start">
         <div className="w-full flex justify-start items-center space-x-[0.5px]">
-          <Link href={link}>
+          {link ? (
+            <>
+              <Link href={link}>
+                <p className="cursor-pointer hover:underline">{projectTitle}</p>
+              </Link>
+              <div className="w-3 h-3 fill-black dark:fill-white stroke-black dark:stroke-white">
+                <LinkIcon />
+              </div>
+            </>
+          ) : (
             <p className="cursor-pointer hover:underline">{projectTitle}</p>
-          </Link>
-          <div className="w-3 h-3 fill-black dark:fill-white stroke-black dark:stroke-white">
-            <LinkIcon />
-          </div>
+          )}
         </div>
         <div className="w-full flex flex-col justify-start text-slate-500 dark:text-slate-400">
           <p>{projectType}</p>
-          <Carousel imgs={imgs} />
+          {imgs && <Carousel imgs={imgs} />}
           {children}
         </div>
       </div>

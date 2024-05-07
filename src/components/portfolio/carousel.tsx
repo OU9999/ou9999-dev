@@ -18,12 +18,12 @@ const Carousel = ({ imgs }: CarouselProps) => {
   }, [emblaThumbsApi]);
 
   return (
-    <div ref={emblaThumbsRef} className="w-auto overflow-x-scroll my-3">
+    <div ref={emblaThumbsRef} className="w-auto overflow-x-scroll mt-3 mb-5">
       <div className="w-auto flex flex-row space-x-2 h-32 py-1">
         {imgs.map((img) => (
           <div
             key={"carousel" + img}
-            className="relative w-52 min-w-52 h-full bg-blue-500 rounded-md overflow-hidden"
+            className="relative w-52 min-w-52 border border-slate-200 dark:border-slate-800 h-full bg-blue-500 rounded-md overflow-hidden"
           >
             <Image
               alt="test"

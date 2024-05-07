@@ -45,6 +45,10 @@ const config: Config = {
           },
         },
       },
+      listStyleType: {
+        square: "square",
+        roman: "upper-roman",
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],
