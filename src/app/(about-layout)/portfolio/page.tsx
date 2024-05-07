@@ -5,6 +5,7 @@ import {
   PortfolioTitle,
   ProjectLayout,
 } from "@/components/portfolio/portfolio-ui";
+import AccordionIcon from "@/components/svg/accordion-icon";
 import XIcon from "@/components/svg/x-icon";
 import Link from "next/link";
 
@@ -90,6 +91,19 @@ const ProjectSection = () => {
               인상적인 UI나 흥미로운 웹 기술을 직접 구현해보기 위해 만든
               프로젝트입니다.
             </p>
+            {/* <ul className="list-disc pl-4 mt-8">
+              <li>
+                <div className="flex">
+                  <p>AI 이미지 생성 구현</p>
+                  <div className="w-3 h-3">
+                    <AccordionIcon />
+                  </div>
+                </div>
+              </li>
+              <li>
+                <p>클라이언트 보안 처리</p>
+              </li>
+            </ul> */}
           </div>
         </ProjectLayout>
         <ProjectLayout

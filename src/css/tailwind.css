@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes huerotate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+.rotated_gradient_box {
+  filter: hue-rotate(360deg);
+  background-image: linear-gradient(#444, #444),
+    linear-gradient(to left, #37a9fa, #5951f3);
+  background-clip: content-box, border-box;
+  background-origin: border-box;
+  animation: huerotate 3s infinite linear;
+}
