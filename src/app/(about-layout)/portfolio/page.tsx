@@ -92,14 +92,22 @@ const ProjectSection = () => {
               인상적인 UI나 흥미로운 웹 기술을 직접 구현해보기 위해 만든
               프로젝트입니다.
             </p>
-            <ul className="list-disc pl-4 mt-8">
+            {/* <ul className="list-disc pl-4 mt-8">
               <li>
-                <Accordion triggerText="AI TEXT-TO-IMAGE 구현"></Accordion>
+                <Accordion triggerText="AI TEXT-TO-IMAGE 구현">
+                  <ul className="list-square pl-4">
+                    <li>Next.js 서버 액션 + Replicate 를 이용하여 구현</li>
+                  </ul>
+                </Accordion>
               </li>
               <li>
-                <LinkText link="/p/server-action-with-replicate" text="zod" />
+                <Accordion triggerText="서버의 부담을 덜기 위한 프론트 에러 처리">
+                  <ul className="list-square pl-4">
+                    <li>zod를 설정하여 </li>
+                  </ul>
+                </Accordion>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </ProjectLayout>
         <ProjectLayout
