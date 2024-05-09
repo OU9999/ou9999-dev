@@ -2,6 +2,7 @@ import AboutMe from "@/components/mainSection/about-me";
 import Accordion from "@/components/portfolio/accordion-ui";
 import ContactLink from "@/components/portfolio/contact-link";
 import LinkText from "@/components/portfolio/link-text";
+import { ListBox, ListItem } from "@/components/portfolio/list-ui";
 import {
   PortfolioContent,
   PortfolioTitle,
@@ -92,19 +93,27 @@ const ProjectSection = () => {
               인상적인 UI나 흥미로운 웹 기술을 직접 구현해보기 위해 만든
               프로젝트입니다.
             </p>
-            {/* <ul className="list-disc pl-4 mt-8">
+            {/* <ul className="list-disc pl-4 mt-8 space-y-1">
               <li>
                 <Accordion triggerText="AI TEXT-TO-IMAGE 구현">
-                  <ul className="list-square pl-4">
+                  <ul className="list-square pl-4 mt-1">
                     <li>Next.js 서버 액션 + Replicate 를 이용하여 구현</li>
                   </ul>
                 </Accordion>
               </li>
               <li>
-                <Accordion triggerText="서버의 부담을 덜기 위한 프론트 에러 처리">
-                  <ul className="list-square pl-4">
-                    <li>zod를 설정하여 </li>
-                  </ul>
+                <Accordion triggerText="Replicate 클라우드 비용 절약을 위한 프론트 설계">
+                  <ListBox>
+                    <ListItem>
+                      bot 접근 방지를 위한 google-recpatcha 설정
+                    </ListItem>
+                    <ListItem>
+                      웹 스토리지를 이용하여 반복적인 접근 차단
+                    </ListItem>
+                    <ListItem>
+                      zod를 활용하여 에러 처리는 클라이언트에서 하도록 설계
+                    </ListItem>
+                  </ListBox>
                 </Accordion>
               </li>
             </ul> */}
