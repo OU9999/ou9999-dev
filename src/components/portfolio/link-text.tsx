@@ -17,7 +17,7 @@ const LinkText = ({ link, text, className }: LinkTextProps) => {
       )}
     >
       <Link href={link}>
-        <p className="cursor-pointer hover:underline">{text}</p>
+        <p className="cursor-pointer underline">{text}</p>
       </Link>
       <div className="w-3 h-3 fill-slate-500 dark:fill-slate-400 stroke-slate-500 dark:stroke-slate-400">
         <LinkIcon />
