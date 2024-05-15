@@ -18,18 +18,20 @@ const PortfolioContent = ({ className, ...props }: PortfolioContentProps) => {
 };
 
 interface ProjectLayoutProps {
-  dateFrom: string;
-  dateTo: string;
+  dateFrom?: string;
+  dateTo?: string;
+  date?: string;
   projectTitle: string;
   projectType: "Side Project" | "FactorLabs" | string;
   link?: string;
   imgs?: string[];
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const ProjectLayout = ({
   dateFrom,
   dateTo,
+  date,
   projectTitle,
   projectType,
   link,
@@ -39,8 +41,9 @@ const ProjectLayout = ({
   return (
     <div className="w-full flex">
       <div className="flex flex-col md:flex-row w-3/12 text-slate-500 dark:text-slate-400">
-        <p>{dateFrom} -&nbsp;</p>
-        <p>{dateTo}</p>
+        {dateFrom && <p>{dateFrom} -&nbsp;</p>}
+        {dateTo && <p>{dateTo}</p>}
+        {date && <p>{date}</p>}
       </div>
 
       <div className="w-9/12 flex flex-col justify-start">
@@ -55,7 +58,7 @@ const ProjectLayout = ({
               </div>
             </>
           ) : (
-            <p className="cursor-pointer hover:underline">{projectTitle}</p>
+            <p className="">{projectTitle}</p>
           )}
         </div>
         <div className="w-full flex flex-col justify-start text-slate-500 dark:text-slate-400">

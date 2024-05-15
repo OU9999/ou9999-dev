@@ -52,7 +52,7 @@ const CareerSection = () => {
           dateFrom="2023.05"
           dateTo="2023.10"
           projectTitle="FactorLabs"
-          projectType="Front-End Developer"
+          projectType="FrontEnd Developer"
           link="https://factorlabs.net/"
         >
           <ListBox className="list-disc mt-5">
@@ -184,7 +184,6 @@ const ProjectSection = () => {
           dateTo="2023.10"
           projectTitle="Factor Explorer"
           projectType="FactorLabs"
-          link="https://explorer.gipc.app/"
           imgs={["ex-1", "ex-2"]}
         >
           <div className="flex flex-col">
@@ -263,6 +262,27 @@ const ProjectSection = () => {
   );
 };
 
+const EducationSection = () => {
+  return (
+    <div>
+      <PortfolioTitle text="Education & Certificate" />
+      <PortfolioContent className="space-y-14">
+        <ProjectLayout
+          dateFrom="2018.03"
+          dateTo="2023.02"
+          projectTitle="부천대학교 졸업"
+          projectType="정보통신과"
+        />
+        <ProjectLayout
+          date="2021.08"
+          projectTitle="정보처리 산업기사"
+          projectType="한국산업인력공단"
+        />
+      </PortfolioContent>
+    </div>
+  );
+};
+
 const PortfolioPage = () => {
   return (
     <>
@@ -277,6 +297,7 @@ const PortfolioPage = () => {
           <ContactSection />
           <CareerSection />
           <ProjectSection />
+          <EducationSection />
         </div>
       </div>
     </>
