@@ -1,7 +1,8 @@
 import { cn } from "@/utils/tailwindUtil";
 import Link from "next/link";
 import LinkIcon from "../svg/link-icon";
-import Carousel from "./carousel";
+import CarouselImg from "./carousel-img";
+import CarouselStack from "./carousel-stack";
 
 interface PortfolioTitleProps {
   text: string;
@@ -24,6 +25,7 @@ interface ProjectLayoutProps {
   projectTitle: string;
   projectType: "Side Project" | "FactorLabs" | string;
   link?: string;
+  stack?: string[];
   imgs?: string[];
   children?: React.ReactNode;
 }
@@ -35,6 +37,7 @@ const ProjectLayout = ({
   projectTitle,
   projectType,
   link,
+  stack,
   imgs,
   children,
 }: ProjectLayoutProps) => {
@@ -63,7 +66,8 @@ const ProjectLayout = ({
         </div>
         <div className="w-full flex flex-col justify-start text-slate-500 dark:text-slate-400">
           <p>{projectType}</p>
-          {imgs && <Carousel imgs={imgs} />}
+          {stack && <CarouselStack stack={stack} />}
+          {imgs && <CarouselImg imgs={imgs} />}
           {children}
         </div>
       </div>

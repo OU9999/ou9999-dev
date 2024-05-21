@@ -7,7 +7,7 @@ interface CarouselProps {
   imgs: string[];
 }
 
-const Carousel = ({ imgs }: CarouselProps) => {
+const CarouselImg = ({ imgs }: CarouselProps) => {
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
     containScroll: "keepSnaps",
     dragFree: true,
@@ -38,4 +38,4 @@ const Carousel = ({ imgs }: CarouselProps) => {
   );
 };
 
-export default Carousel;
+export default CarouselImg;

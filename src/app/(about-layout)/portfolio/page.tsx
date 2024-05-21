@@ -9,7 +9,6 @@ import {
   ProjectLayout,
 } from "@/components/portfolio/portfolio-ui";
 import XIcon from "@/components/svg/x-icon";
-import Image from "next/image";
 import Link from "next/link";
 
 const ContactSection = () => {
@@ -81,6 +80,7 @@ const ProjectSection = () => {
           projectTitle="ou-playground.com"
           projectType="Side Project"
           link="https://ou-playground.com"
+          stack={["React", "TypeScript", "Next.js", "replicate", "shadcn/ui"]}
           imgs={["default", "pg-1", "pg-2", "pg-3"]}
         >
           <div className="flex flex-col">
@@ -126,6 +126,7 @@ const ProjectSection = () => {
           projectTitle="ou9999-dev.com"
           projectType="Side Project"
           link="/"
+          stack={["React", "TypeScript", "Next.js", "content-layer"]}
           imgs={["blog"]}
         >
           <div className="flex flex-col">
@@ -184,6 +185,7 @@ const ProjectSection = () => {
           dateTo="2023.10"
           projectTitle="Factor Explorer"
           projectType="FactorLabs"
+          stack={["React", "TypeScript", "Next.js", "React-Query", "Web3"]}
           imgs={["ex-1", "ex-2"]}
         >
           <div className="flex flex-col">
@@ -241,6 +243,14 @@ const ProjectSection = () => {
           projectTitle="Factor Wallet"
           projectType="FactorLabs"
           link="https://chromewebstore.google.com/detail/factor-wallet/bpkgfjmgpodhnfoioccefnkjilfjfjnp?hl=ko"
+          stack={[
+            "React",
+            "TypeScript",
+            "React-Query",
+            "Web3",
+            "Webpack",
+            "Babel",
+          ]}
           imgs={["wa-1", "wa-2", "wa-3"]}
         >
           <div className="flex flex-col">
