@@ -80,7 +80,14 @@ const ProjectSection = () => {
           projectTitle="ou-playground.com"
           projectType="Side Project"
           link="https://ou-playground.com"
-          stack={["React", "TypeScript", "Next.js", "replicate", "shadcn/ui"]}
+          stack={[
+            "React",
+            "TypeScript",
+            "Next.js",
+            "replicate",
+            "clova-ocr",
+            "shadcn/ui",
+          ]}
           imgs={["default", "pg-1", "pg-2", "pg-3"]}
         >
           <div className="flex flex-col">
