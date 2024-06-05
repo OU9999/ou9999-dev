@@ -49,7 +49,7 @@ const CareerSection = () => {
       <PortfolioContent>
         <ProjectLayout
           dateFrom="2023.05"
-          dateTo="2023.10"
+          dateTo="2023.11"
           projectTitle="FactorLabs"
           projectType="FrontEnd Developer"
           link="https://factorlabs.net/"
