@@ -113,7 +113,7 @@ const ProjectSection = () => {
                 <Accordion triggerText="Replicate 클라우드 비용 절약을 위한 프론트 설계">
                   <ListBox className="list-square">
                     <ListItem>
-                      bot 접근 방지를 위한 google-recpatcha 설정
+                      bot 접근 방지를 위한 google-recaptcha 설정
                     </ListItem>
                     <ListItem>
                       웹 스토리지를 이용하여 반복적인 접근 차단
