@@ -167,7 +167,7 @@ const ProjectSection = () => {
                     <ListItem>
                       <div className="flex flex-col">
                         <p>
-                          기존 블로그 대비 노출수 2배 증가, 평균 CTR 2.5배증가
+                          기존 블로그 대비 노출수 4배 증가, 평균 CTR 4배증가
                         </p>
                       </div>
                     </ListItem>
