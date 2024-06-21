@@ -48,7 +48,7 @@ const PostPage = async ({ params }: IPostPageProps) => {
 
   return (
     <>
-      <article className="w-full max-w-full overflow-x-hidden prose dark:prose-invert prose-img:mb-0 prose-headings:font-semibold prose-blockquote:not-italic prose-blockquote:font-normal prose-a:text-gradient-end dark:prose-a:text-gradient-start prose-quoteless prose-blockquote:border-gradient-end dark:prose-blockquote:border-gradient-start prose-strong:text-yellow-600 dark:prose-strong:text-[rgb(249,204,117)] prose-video:mb-0">
+      <article className="w-full overflow-x-hidden overflow-y-hidden max-w-full prose dark:prose-invert prose-img:mb-0 prose-headings:font-semibold prose-blockquote:not-italic prose-blockquote:font-normal prose-a:text-gradient-end dark:prose-a:text-gradient-start prose-quoteless prose-blockquote:border-gradient-end dark:prose-blockquote:border-gradient-start prose-strong:text-yellow-600 dark:prose-strong:text-[rgb(249,204,117)] prose-video:mb-0">
         <Mdx code={post.body.code} />
       </article>
       <div className="w-full mt-10">
