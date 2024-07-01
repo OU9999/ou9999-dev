@@ -1,33 +1,51 @@
 ---
-title: 신분증 OCR 구현을 위한 데이터 특징 파악하기
-description: CLOVA OCR + next.js 서버 액션으로 신분증 OCR 구현하기
-date: "2024-06-24"
+title: CLOVA OCR 최소 비용과 제한된 기능으로 구현하는 신분증 OCR 알고리즘
+description: 제한된 기능으로 원하는 데이터를 추출하는 과정과 후기
+date: "2024-06-30"
 tags:
-  - next.js
   - clova-ocr
+  - algorithm
 
-thumbnail: next
-published: false
+thumbnail: ocr
+published: true
 ---
 
 ## 개요
 
-이미지 - 신분증 OCR
+<Image
+  src="/imgs/post/id-ocr/thumb.jpg"
+  width="500"
+  height="350"
+  alt={"신분증 OCR"}
+/>
 
-여러 금융 어플에서 OCR 기능을 사용하는것에 흥미가 생겨,\
-직접 구현해보면서 겪었던 문제점과 해결 방법을 공유하려고합니다.
+여러 금융 어플에서 OCR 기능을 사용하는 것에 흥미가 생겨, 직접 구현해 보면서 겪었던 문제점과 해결 방법을 공유하려고 합니다.
+
+이 글은 CLOVA OCR 기본 사용법이나 프론트엔드 구현 코드에 관한 글이 아닌, 적은 요금으로 신분증의 이름과 주민등록번호, 카드의 카드번호와 유효기간을 추출하는 방법에 대한 글입니다.
 
 ## CLOVA OCR
 
-이미지 - 악필이어도 글자를 정확히 인식하는 CLOVA OCR
+<Image
+  src="/imgs/post/id-ocr/car.png"
+  width="800"
+  height="350"
+  alt={"2년전 졸업작품, 번호판 인식 주차장 시스템"}
+/>
+
+클라우드 서비스를 사용하지않고 이미지를 직접 처리하여 글자를 추출하는것도 가능하지만,\
+정확도(특히 한글)와 속도에서 크게 뒤쳐졌기에 클라우드 서비스를 이용할것 입니다.
+
+<Image
+  src="/imgs/post/id-ocr/ugly-word.png"
+  width="800"
+  height="350"
+  alt={"악필이어도 글자를 정확히 인식하는 CLOVA OCR"}
+/>
 
 [Naver Cloud CLOVA OCR 공식문서](https://www.ncloud.com/product/aiService/ocr)
 
 다양한 OCR 서비스중에서 CLOVA OCR을 선택한 이유는, 한글 문자 인식에 있어서 매우 정확했기 때문입니다.\
 구글의 클라우드 비전또한 괜찮은 선택지이지만, 한글 필기체 인식이 아쉬웠습니다.
-
-> 이미지 - 2년전 졸업작품, 번호판 인식 주차장 시스템 \
-> 클라우드 서비스를 사용하지않고 이미지를 직접 처리하여 글자를 추출하는것도 가능하지만, 정확도(특히 한글)와 속도에서 크게 뒤쳐졌습니다.
 
 CLOVA OCR이 제공하는 3가지의 OCR은 각자 기능과 요금이 다릅니다.
 
@@ -46,31 +64,53 @@ CLOVA OCR이 제공하는 3가지의 OCR은 각자 기능과 요금이 다릅니
 
 ## 추출 로직 구상하기
 
+### 신분증(이름, 주민등록번호)
+
 > 실제로 신분증 OCR을 사용할때는 사진을 포함 사진속의 많은 데이터들이 필요하겠지만,\
 > 저의 OCR에서는 신분증 고유의 값인 이름과 주민번호만 추출할것입니다.
 
-이미지 - clova ocr 신분증 인식 결과
+<Image
+  src="/imgs/post/id-ocr/id-result.png"
+  width="800"
+  height="350"
+  alt={"CLOVA OCR 신분증 인식 결과"}
+/>
 
 신분증 사진을 General OCR 돌린 결과물입니다.\
-retrun 배열의 순서는 사진기준 위 부터 아래로, y축이 같다면 좌에서 우로 순서대로 채워집니다.
+return 배열의 순서는 사진기준 위 부터 아래로, y축이 같다면 좌에서 우로 순서대로 채워집니다.
 
 주민등록증의 형태는 변하지 않기에, 예제 사진과 다른 주민등록증 사진으로 테스트 하더라도,\
 배열에서 1번과 3번값을 가져온다면 이름과 주민등록번호를 추출할 수 있을것입니다.
 
-이미지 - 재외국민 주민등록증
+<Image
+  src="/imgs/post/id-ocr/id-naldo.png"
+  width="800"
+  height="350"
+  alt={"재외국민 주민등록증"}
+/>
 
 하지만 재외국민 주민등록증의 경우도 있기 때문에 배열의 index만으로 값을 추출하는건 오류가 생길것입니다.\
 필요한 데이터의 특징을 파악하여 추출하는 방식으로 방법을 바꿔야 합니다.
 
-이미지 - 이름 field 특성 파악
+<Image
+  src="/imgs/post/id-ocr/id-name.png"
+  width="800"
+  height="350"
+  alt={"이름 field 특성 파악"}
+/>
 
 이름 field 다음인 한자 field 에는 항상 "()" 괄호가 있기 때문에\
-배열에서 "()" 의 index의 전 field가 이름 field인걸 알수있습니다.\
+배열에서 "()" 의 index의 전 field가 이름 field인걸 알수있습니다.
 
 하지만 "(재외국민)" 과 같이 괄호가 포함된 field도 존재합니다.\
 그러나 "(재외국민)" 은 고정된 값이기 때문에 제외 목록을 만들어서 검증을 하면 이름 field를 찾을 수 있습니다.
 
-이미지 - 주민등록번호 field 특성 파악
+<Image
+  src="/imgs/post/id-ocr/id-id.png"
+  width="800"
+  height="350"
+  alt={"주민등록번호 field 특성 파악"}
+/>
 
 주민등록번호는 "-" 문자가 존재하기 때문에 "-"가 포함된 field를 찾는다면 가능할것같지만,\
 "412-3번지" 와 같이 주소에도 "-" 문자가 포함된 경우가 있습니다.
@@ -156,7 +196,14 @@ if (nameAndId) {
 원하는 값인 이름과 주민등록번호를 성공적으로 얻을 수 있었습니다.\
 다음은 신용카드 데이터를 추출할것입니다.
 
-이미지 - 신용카드 OCR
+### 신용카드(카드번호, 유효기간)
+
+<Image
+  src="/imgs/post/id-ocr/card-result.png"
+  width="800"
+  height="350"
+  alt={"신용카드 OCR"}
+/>
 
 > 실제로 신용카드 OCR을 사용할때는 사진을 포함 사진속의 많은 데이터들이 필요하겠지만,\
 > 저의 OCR에서는 신용카드 고유의 값인 카드번호와 유효기간만 추출할것입니다.
@@ -164,90 +211,68 @@ if (nameAndId) {
 카드마다 카드번호와 유효기간의 위치가 다르기때문에 index기준으로 찾는것은 어렵습니다.\
 그렇기에 카드번호와 유효기간의 특징을 파악하여 추출해야합니다.
 
-이미지 - 유효기간 특징
+<Image
+  src="/imgs/post/id-ocr/card-date.png"
+  width="800"
+  height="350"
+  alt={"유효기간 특징"}
+/>
 
 유효기간은 모든 field중 유일하게 "/" 를 포함한것을 확인할 수 있습니다.\
 그렇다면 모든 field중 "/" 문자를 포함한 field를 찾는다면 유효기간을 찾을 수 있습니다.\
-더욱 확실하게 추출하려면 다음과 같은 특징을 추가하여 검출하는것도 좋습니다.
+더욱 확실하게 추출하려면 다음과 같은 특징을 추가하여 찾는것도 좋습니다.
 
 1. "/" 문자를 제외하면 숫자로만 이루어져있다.
 2. "/" 문자 기준 앞부분은 2자리, 뒷부분 2자리이다.
 
-이미지 - 카드번호 2가지 특징
+<Image
+  src="/imgs/post/id-ocr/card-number.png"
+  width="800"
+  height="350"
+  alt={"카드번호 2가지 특징"}
+/>
 
 사진과 같이 카드번호는 2가지 특징이있습니다.
 
-1. 카드번호의 width가 같은 4개의 field
-2. 그 4개의 필드가 y축 위치가 동일하여야한다.
+1. 4개의 필드가 y축 위치가 동일하여야한다.
+2. 그 4개의 field가 width가 같아야 한다.
 
-위 특징을 파악하여 카드번호 field 4개를 순서대로 찾을수 있습니다.\
-이제 이 특징들을 이용한 코드를 작성하겠습니다.
+CLOVA OCR은 필드마다 x,y축 값을 제공하니 동일한 y축을 4개를 찾는것은 간단합니다.\
+다만 width 값을 따로 제공하지 않으니 직접 계산해야합니다.
 
-```ts title="신용카드 예제코드"
-// 카드번호 필드를 찾는 함수
-const findConsistentYFields = (fields) => {
-  // 모든 필드의 y 좌표를 추출하여 정렬
-  const yValues = fields.map((field) => field.y).sort((a, b) => a - b);
+<Image
+  src="/imgs/post/id-ocr/card-width.png"
+  width="800"
+  height="350"
+  alt={"x축 y축"}
+/>
 
-  for (let i = 0; i <= yValues.length - 4; i++) {
-    const group = yValues.slice(i, i + 4);
+x축 시작점과 끝점의 값을 계산하면 field의 width를 알수있습니다.\
+사진속 카드번호 4000 field의 width는 `147 - 72 = 75`로 75인것을 알수있습니다.\
+이제 다른 필드들도 75의 width를 가졌는지 검증하면 카드번호 4개의 field를 알수있습니다.
 
-    // 그룹 내 모든 y 좌표가 일정한지 확인
-    const isConsistent = group.every((y, idx, arr) => {
-      if (idx === 0) return true;
-      return Math.abs(y - arr[idx - 1]) <= 3;
-    });
+이제 이 특징들을 이용하여 코드 로직을 작성하겠습니다.
 
-    // 일정한 y 좌표를 가진 그룹을 찾으면 해당 필드를 반환
-    if (isConsistent) {
-      const consistentFields = fields.filter((field) =>
-        group.includes(field.y)
-      );
+<Image
+  src="/imgs/post/id-ocr/algol.png"
+  width="800"
+  height="600"
+  alt={"카드번호와 유효기간 추출"}
+/>
 
-      if (consistentFields.length === 4) {
-        return consistentFields;
-      }
-    }
-  }
+> 코드 흐름은 간단하지만, 내용이 너무 길기에 알고리즘 순서도로 올렸습니다. 코드는
 
-  return null;
-};
+## 마치며
 
-// 유효기간 필드를 찾는 함수
-const findExpiryDate = (fields) => {
-  return fields.find((field) => {
-    const text = field.inferText;
-    // "/"를 포함하고, "/" 기준으로 나눴을 때 앞뒤가 각각 2자리 숫자인지 확인
-    if (text.includes("/") && text.split("/").length === 2) {
-      const [month, year] = text.split("/");
-      return (
-        month.length === 2 &&
-        year.length === 2 &&
-        !isNaN(Number(month)) &&
-        !isNaN(Number(year))
-      );
-    }
-    return false;
-  });
-};
+<Image
+  src="/imgs/post/id-ocr/result.png"
+  width="800"
+  height="400"
+  alt={"OCR 결과물"}
+/>
 
-const cardNumberFields = findConsistentYFields(ocrFields);
-const expiryDateField = findExpiryDate(ocrFields);
+> [PLAYGROUND](https://ou-playground.com) 링크를 통해 결과물을 확인하실 수 있습니다.
 
-if (cardNumberFields) {
-  const cardNumber = cardNumberFields.map((field) => field.inferText).join(" ");
-  console.log(`카드번호: ${cardNumber}`);
-  // 카드번호 : 4000 1234 5678 9010
-} else {
-  console.log("카드번호를 찾을 수 없습니다.");
-}
+많은 사용자들을 유지하는 서비스라면, 비용이 비쌀지라도 머신러닝을 통해 학습시킨 Template, Document OCR을 사용하는 것이 더 좋은 선택지가 될 수 있습니다.
 
-if (expiryDateField) {
-  console.log(`유효기간: ${expiryDateField.inferText}`);
-  // 유효기간 : 12/25
-} else {
-  console.log("유효기간을 찾을 수 없습니다.");
-}
-```
-
-## 구현
+하지만 필요한 데이터의 특징을 파악하여 추출할 수 있는 논리적인 방법이 있다면, General OCR의 제한된 기능만으로도 충분히 원하는 데이터를 구할 수 있습니다.
