@@ -124,6 +124,12 @@ const ProjectSection = () => {
                   </ListBox>
                 </Accordion>
               </ListItem>
+              <ListItem>
+                <LinkText
+                  link="/p/id-ocr"
+                  text="최소 비용과 기본 기능으로 신분증 OCR 알고리즘 구현"
+                />
+              </ListItem>
             </ListBox>
           </div>
         </ProjectLayout>
@@ -239,7 +245,13 @@ const ProjectSection = () => {
                 </Accordion>
               </ListItem>
               <ListItem>
-                사용자가 필요로 하는 정보 추가 제공 (데이터 재설계)
+                Web3 데이터 로직을 재설계하여 불필요한 리렌더링 감소
+              </ListItem>
+              <ListItem>
+                불필요한 라이브러리 및 전역상태를 제거하여 최적화
+              </ListItem>
+              <ListItem>
+                타입스크립트 도입 후 블록체인 인터페이스 작성으로 DX 향상
               </ListItem>
             </ListBox>
           </div>
@@ -267,9 +279,18 @@ const ProjectSection = () => {
             </p>
             <ListBox className="list-disc mt-5">
               <ListItem>
-                크롬 익스텐션 개발 환경 설계 (Webpack , Babel)
+                <LinkText
+                  link="https://easy-track-3bf.notion.site/React-Webpack-Babel-cb479360ec18464683fc5f246e25b83f"
+                  text="크롬 익스텐션을 위한 개발 환경 구성 (Webpack , Babel)"
+                />
               </ListItem>
-              <ListItem>니모닉 알고리즘을 이용한 블록체인 지갑 설계</ListItem>
+              <ListItem>
+                <LinkText
+                  link="https://easy-track-3bf.notion.site/29daf9250faa4cc3a549c42a0b017290"
+                  text="니모닉 알고리즘을 이용한 블록체인 지갑 설계 후 구현"
+                />
+              </ListItem>
+              <ListItem>crypto-js와 dot-env로 정보 암호화</ListItem>
               <ListItem>무한 스크롤 구현</ListItem>
             </ListBox>
           </div>
