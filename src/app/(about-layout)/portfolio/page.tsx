@@ -190,6 +190,7 @@ const ProjectSection = () => {
                   </ListBox>
                 </Accordion>
               </ListItem>
+              <ListItem>next.js app router layout 장점 활용 설계</ListItem>
             </ListBox>
           </div>
         </ProjectLayout>
