@@ -110,7 +110,7 @@ const ProjectSection = () => {
               </ListItem>
 
               <ListItem>
-                <Accordion triggerText="Replicate 클라우드 비용 절약을 위한 프론트 설계">
+                <Accordion triggerText="클라우드 비용 절약을 위한 프론트 설계">
                   <ListBox className="list-square">
                     <ListItem>
                       bot 접근 방지를 위한 google-recaptcha 설정
@@ -169,13 +169,10 @@ const ProjectSection = () => {
               <ListItem>
                 <Accordion triggerText="동적인 metadata 적용">
                   <ListBox className="list-square">
+                    <ListItem>동적인 metadata 및 openGraph 적용</ListItem>
                     <ListItem>구글 , 네이버 검색엔진 등록</ListItem>
                     <ListItem>
-                      <div className="flex flex-col">
-                        <p>
-                          기존 블로그 대비 노출수 4배 증가, 평균 CTR 4배증가
-                        </p>
-                      </div>
+                      기존 블로그 대비 노출수 4배 증가, 평균 CTR 4배증가
                     </ListItem>
                   </ListBox>
                 </Accordion>
@@ -186,11 +183,23 @@ const ProjectSection = () => {
                     <ListItem>
                       content-layer를 적용하여 빌드시에 markdown 페이지 생성
                     </ListItem>
-                    <ListItem>서버/클라이언트 컴포넌트 권장 설계 적용</ListItem>
                   </ListBox>
                 </Accordion>
               </ListItem>
-              <ListItem>next.js app router layout 장점 활용 설계</ListItem>
+              <ListItem>
+                <Accordion triggerText="Next.js App router 장점을 살린 설계">
+                  <ListBox className="list-square">
+                    <ListItem>
+                      클라이언트 컴포넌트를 리프노드에 가깝게 둬서 불필요한
+                      리렌더링 방지
+                    </ListItem>
+                    <ListItem>
+                      병렬 라우팅을 활용하여 일관성 있는 레이아웃 유지 및 개발
+                      편의성 향상
+                    </ListItem>
+                  </ListBox>
+                </Accordion>
+              </ListItem>
             </ListBox>
           </div>
         </ProjectLayout>
@@ -234,7 +243,7 @@ const ProjectSection = () => {
               </ListItem>
 
               <ListItem>
-                <Accordion triggerText="비동기 데이터 로직 재설계 후 리렌더링 감소">
+                <Accordion triggerText="비효율적인 전역 상태 리팩토링 후 리렌더링 감소">
                   <ListBox className="list-square">
                     <ListItem>
                       <LinkText
@@ -247,9 +256,6 @@ const ProjectSection = () => {
               </ListItem>
               <ListItem>
                 Web3 데이터 로직을 재설계하여 불필요한 리렌더링 감소
-              </ListItem>
-              <ListItem>
-                불필요한 라이브러리 및 전역상태를 제거하여 최적화
               </ListItem>
               <ListItem>
                 타입스크립트 도입 후 블록체인 인터페이스 작성으로 DX 향상
