@@ -167,9 +167,9 @@ const ProjectSection = () => {
               </ListItem>
 
               <ListItem>
-                <Accordion triggerText="동적인 metadata 적용">
+                <Accordion triggerText="동적인 metadata 와 openGraph 적용">
                   <ListBox className="list-square">
-                    <ListItem>동적인 metadata 및 openGraph 적용</ListItem>
+                    <ListItem>동적인 metadata 및 openGraph 설계</ListItem>
                     <ListItem>구글 , 네이버 검색엔진 등록</ListItem>
                     <ListItem>
                       기존 블로그 대비 노출수 4배 증가, 평균 CTR 4배증가
