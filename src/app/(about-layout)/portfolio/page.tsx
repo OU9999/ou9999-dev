@@ -97,7 +97,7 @@ const ProjectSection = () => {
             </p>
             <ListBox className="list-disc mt-5">
               <ListItem>
-                <Accordion triggerText="AI TEXT-TO-IMAGE 구현">
+                <Accordion triggerText="Next.js 서버 액션 AI TEXT-TO-IMAGE 구현">
                   <ListBox className="list-square">
                     <ListItem>
                       <LinkText
@@ -206,7 +206,7 @@ const ProjectSection = () => {
         <ProjectLayout
           dateFrom="2023.09"
           dateTo="2023.10"
-          projectTitle="Factor Explorer"
+          projectTitle="Factor Explorer V2"
           projectType="FactorLabs"
           stack={["React", "TypeScript", "Next.js", "React-Query", "Web3"]}
           imgs={["ex-1", "ex-2"]}
@@ -254,8 +254,9 @@ const ProjectSection = () => {
                   </ListBox>
                 </Accordion>
               </ListItem>
+              <ListItem>효율적인 개발 환경 구성을 위한 Gitlab CI 구성</ListItem>
               <ListItem>
-                Web3 데이터 로직을 재설계하여 불필요한 리렌더링 감소
+                효율적인 블록체인 데이터를 보여주기 위한 데이터 재설계
               </ListItem>
               <ListItem>
                 타입스크립트 도입 후 블록체인 인터페이스 작성으로 DX 향상
@@ -288,7 +289,7 @@ const ProjectSection = () => {
               <ListItem>
                 <LinkText
                   link="https://easy-track-3bf.notion.site/React-Webpack-Babel-cb479360ec18464683fc5f246e25b83f"
-                  text="크롬 익스텐션을 위한 개발 환경 구성 (Webpack , Babel)"
+                  text="React로 크롬 익스텐션 개발을 위한 개발 환경 구성"
                 />
               </ListItem>
               <ListItem>
