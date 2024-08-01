@@ -329,6 +329,14 @@ const EducationSection = () => {
   );
 };
 
+const CardSection = () => {
+  return (
+    <div>
+      <PortfolioTitle text="Project" />
+    </div>
+  );
+};
+
 const PortfolioPage = () => {
   return (
     <>
@@ -341,9 +349,12 @@ const PortfolioPage = () => {
             </div>
           </Link>
           <ContactSection />
-          <CareerSection />
+          <CardSection />
+
+          {/* for test */}
+          {/* <CareerSection />
           <ProjectSection />
-          <EducationSection />
+          <EducationSection /> */}
         </div>
       </div>
     </>
