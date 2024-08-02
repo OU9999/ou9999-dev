@@ -9,6 +9,7 @@ import {
   ProjectLayout,
 } from "@/components/portfolio/portfolio-ui";
 import XIcon from "@/components/svg/x-icon";
+import Image from "next/image";
 import Link from "next/link";
 
 const ContactSection = () => {
@@ -333,6 +334,26 @@ const CardSection = () => {
   return (
     <div>
       <PortfolioTitle text="Project" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-1">
+        <div className="h-auto rounded-md flex-col overflow-hidden bg-content-header-white dark:bg-content-header-black shadow-lg">
+          <div className="h-36 relative">
+            <Image
+              alt="test"
+              src={`/imgs/portfolio/blog.png`}
+              quality={75}
+              fill
+            />
+          </div>
+          <div className="h-36 flex-row border-y-1 p-3 border-slate-600 dark:border-slate-800">
+            <p>title</p>
+            <p>project</p>
+            <p>type</p>
+          </div>
+          <div className="h-10 px-3 py-1 flex-row">
+            <p>React</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
