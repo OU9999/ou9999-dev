@@ -9,6 +9,7 @@ import {
   ProjectLayout,
 } from "@/components/portfolio/portfolio-ui";
 import XIcon from "@/components/svg/x-icon";
+import Image from "next/image";
 import Link from "next/link";
 
 const ContactSection = () => {
