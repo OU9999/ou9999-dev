@@ -21,12 +21,14 @@ const IconBox = ({ link, icon }: IIconBoxProps) => {
 };
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className="w-full mt-20 flex justify-center border-t-1 border-slate-300 dark:border-slate-700">
       <div className="w-full max-w-276 p-5 flex justify-between items-center">
         <div className="flex flex-col space-y-1  text-slate-500 dark:text-slate-400">
           <div className="flex text-sm">
-            <p>2024﹒©</p>
+            <p>{currentYear}﹒©</p>
             <p className="font-bold">&nbsp;OU9999</p>
           </div>
           <p className="text-xs">Powered by Next.js﹒Vercel</p>
