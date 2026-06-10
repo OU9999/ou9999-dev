@@ -10,13 +10,10 @@
     "generate": "node src/scripts/generateBase64.mjs"
   },
   "dependencies": {
-    "-": "^0.0.1",
     "clsx": "^2.1.0",
     "contentlayer": "^0.3.4",
     "date-fns": "^3.3.1",
     "embla-carousel-react": "^8.0.2",
-    "g": "^2.0.1",
-    "n": "^9.2.0",
     "next": "^14.1.0",
     "next-contentlayer": "^0.3.4",
     "next-themes": "^0.2.1",
