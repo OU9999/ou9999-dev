@@ -29,6 +29,11 @@ const Header = () => {
               About
             </p>
           </Link>
+          <Link href={"/portfolio"}>
+            <p className=" text-lg font-semibold hover:text-slate-500 hover:dark:text-slate-400">
+              Portfolio
+            </p>
+          </Link>
           <ModeToggle />
         </div>
         <PopoverButton />

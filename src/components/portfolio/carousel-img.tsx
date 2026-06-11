@@ -26,7 +26,7 @@ const CarouselImg = ({ imgs }: CarouselProps) => {
             className="relative w-52 min-w-52 border border-slate-200 dark:border-slate-800 h-full rounded-md overflow-hidden"
           >
             <Image
-              alt="test"
+              alt={`Portfolio screenshot: ${img}`}
               src={`/imgs/portfolio/${img}.png`}
               quality={75}
               fill

@@ -1,5 +1,10 @@
 import AboutMe from "@/components/mainSection/about-me";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "ABOUT | ou9999.dev",
+};
 
 const PortfolioLink = () => {
   return (
@@ -23,7 +28,7 @@ const AboutPage = () => {
   return (
     <>
       <AboutMe />
-      {/* <PortfolioLink /> */}
+      <PortfolioLink />
     </>
   );
 };

@@ -42,9 +42,11 @@ const ContentHeader = ({
             </div>
           )}
 
-          <p className="mt-1 md:mt-3 text-sm md:text-xl text-slate-500 dark:text-slate-400">
-            {text}
-          </p>
+          {text && (
+            <p className="mt-1 md:mt-3 text-sm md:text-xl text-slate-500 dark:text-slate-400">
+              {text}
+            </p>
+          )}
           {date && (
             <p className="mt-5 md:mt-24 text-xs md:text-base text-slate-500 dark:text-slate-400">
               {formatDateToString(date)}

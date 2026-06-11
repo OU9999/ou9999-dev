@@ -9,8 +9,12 @@ import {
   ProjectLayout,
 } from "@/components/portfolio/portfolio-ui";
 import XIcon from "@/components/svg/x-icon";
-import Image from "next/image";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "PORTFOLIO | ou9999.dev",
+};
 
 const ContactSection = () => {
   return (
@@ -334,19 +338,19 @@ const PortfolioPage = () => {
   return (
     <>
       <AboutMe />
-      {/* <div className="mt-10 w-full flex justify-center">
+      <div className="mt-10 w-full flex justify-center">
         <div className="w-full max-w-138 flex flex-col relative space-y-5">
           <Link href={"/about"}>
             <div className="absolute cursor-pointer top-14 right-0 w-5 h-5 fill-black dark:fill-white">
               <XIcon />
             </div>
-          </Link  >
+          </Link>
           <ContactSection />
           <CareerSection />
           <ProjectSection />
           <EducationSection />
         </div>
-      </div> */}
+      </div>
     </>
   );
 };
