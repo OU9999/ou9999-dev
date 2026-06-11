@@ -44,3 +44,4 @@ testJS.mjs
 # progress
 .progress/
 .progrss/
+.playwright-cli/
