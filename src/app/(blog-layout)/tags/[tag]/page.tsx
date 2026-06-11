@@ -1,15 +1,13 @@
 import PostBox from "@/components/mainSection/post-box";
-import { getPostsFromParamsByTag } from "@/utils/postUtil";
+import { getPostsFromParamsByTag, type TagParams } from "@/utils/postUtil";
 import { allPosts } from "contentlayer/generated";
 
 interface ITagPageProps {
-  params: {
-    tag: string;
-  };
+  params: Promise<TagParams>;
 }
 
 export const generateMetadata = async ({ params }: ITagPageProps) => {
-  const slug = decodeURI(params.tag);
+  const slug = decodeURI((await params).tag);
   const title = `${slug.toUpperCase()} | ou9999.dev`;
 
   return {
@@ -18,7 +16,7 @@ export const generateMetadata = async ({ params }: ITagPageProps) => {
 };
 
 export const generateStaticParams = async () => {
-  const params: ITagPageProps["params"][] = [];
+  const params: TagParams[] = [];
 
   allPosts.forEach((post) => {
     post.tags.forEach((tag) => {
@@ -30,7 +28,7 @@ export const generateStaticParams = async () => {
 };
 
 const TagPage = async ({ params }: ITagPageProps) => {
-  const posts = await getPostsFromParamsByTag(params);
+  const posts = getPostsFromParamsByTag(await params);
 
   return (
     <div className="w-full flex flex-col space-y-5">

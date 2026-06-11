@@ -2,7 +2,12 @@ import BackButton from "@/components/nav/header/BackButton";
 import ModeToggle from "@/components/nav/header/ModeToggle";
 import { getTagsFromPosts } from "@/utils/postUtil";
 
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "MENU | ou9999.dev",
+};
 
 interface ILinkButtonProps {
   text: string;
@@ -11,8 +16,8 @@ interface ILinkButtonProps {
 
 const LinkButton = ({ text, link }: ILinkButtonProps) => {
   return (
-    <Link href={link}>
-      <button className="text-2xl font-semibold">{text}</button>
+    <Link href={link} className="text-2xl font-semibold">
+      {text}
     </Link>
   );
 };
@@ -42,12 +47,13 @@ const MobilePopover = async () => {
 
   return (
     <div className="fixed top-0 left-0 right-0 bottom-0 z-50 w-dvw h-dvh overflow-y-auto bg-white-bg dark:bg-dark-bg">
-      <div className="w-full h-2vh flex flex-col justify-start items-center relative">
+      <div className="w-full min-h-dvh flex flex-col justify-start items-center relative">
         <BackButton />
         <p className="mt-20 mb-7 font-bold text-4xl">Menu</p>
         <div className="flex flex-col justify-center items-center space-y-3">
           <LinkButton text="Home" link="/" />
           <LinkButton text="About" link="/about" />
+          <LinkButton text="Portfolio" link="/portfolio" />
           <div className="pt-3">
             <ModeToggle />
           </div>

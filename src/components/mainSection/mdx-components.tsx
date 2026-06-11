@@ -1,4 +1,4 @@
-import { useMDXComponent } from "next-contentlayer/hooks";
+import { useMDXComponent } from "next-contentlayer2/hooks";
 import ImageWithPlaceholder from "./image-with-placeholder";
 import VideoWithAlt from "./video-with-alt";
 

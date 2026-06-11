@@ -1,11 +1,12 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import MailIcon from "../svg/mail-icon";
 import GithubIcon from "../svg/github-icon";
 import OwlIcon from "../svg/owl-icon";
 
 interface IconBoxProps {
   link: string;
-  icon: JSX.Element;
+  icon: ReactNode;
   owl?: boolean;
   subText?: string;
 }

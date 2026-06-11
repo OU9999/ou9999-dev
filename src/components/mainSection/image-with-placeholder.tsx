@@ -1,4 +1,5 @@
 import { getBase64 } from "@/utils/base64Util";
+import { cn } from "@/utils/tailwindUtil";
 import Image, { ImageProps } from "next/image";
 
 const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
@@ -9,7 +10,7 @@ const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
       <Image
         {...props}
         alt={props.alt}
-        className="rounded-lg"
+        className={cn("rounded-lg w-auto h-auto max-w-full", props.className)}
         placeholder="blur"
         blurDataURL={base64Data.base64}
       />

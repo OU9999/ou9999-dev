@@ -6,10 +6,12 @@ import { useEffect, useRef } from "react";
 const GiscusComment = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
+  const isProduction = process.env.NODE_ENV === "production";
 
   const theme = resolvedTheme === "dark" ? "dark" : "light";
 
   useEffect(() => {
+    if (!isProduction) return;
     if (!ref.current || ref.current.hasChildNodes()) return;
 
     const scriptElem = document.createElement("script");
@@ -31,10 +33,12 @@ const GiscusComment = () => {
 
     ref.current.appendChild(scriptElem);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isProduction]);
 
   // https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#isetconfigmessage
   useEffect(() => {
+    if (!isProduction) return;
+
     const iframe = document.querySelector<HTMLIFrameElement>(
       "iframe.giscus-frame"
     );
@@ -42,7 +46,7 @@ const GiscusComment = () => {
       { giscus: { setConfig: { theme } } },
       "https://giscus.app"
     );
-  }, [theme]);
+  }, [isProduction, theme]);
 
   return <section ref={ref} />;
 };
