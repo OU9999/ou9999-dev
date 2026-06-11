@@ -40,3 +40,7 @@ next-env.d.ts
 
 # test
 testJS.mjs
+
+# progress
+.progress/
+.progrss/
