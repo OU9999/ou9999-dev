@@ -25,4 +25,3 @@
 - 빌드·라우팅·콘텐츠 생성 영향 → `npm run build`
 - UI·브라우저 동작 영향 → Playwright 또는 실제 브라우저 확인
 - 스킬·규칙 문서 변경 → 해당 validator 또는 `git diff --check`
-
