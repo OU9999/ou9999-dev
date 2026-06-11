@@ -10,40 +10,28 @@ export const getAllPosts = (): Post[] => {
   return posts;
 };
 
-interface PostProps {
-  params: {
-    title: string;
-  };
+export interface PostParams {
+  title: string;
 }
 
-export const getPostFromParamsBySlug = async (params: PostProps["params"]) => {
+export const getPostFromParamsBySlug = (params: PostParams) => {
   const slug = params.title;
   const filterPosts = allPosts.filter((post) => post.published);
   const post = filterPosts.find((post) => post.slugAsParams === slug);
 
-  if (!post) {
-    null;
-  }
-
   return post;
 };
 
-interface TagProps {
-  params: {
-    tag: string;
-  };
+export interface TagParams {
+  tag: string;
 }
 
-export const getPostsFromParamsByTag = async (params: TagProps["params"]) => {
+export const getPostsFromParamsByTag = (params: TagParams) => {
   const slug = decodeURI(params.tag);
   const filterPosts = allPosts.filter((post) => post.published);
   const includeSlugPosts = filterPosts.filter((post) =>
     post.tags.includes(slug)
   );
-
-  if (!includeSlugPosts) {
-    null;
-  }
 
   const posts = includeSlugPosts.sort((a, b) =>
     compareDesc(new Date(a.date), new Date(b.date))

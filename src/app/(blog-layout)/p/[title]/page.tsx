@@ -1,16 +1,18 @@
 import GiscusComment from "@/components/mainSection/giscus-comment";
 import { Mdx } from "@/components/mainSection/mdx-components";
-import { getAllPosts, getPostFromParamsBySlug } from "@/utils/postUtil";
+import {
+  getAllPosts,
+  getPostFromParamsBySlug,
+  type PostParams,
+} from "@/utils/postUtil";
 import { notFound } from "next/navigation";
 
 interface IPostPageProps {
-  params: {
-    title: string;
-  };
+  params: Promise<PostParams>;
 }
 
 export const generateMetadata = async ({ params }: IPostPageProps) => {
-  const post = await getPostFromParamsBySlug(params);
+  const post = getPostFromParamsBySlug(await params);
 
   if (!post) {
     return {};
@@ -40,7 +42,7 @@ export const generateStaticParams = async () => {
 };
 
 const PostPage = async ({ params }: IPostPageProps) => {
-  const post = await getPostFromParamsBySlug(params);
+  const post = getPostFromParamsBySlug(await params);
 
   if (!post) {
     notFound();

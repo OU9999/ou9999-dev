@@ -2,7 +2,7 @@ import {
   ComputedFields,
   defineDocumentType,
   makeSource,
-} from "contentlayer/source-files";
+} from "contentlayer2/source-files";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
@@ -56,7 +56,7 @@ export default makeSource({
     rehypePlugins: [
       rehypeSlug,
       [
-        rehypePrettyCode as any,
+        rehypePrettyCode as never,
         {
           theme: "material-theme",
         },

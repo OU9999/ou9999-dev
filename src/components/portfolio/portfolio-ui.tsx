@@ -12,7 +12,7 @@ const PortfolioTitle = ({ text }: PortfolioTitleProps) => {
   return <p className="text-lg mt-14 mb-5">{text}</p>;
 };
 
-interface PortfolioContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+type PortfolioContentProps = React.HTMLAttributes<HTMLDivElement>;
 
 const PortfolioContent = ({ className, ...props }: PortfolioContentProps) => {
   return <div className={cn("space-y-5", className)} {...props} />;

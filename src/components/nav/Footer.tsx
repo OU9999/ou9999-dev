@@ -1,11 +1,12 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import RssIcon from "../svg/rss-icon";
 import MailIcon from "../svg/mail-icon";
 import GithubIcon from "../svg/github-icon";
 
 interface IIconBoxProps {
   link: string;
-  icon: JSX.Element;
+  icon: ReactNode;
 }
 const IconBox = ({ link, icon }: IIconBoxProps) => {
   return (

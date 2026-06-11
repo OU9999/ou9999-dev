@@ -2,6 +2,8 @@ import { myDomain } from "@/constant/domain";
 import { getAllPosts, getTagsFromPosts } from "@/utils/postUtil";
 import { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const posts = getAllPosts();
   const tags = await getTagsFromPosts();

@@ -1,22 +1,24 @@
 import ContentHeader from "@/components/headSection/content-header";
-import { getPostFromParamsBySlug } from "@/utils/postUtil";
+import { getPostFromParamsBySlug, type PostParams } from "@/utils/postUtil";
 
 interface IPostHeadSectionProps {
-  params: {
-    title: string;
-  };
+  params: Promise<PostParams>;
 }
 
 const PostHeadSection = async ({ params }: IPostHeadSectionProps) => {
-  const post = await getPostFromParamsBySlug(params);
+  const post = getPostFromParamsBySlug(await params);
+
+  if (!post) {
+    return null;
+  }
 
   return (
     <ContentHeader
-      title={post?.title!}
-      text={post?.description!}
-      img={post?.thumbnail!}
-      tags={post?.tags!}
-      date={post?.date!}
+      title={post.title}
+      text={post.description}
+      img={post.thumbnail}
+      tags={post.tags}
+      date={post.date}
     />
   );
 };
