@@ -1,0 +1,7 @@
+interface:
+  display_name: "Release Manager"
+  short_description: "Manage release branch promotions"
+  default_prompt: "Use $release-manager to promote develop to release and verify deployment."
+
+policy:
+  allow_implicit_invocation: true
