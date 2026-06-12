@@ -13,6 +13,6 @@
 
 ## 검증 기준
 
-- 기본 코드 변경 → `npm run lint`
-- 빌드·라우팅·콘텐츠 생성 영향 → `npm run build`
+- 기본 코드 변경 → `pnpm lint`
+- 빌드·라우팅·콘텐츠 생성 영향 → `pnpm build`
 - UI·브라우저 동작 영향 → Playwright 또는 실제 브라우저 확인
