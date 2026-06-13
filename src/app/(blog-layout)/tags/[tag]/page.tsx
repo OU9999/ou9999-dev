@@ -1,6 +1,9 @@
 import PostBox from "@/components/mainSection/post-box";
-import { getPostsFromParamsByTag, type TagParams } from "@/utils/postUtil";
-import { allPosts } from "contentlayer/generated";
+import {
+  getAllPosts,
+  getPostsFromParamsByTag,
+  type TagParams,
+} from "@/utils/postUtil";
 
 interface ITagPageProps {
   params: Promise<TagParams>;
@@ -16,15 +19,15 @@ export const generateMetadata = async ({ params }: ITagPageProps) => {
 };
 
 export const generateStaticParams = async () => {
-  const params: TagParams[] = [];
+  const tags = new Set<string>();
 
-  allPosts.forEach((post) => {
-    post.tags.forEach((tag) => {
-      params.push({ tag: encodeURIComponent(tag) });
-    });
+  getAllPosts().forEach((post) => {
+    post.tags.forEach((tag) => tags.add(tag));
   });
 
-  return params;
+  return Array.from(tags).map((tag) => ({
+    tag: encodeURIComponent(tag),
+  }));
 };
 
 const TagPage = async ({ params }: ITagPageProps) => {

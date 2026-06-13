@@ -1,18 +1,10 @@
-import { useMDXComponent } from "next-contentlayer2/hooks";
-import ImageWithPlaceholder from "./image-with-placeholder";
-import VideoWithAlt from "./video-with-alt";
-
-const components = {
-  Image: ImageWithPlaceholder,
-  Video: VideoWithAlt,
-};
+import { mdxComponents } from "@/mdx-components";
+import type { MDXContent } from "mdx/types";
 
 interface MdxProps {
-  code: string;
+  Component: MDXContent;
 }
 
-export const Mdx = ({ code }: MdxProps) => {
-  const Component = useMDXComponent(code);
-
-  return <Component components={components} />;
+export const Mdx = ({ Component }: MdxProps) => {
+  return <Component components={mdxComponents} />;
 };
