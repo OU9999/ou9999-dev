@@ -4,12 +4,13 @@ https://ou9999-dev.com
 
 # Dependencies
 
-- Node.js@20
-- React@18
-- Next.js@14
-- TypeScript@5
+- Node.js@24
+- React@19
+- Next.js@16
+- TypeScript@6
 - tailwindcss
-- next-contentlayer
+- @next/mdx
+- gray-matter
 - vercel
 
 # Document Type

@@ -12,7 +12,7 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    files: ["next.config.js", "tailwind.config.js", "src/utils/base64Util.ts"],
+    files: ["tailwind.config.js", "src/utils/base64Util.ts"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
     },
@@ -21,7 +21,6 @@ const eslintConfig = defineConfig([
     ".next/**",
     "out/**",
     "build/**",
-    ".contentlayer/**",
     "next-env.d.ts",
   ]),
 ]);
