@@ -1,18 +1,21 @@
-import GiscusComment from "@/components/mainSection/giscus-comment";
-import { Mdx } from "@/components/mainSection/mdx-components";
+import { GiscusComment } from "@/components/main-section/giscus-comment";
+import { Mdx } from "@/components/main-section/mdx-components";
 import {
   getAllPosts,
   getPostComponent,
   getPostFromParamsBySlug,
   type PostParams,
-} from "@/utils/postUtil";
+} from "@/utils/post-util";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface IPostPageProps {
   params: Promise<PostParams>;
 }
 
-export const generateMetadata = async ({ params }: IPostPageProps) => {
+export const generateMetadata = async ({
+  params,
+}: IPostPageProps): Promise<Metadata> => {
   const post = getPostFromParamsBySlug(await params);
 
   if (!post) {
@@ -35,7 +38,7 @@ export const generateMetadata = async ({ params }: IPostPageProps) => {
   };
 };
 
-export const generateStaticParams = async () => {
+export const generateStaticParams = async (): Promise<PostParams[]> => {
   const posts = await getAllPosts();
   return posts.map((page) => ({
     title: page.slugAsParams,

@@ -2,14 +2,14 @@ import { ReactNode } from "react";
 
 interface BlogLayoutProps {
   children: ReactNode;
-  headSection: ReactNode;
-  rightSection: ReactNode;
+  "head-section": ReactNode;
+  "right-section": ReactNode;
 }
 
 const BlogLayout = ({
   children,
-  headSection,
-  rightSection,
+  "head-section": headSection,
+  "right-section": rightSection,
 }: BlogLayoutProps) => {
   return (
     <div className="w-dvw h-auto relative">

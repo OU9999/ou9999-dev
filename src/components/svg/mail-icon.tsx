@@ -7,4 +7,4 @@ const MailIcon = () => {
   );
 };
 
-export default MailIcon;
+export { MailIcon };

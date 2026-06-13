@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Noto_Sans_KR } from "next/font/google";
 import "@/css/tailwind.css";
 import "@/css/prettyCode.css";
 import { defaultOpenGraph, defaultTwitter } from "@/constant/meta-data";
 import { ThemeProvider } from "@/components/theme-provider";
-import Footer from "@/components/nav/Footer";
+import { Footer } from "@/components/nav/site-footer";
 import { myDomain } from "@/constant/domain";
-import Header from "@/components/nav/Header";
+import { Header } from "@/components/nav/site-header";
+import { cn } from "@/utils/tailwind-util";
 
 const notoSans = Noto_Sans_KR({ subsets: ["latin"] });
 
@@ -31,15 +33,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: {
-  children: React.ReactNode;
-}) {
+  children: ReactNode;
+}) => {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`bg-white-bg dark:bg-dark-bg text-slate-900 dark:text-slate-50 ${notoSans.className}`}
+        className={cn(
+          "bg-white-bg dark:bg-dark-bg text-slate-900 dark:text-slate-50",
+          notoSans.className
+        )}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Header />
@@ -49,4 +54,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

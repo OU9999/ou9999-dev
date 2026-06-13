@@ -12,7 +12,7 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    files: ["tailwind.config.js", "src/utils/base64Util.ts"],
+    files: ["tailwind.config.js", "src/utils/base64-util.ts"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
     },

@@ -1,6 +1,6 @@
-import { cn } from "@/utils/tailwindUtil";
+import { cn } from "@/utils/tailwind-util";
 import Link from "next/link";
-import LinkIcon from "../svg/link-icon";
+import { LinkIcon } from "../svg/link-icon";
 
 interface LinkTextProps {
   link: string;
@@ -26,4 +26,4 @@ const LinkText = ({ link, text, className }: LinkTextProps) => {
   );
 };
 
-export default LinkText;
+export { LinkText };

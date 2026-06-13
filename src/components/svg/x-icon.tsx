@@ -10,4 +10,4 @@ const XIcon = () => {
   );
 };
 
-export default XIcon;
+export { XIcon };

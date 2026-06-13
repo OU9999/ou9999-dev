@@ -1,15 +1,17 @@
-import ImageWithPlaceholder from "@/components/mainSection/image-with-placeholder";
-import VideoWithAlt from "@/components/mainSection/video-with-alt";
+import { ImageWithPlaceholder } from "@/components/main-section/image-with-placeholder";
+import { VideoWithAlt } from "@/components/main-section/video-with-alt";
 import type { MDXComponents } from "mdx/types";
 
-export const mdxComponents: MDXComponents = {
+const mdxComponents: MDXComponents = {
   Image: ImageWithPlaceholder,
   Video: VideoWithAlt,
 };
 
-export function useMDXComponents(components: MDXComponents): MDXComponents {
+const useMDXComponents = (components: MDXComponents): MDXComponents => {
   return {
     ...mdxComponents,
     ...components,
   };
-}
+};
+
+export { mdxComponents, useMDXComponents };

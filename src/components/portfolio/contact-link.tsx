@@ -1,5 +1,5 @@
 import Link from "next/link";
-import LinkIcon from "../svg/link-icon";
+import { LinkIcon } from "../svg/link-icon";
 
 interface ContactLinkProps {
   title: string;
@@ -24,4 +24,4 @@ const ContactLink = ({ title, link, linkText }: ContactLinkProps) => {
   );
 };
 
-export default ContactLink;
+export { ContactLink };

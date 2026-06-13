@@ -1,10 +1,10 @@
 import { myDomain } from "@/constant/domain";
-import { getAllPosts } from "@/utils/postUtil";
+import { getAllPosts } from "@/utils/post-util";
 import RSS from "rss";
 
 export const dynamic = "force-static";
 
-export const GET = async () => {
+export const GET = async (): Promise<Response> => {
   const posts = getAllPosts();
 
   const feed = new RSS({

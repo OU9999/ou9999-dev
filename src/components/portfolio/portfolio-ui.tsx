@@ -1,8 +1,8 @@
-import { cn } from "@/utils/tailwindUtil";
+import { cn } from "@/utils/tailwind-util";
 import Link from "next/link";
-import LinkIcon from "../svg/link-icon";
-import CarouselImg from "./carousel-img";
-import CarouselStack from "./carousel-stack";
+import { LinkIcon } from "../svg/link-icon";
+import { CarouselImg } from "./carousel-img";
+import { CarouselStack } from "./carousel-stack";
 
 interface PortfolioTitleProps {
   text: string;
@@ -12,9 +12,10 @@ const PortfolioTitle = ({ text }: PortfolioTitleProps) => {
   return <p className="text-lg mt-14 mb-5">{text}</p>;
 };
 
-type PortfolioContentProps = React.HTMLAttributes<HTMLDivElement>;
-
-const PortfolioContent = ({ className, ...props }: PortfolioContentProps) => {
+const PortfolioContent = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => {
   return <div className={cn("space-y-5", className)} {...props} />;
 };
 
