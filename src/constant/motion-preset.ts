@@ -38,16 +38,10 @@ const staggerContainerPreset = {
 
 const viewportImagePreset = {
   hidden: {
-    opacity: 0,
-    y: 72,
-    scale: 0.98,
-    clipPath: "inset(12% 0 0 0)",
+    clipPath: "inset(0% 0% 100%)",
   },
   visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    clipPath: "inset(0% 0 0 0)",
+    clipPath: "inset(0%)",
     transition: {
       duration: motionDuration.entrance,
       ease: editorialEase,
@@ -77,17 +71,12 @@ const overlayPreset = {
 
 const heroImagePreset = {
   hidden: {
-    opacity: 0,
-    y: 56,
-    scale: 0.98,
-    clipPath: "inset(50% 0 49% 0)",
+    clipPath: "inset(0% 0% 100%)",
   },
   visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    clipPath: "inset(0% 0 0 0)",
+    clipPath: "inset(0%)",
     transition: {
+      delay: motionStagger.base,
       duration: motionDuration.entrance,
       ease: editorialEase,
     },

@@ -57,9 +57,11 @@
 - React 애니메이션 패키지 `motion` 사용
 - import 경로 `motion/react` 사용
 - 진입, stagger, viewport reveal, overlay 전환에 Motion 사용
+- 사진 reveal은 `clip-path: inset(0% 0% 100%)` → `inset(0%)` 마스크 방식 우선
+- 글 상세 대표 이미지는 preload 후 reveal 적용
 - 단순 hover·focus transition은 Tailwind 우선
 - 기본 preset: `/Users/ou9999/Documents/My Project/simple-blog/src/constant/motion-preset.ts`
-- `prefers-reduced-motion` 대응 시 `useReducedMotion` 우선
+- `prefers-reduced-motion` 대응 시 `useReducedMotion`과 `motion-reduce` className 사용
 
 ## Redesign Notes
 

@@ -79,7 +79,7 @@ const ContentHeader = ({
               main && "bg-gradient-to-t from-gray-100 via-gray-300 to-gray-400"
             )}
           >
-            <ImageWithPlaceholderHeader alt={title} img={img} />
+            <ImageWithPlaceholderHeader alt={title} img={img} preload />
           </ContentHeaderMotionImage>
         )}
 

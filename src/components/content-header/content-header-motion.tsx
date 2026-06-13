@@ -8,6 +8,7 @@ import {
   heroTitlePreset,
   staggerContainerPreset,
 } from "@/constant/motion-preset";
+import { cn } from "@/utils/tailwind-util";
 
 interface ContentHeaderMotionProps {
   children: ReactNode;
@@ -41,7 +42,7 @@ const ContentHeaderMotionImage = ({
 
   return (
     <motion.div
-      className={className}
+      className={cn(className, "motion-reduce:![clip-path:inset(0%)]")}
       variants={heroImagePreset}
       initial={initialState}
       animate="visible"
