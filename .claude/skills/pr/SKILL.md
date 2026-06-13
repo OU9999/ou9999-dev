@@ -16,40 +16,40 @@ PR 생성 가능 상태 확인:
 ```bash
 git status --short
 git branch --show-current
-git fetch origin main --prune
+git fetch origin develop --prune
 ```
 
 **중단 조건:**
 
 - working tree dirty 상태면 중단, 커밋 또는 스태시 후 재실행 안내
-- 현재 브랜치가 `main`이면 중단
-- `git fetch origin main --prune` 실패 시 원격 기준 검사가 불완전하다는 점을 사용자에게 알리고 진행 여부 확인
+- 현재 브랜치가 `develop`이면 중단
+- `git fetch origin develop --prune` 실패 시 원격 기준 검사가 불완전하다는 점을 사용자에게 알리고 진행 여부 확인
 - 기준 브랜치 대비 커밋 0개면 PR 생성 변경사항 없음으로 중단
 
-기준 브랜치는 `origin/main` 우선, 불가 시 로컬 `main` 사용:
+기준 브랜치는 `origin/develop` 우선, 불가 시 로컬 `develop` 사용:
 
 ```bash
-git log --oneline origin/main..HEAD
-git log --name-status --find-renames --oneline origin/main..HEAD
-git diff --stat origin/main...HEAD
-git diff --name-status --find-renames origin/main...HEAD
+git log --oneline origin/develop..HEAD
+git log --name-status --find-renames --oneline origin/develop..HEAD
+git diff --stat origin/develop...HEAD
+git diff --name-status --find-renames origin/develop...HEAD
 ```
 
-`origin/main`을 사용할 수 없는 경우:
+`origin/develop`을 사용할 수 없는 경우:
 
 ```bash
-git log --oneline main..HEAD
-git log --name-status --find-renames --oneline main..HEAD
-git diff --stat main...HEAD
-git diff --name-status --find-renames main...HEAD
+git log --oneline develop..HEAD
+git log --name-status --find-renames --oneline develop..HEAD
+git diff --stat develop...HEAD
+git diff --name-status --find-renames develop...HEAD
 ```
 
-**주의:** `git diff main..HEAD` 또는 `git diff origin/main..HEAD` 사용 금지.
+**주의:** `git diff develop..HEAD` 또는 `git diff origin/develop..HEAD` 사용 금지.
 
 - `A..B` 형태의 `git diff`는 PR 기준 diff가 아니라 A와 B 직접 비교
 - base 브랜치에만 있는 변경사항이 이 브랜치에서 삭제된 것처럼 보일 위험
-- 실제 PR diff 확인은 `origin/main...HEAD` 같은 triple-dot 사용
-- 커밋 기반 변경 파일 확인은 `git log --name-status --find-renames origin/main..HEAD` 사용
+- 실제 PR diff 확인은 `origin/develop...HEAD` 같은 triple-dot 사용
+- 커밋 기반 변경 파일 확인은 `git log --name-status --find-renames origin/develop..HEAD` 사용
 
 ### 2. 사전 검사 체크리스트
 
@@ -131,7 +131,7 @@ PR 미리보기
 [생성한 본문 내용]
 
 라벨: [결정한 라벨들]
-Base: main
+Base: develop
 
 사전 검사:
 - CLAUDE.md 준수: [확인/수정 필요/해당 없음]
@@ -162,7 +162,7 @@ EOF
 )" \
   --assignee @me \
   --label "라벨" \
-  --base main
+  --base develop
 ```
 
 **중요:** body는 HEREDOC 필수.
