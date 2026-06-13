@@ -22,6 +22,10 @@
   - `text-google-blue`
   - `text-google-muted`
   - `text-google-yellow`
+- 텍스트 그라데이션
+  - `bg-nacre-moonlit`
+  - `bg-clip-text`
+  - `text-transparent`
 - 폰트
   - `font-sans`
   - `LINE Seed Sans KR`

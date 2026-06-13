@@ -1,4 +1,5 @@
 import { Tag } from "@/components/common/tag-link";
+import { nacreTextGradient } from "@/components/common/styles";
 import { formatDateToString } from "@/utils/date-util";
 import { cn } from "@/utils/tailwind-util";
 import {
@@ -45,7 +46,8 @@ const ContentHeader = ({
           )}
           <ContentHeaderMotionTitle
             className={cn(
-              "w-full text-5xl font-normal leading-none text-current sm:text-6xl md:text-7xl lg:text-[90px] lg:leading-[0.95]",
+              "w-full text-5xl font-normal leading-none sm:text-6xl md:text-7xl lg:text-[90px] lg:leading-[0.95]",
+              nacreTextGradient,
               date ? "mt-10 md:mt-[51px]" : "mt-0"
             )}
           >

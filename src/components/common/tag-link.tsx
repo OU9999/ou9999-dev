@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { hoverNacreTextGradient } from "@/components/common/styles";
 import { cn } from "@/utils/tailwind-util";
 
 interface TagProps {
@@ -16,7 +17,10 @@ const Tag = ({ tag, variant = "paper" }: TagProps) => {
             variant === "ink" &&
               "border-google-ink/40 text-google-ink hover:bg-google-ink hover:text-google-paper",
             variant === "paper" &&
-              "border-white/40 text-google-paper hover:border-google-yellow hover:bg-google-paper hover:text-google-ink"
+              cn(
+                "border-white/40 text-google-paper hover:border-white/80",
+                hoverNacreTextGradient
+              )
           )}
         >
           {tag.toUpperCase()}

@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { hoverNacreTextGradient } from "../common/styles";
 import { Tag } from "../common/tag-link";
 import { formatDateToString } from "@/utils/date-util";
+import { cn } from "@/utils/tailwind-util";
 import { ImageWithPlaceholderHeader } from "../content-header/image-with-placeholder-header";
 
 interface PostBoxProps {
@@ -30,7 +32,12 @@ const PostBox = ({
       </Link>
       <div className="mt-7 w-full">
         <Link href={`/p/${slug}`}>
-          <p className="inline cursor-pointer text-2xl font-normal leading-tight text-google-paper transition-colors hover:text-google-yellow sm:text-[32px] sm:leading-[35px]">
+          <p
+            className={cn(
+              "inline cursor-pointer text-2xl font-normal leading-tight text-google-paper sm:text-[32px] sm:leading-[35px]",
+              hoverNacreTextGradient
+            )}
+          >
             {title}
           </p>
         </Link>

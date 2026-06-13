@@ -65,7 +65,7 @@ const PostPage = async ({ params }: IPostPageProps) => {
           tags={post.tags}
           date={post.date}
         />
-        <div className="mx-auto w-full max-w-[684px] px-6 pb-20 pt-28 prose prose-google prose-img:mb-0 prose-p:my-6 prose-p:text-xl prose-p:font-normal prose-p:leading-7 prose-p:text-google-paper prose-headings:font-normal prose-headings:text-google-paper prose-h2:mb-10 prose-h2:mt-20 prose-h2:text-5xl prose-h2:leading-tight prose-blockquote:not-italic prose-blockquote:font-normal prose-blockquote:text-google-paper prose-a:text-google-blue prose-quoteless prose-blockquote:border-google-blue prose-strong:text-google-paper prose-video:mb-0 md:px-0 md:pb-28 md:pt-[327px] md:prose-h2:text-[64px] md:prose-h2:leading-[67px] 2xl:max-w-[804px] 2xl:pt-[361px]">
+        <div className="mx-auto w-full max-w-[684px] px-6 pb-20 pt-28 prose prose-google prose-img:mb-0 prose-p:my-6 prose-p:text-xl prose-p:font-normal prose-p:leading-7 prose-p:text-google-paper prose-headings:font-normal prose-headings:text-google-paper prose-h2:mb-10 prose-h2:mt-20 prose-h2:text-5xl prose-h2:leading-tight prose-blockquote:not-italic prose-blockquote:font-normal prose-blockquote:text-google-paper prose-a:bg-nacre-moonlit prose-a:bg-clip-text prose-a:text-transparent prose-quoteless prose-blockquote:border-google-blue prose-strong:text-google-paper prose-video:mb-0 md:px-0 md:pb-28 md:pt-[327px] md:prose-h2:text-[64px] md:prose-h2:leading-[67px] 2xl:max-w-[804px] 2xl:pt-[361px]">
           <Mdx Component={MdxComponent} />
         </div>
       </article>

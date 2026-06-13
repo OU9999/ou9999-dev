@@ -27,6 +27,10 @@ const config = {
         "gradient-start": "#93A1F7",
         "gradient-end": "#52C7C6",
       },
+      backgroundImage: {
+        "nacre-moonlit":
+          "linear-gradient(135deg, #EDF7F3 0%, #9DF4E6 24%, #B7B9FF 52%, #F4B9DE 76%, #FFF4CA 100%)",
+      },
       fontFamily: {
         sans: ["LINE Seed Sans KR", "system-ui", "sans-serif"],
       },
