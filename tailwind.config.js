@@ -22,6 +22,9 @@ const config = {
         "gradient-start": "#93A1F7",
         "gradient-end": "#52C7C6",
       },
+      fontFamily: {
+        sans: ["LINE Seed Sans KR", "system-ui", "sans-serif"],
+      },
       borderWidth: {
         "1": "1px",
       },

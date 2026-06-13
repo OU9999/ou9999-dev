@@ -21,6 +21,9 @@
   - `text-gradient-end`
   - `from-gradient-start`
   - `to-gradient-end`
+- 폰트
+  - `font-sans`
+  - `LINE Seed Sans KR`
 - 레이아웃
   - `max-w-138`
   - `max-w-186`

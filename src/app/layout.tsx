@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Noto_Sans_KR } from "next/font/google";
+import "@kfonts/line-seed-sans-kr/index.css";
 import "@/css/tailwind.css";
 import "@/css/prettyCode.css";
 import { defaultOpenGraph, defaultTwitter } from "@/constant/meta-data";
 import { Footer } from "@/components/nav/site-footer";
 import { myDomain } from "@/constant/domain";
 import { Header } from "@/components/nav/site-header";
-import { cn } from "@/utils/tailwind-util";
-
-const notoSans = Noto_Sans_KR({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(myDomain),
@@ -39,7 +36,7 @@ const RootLayout = ({
 }) => {
   return (
     <html lang="en">
-      <body className={cn("bg-dark-bg text-slate-50", notoSans.className)}>
+      <body className="bg-dark-bg text-slate-50 font-sans">
         <Header />
         {children}
         <Footer />
