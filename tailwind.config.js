@@ -22,7 +22,7 @@ const config = {
         "google-ink": "#12110C",
         "google-paper": "#FFFFFF",
         "google-blue": "#1A73E8",
-        "google-muted": "#5F6368",
+        "google-muted": "#BDC1C6",
         "google-yellow": "#FAE366",
         "gradient-start": "#93A1F7",
         "gradient-end": "#52C7C6",
