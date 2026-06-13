@@ -4,6 +4,7 @@ const motionDuration = {
   fast: 0.2,
   base: 0.4,
   entrance: 0.7,
+  textReveal: 0.32,
 };
 
 const motionStagger = {
@@ -38,16 +39,10 @@ const staggerContainerPreset = {
 
 const viewportImagePreset = {
   hidden: {
-    opacity: 0,
-    y: 72,
-    scale: 0.98,
-    clipPath: "inset(12% 0 0 0)",
+    clipPath: "inset(0% 0% 100%)",
   },
   visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    clipPath: "inset(0% 0 0 0)",
+    clipPath: "inset(0%)",
     transition: {
       duration: motionDuration.entrance,
       ease: editorialEase,
@@ -77,17 +72,12 @@ const overlayPreset = {
 
 const heroImagePreset = {
   hidden: {
-    opacity: 0,
-    y: 56,
-    scale: 0.98,
-    clipPath: "inset(50% 0 49% 0)",
+    clipPath: "inset(0% 0% 100%)",
   },
   visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    clipPath: "inset(0% 0 0 0)",
+    clipPath: "inset(0%)",
     transition: {
+      delay: motionStagger.base,
       duration: motionDuration.entrance,
       ease: editorialEase,
     },
@@ -109,6 +99,29 @@ const heroTitlePreset = {
   },
 };
 
+const textRevealContainerPreset = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.1,
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const textRevealWordPreset = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: motionDuration.textReveal,
+      ease: editorialEase,
+    },
+  },
+};
+
 export {
   editorialEase,
   fadeUpPreset,
@@ -118,5 +131,7 @@ export {
   motionStagger,
   overlayPreset,
   staggerContainerPreset,
+  textRevealContainerPreset,
+  textRevealWordPreset,
   viewportImagePreset,
 };

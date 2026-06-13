@@ -4,11 +4,13 @@ import Image from "next/image";
 interface ImageWithPlaceholderHeaderProps {
   alt?: string;
   img: string;
+  preload?: boolean;
 }
 
 const ImageWithPlaceholderHeader = ({
   alt,
   img,
+  preload = false,
 }: ImageWithPlaceholderHeaderProps) => {
   const imgSrc = `/imgs/header/${img}.webp`;
   const base64Data = getBase64Header(`${img}.webp`);
@@ -19,6 +21,7 @@ const ImageWithPlaceholderHeader = ({
       src={imgSrc}
       fill
       sizes="(max-width: 768px) 100vw, 96vw"
+      preload={preload}
       placeholder="blur"
       blurDataURL={base64Data.base64}
     />

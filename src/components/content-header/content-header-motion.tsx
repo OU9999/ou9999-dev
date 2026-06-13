@@ -1,13 +1,14 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import {
   fadeUpPreset,
   heroImagePreset,
   heroTitlePreset,
   staggerContainerPreset,
 } from "@/constant/motion-preset";
+import { cn } from "@/utils/tailwind-util";
 
 interface ContentHeaderMotionProps {
   children: ReactNode;
@@ -18,13 +19,10 @@ const ContentHeaderMotionRoot = ({
   children,
   className,
 }: ContentHeaderMotionProps) => {
-  const shouldReduceMotion = useReducedMotion();
-  const initialState = shouldReduceMotion ? false : "hidden";
-
   return (
     <motion.section
       className={className}
-      initial={initialState}
+      initial="hidden"
       animate="visible"
     >
       {children}
@@ -36,14 +34,11 @@ const ContentHeaderMotionImage = ({
   children,
   className,
 }: ContentHeaderMotionProps) => {
-  const shouldReduceMotion = useReducedMotion();
-  const initialState = shouldReduceMotion ? false : "hidden";
-
   return (
     <motion.div
-      className={className}
+      className={cn(className, "motion-reduce:![clip-path:inset(0%)]")}
       variants={heroImagePreset}
-      initial={initialState}
+      initial="hidden"
       animate="visible"
     >
       {children}
@@ -55,14 +50,11 @@ const ContentHeaderMotionText = ({
   children,
   className,
 }: ContentHeaderMotionProps) => {
-  const shouldReduceMotion = useReducedMotion();
-  const initialState = shouldReduceMotion ? false : "hidden";
-
   return (
     <motion.div
       className={className}
       variants={staggerContainerPreset}
-      initial={initialState}
+      initial="hidden"
       animate="visible"
     >
       {children}
@@ -75,7 +67,13 @@ const ContentHeaderMotionTitle = ({
   className,
 }: ContentHeaderMotionProps) => {
   return (
-    <motion.h1 className={className} variants={heroTitlePreset}>
+    <motion.h1
+      className={cn(
+        className,
+        "motion-reduce:!transform-none motion-reduce:!opacity-100",
+      )}
+      variants={heroTitlePreset}
+    >
       {children}
     </motion.h1>
   );
@@ -86,7 +84,13 @@ const ContentHeaderMotionItem = ({
   className,
 }: ContentHeaderMotionProps) => {
   return (
-    <motion.div className={className} variants={fadeUpPreset}>
+    <motion.div
+      className={cn(
+        className,
+        "motion-reduce:!transform-none motion-reduce:!opacity-100",
+      )}
+      variants={fadeUpPreset}
+    >
       {children}
     </motion.div>
   );
