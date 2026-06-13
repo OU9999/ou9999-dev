@@ -3,8 +3,8 @@ import { PopoverButton } from "./header/popover-button";
 
 const Header = () => {
   return (
-    <header className="z-40 w-full h-14 md:h-20 flex justify-center fixed backdrop-blur-md bg-blur-black">
-      <div className="w-full max-w-276 px-5 xl:px-0 h-full flex justify-between items-center">
+    <header className="z-40 flex h-14 w-full items-center border-b border-slate-800 bg-dark-bg px-6 md:h-20">
+      <nav className="flex h-full w-full items-center justify-between">
         <Link href={"/"}>
           <div className="flex justify-center items-center font-bold text-2xl md:text-3xl cursor-pointer hover:group group">
             <p className="text-gradient-start">&lt;</p>
@@ -15,7 +15,7 @@ const Header = () => {
           </div>
         </Link>
 
-        <div className="hidden space-x-10 md:flex">
+        <div className="hidden items-center gap-10 md:flex">
           <Link href={"/"}>
             <p className=" text-lg font-semibold hover:text-slate-400">Home</p>
           </Link>
@@ -31,7 +31,7 @@ const Header = () => {
           </Link>
         </div>
         <PopoverButton />
-      </div>
+      </nav>
     </header>
   );
 };

@@ -11,8 +11,7 @@ const TagsHeadSection = async ({ params }: ITagHeadSectionProps) => {
   return (
     <ContentHeader
       title={`TAG : ${decodeURIComponent(tag).toUpperCase()}`}
-      text=""
-      img="ovo3"
+      text="같은 맥락으로 묶인 글"
       main
     />
   );

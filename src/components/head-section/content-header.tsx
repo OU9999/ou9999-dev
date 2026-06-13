@@ -1,12 +1,19 @@
 import { Tag } from "@/components/common/tag-link";
 import { formatDateToString } from "@/utils/date-util";
 import { cn } from "@/utils/tailwind-util";
+import {
+  ContentHeaderMotionImage,
+  ContentHeaderMotionItem,
+  ContentHeaderMotionRoot,
+  ContentHeaderMotionText,
+  ContentHeaderMotionTitle,
+} from "./content-header-motion";
 import { ImageWithPlaceholderHeader } from "./image-with-placeholder-header";
 
 interface ContentHeaderProps {
   title: string;
   text: string;
-  img: string;
+  img?: string;
   tags?: string[];
   date?: string;
   main?: boolean;
@@ -21,39 +28,64 @@ const ContentHeader = ({
   main,
 }: ContentHeaderProps) => {
   return (
-    <div className="shadow-sm mt-14 md:mt-20 w-full flex flex-col justify-center items-center bg-content-header-black">
-      <div className="w-full flex max-w-276 px-5 xl:px-0 py-10 flex-col justify-center items-center md:flex-row md:justify-start md:items-start md:space-x-10">
-        <div
-          className={cn(
-            "w-64 h-40 md:w-96 md:h-64 relative overflow-hidden rounded-xl flex-shrink-0 flex-grow-0",
-            main && "bg-gradient-to-t from-gray-100 via-gray-300 to-gray-400"
-          )}
-        >
-          <ImageWithPlaceholderHeader img={img} />
-        </div>
-        <div className="mt-5 flex flex-col justify-center items-center md:justify-start md:items-start ">
-          <p className="font-bold text-base sm:text-xl md:text-3xl bg-gradient-to-r from-white to-white inline-block text-transparent bg-clip-text">
-            {title}
-          </p>
-          {tags && (
-            <div className="mt-2 flex space-x-2 md:space-x-3 text-gradient-start">
-              {tags.map((tag) => (
-                <Tag key={"ITEM" + tag} tag={tag} />
-              ))}
-            </div>
-          )}
-
-          {text && (
-            <p className="mt-1 md:mt-3 text-sm md:text-xl text-slate-400">{text}</p>
-          )}
+    <ContentHeaderMotionRoot
+      className={cn(
+        "w-full bg-content-header-black px-6",
+        main ? "pb-8 pt-32 md:pb-8 md:pt-32" : "pb-16 pt-24 md:pb-24 md:pt-28"
+      )}
+    >
+      <div className="w-full">
+        <ContentHeaderMotionText className="w-full">
           {date && (
-            <p className="mt-5 md:mt-24 text-xs md:text-base text-slate-400">
-              {formatDateToString(date)}
-            </p>
+            <ContentHeaderMotionItem className="font-mono text-xs uppercase leading-none tracking-normal text-slate-400 md:text-sm">
+              <time dateTime={date}>{formatDateToString(date)}</time>
+            </ContentHeaderMotionItem>
           )}
-        </div>
+          <ContentHeaderMotionTitle
+            className={cn(
+              "max-w-[1392px] text-5xl font-normal leading-none text-slate-50 sm:text-6xl md:text-7xl lg:text-[90px]",
+              date ? "mt-10 md:mt-14" : "mt-0"
+            )}
+          >
+            {title}
+          </ContentHeaderMotionTitle>
+          <ContentHeaderMotionItem
+            className={cn(
+              "mt-10 flex w-full flex-col gap-6 md:flex-row md:items-end md:justify-between",
+              !main && "md:mt-12"
+            )}
+          >
+            <div className="max-w-2xl text-base text-slate-300 md:text-lg">
+              <p>{main ? text : "OU9999"}</p>
+            </div>
+            {tags && (
+              <div className="flex flex-wrap gap-2 md:justify-end">
+                {tags.map((tag) => (
+                  <Tag key={"ITEM" + tag} tag={tag} />
+                ))}
+              </div>
+            )}
+          </ContentHeaderMotionItem>
+        </ContentHeaderMotionText>
+
+        {img && (
+          <ContentHeaderMotionImage
+            className={cn(
+              "relative mt-10 aspect-[16/9] w-full overflow-hidden md:mt-12",
+              main && "bg-gradient-to-t from-gray-100 via-gray-300 to-gray-400"
+            )}
+          >
+            <ImageWithPlaceholderHeader alt={title} img={img} />
+          </ContentHeaderMotionImage>
+        )}
+
+        {text && !main && (
+          <ContentHeaderMotionItem className="mx-auto mt-14 max-w-[684px] text-2xl leading-snug text-slate-200 md:mt-20 md:text-3xl">
+            <p>{text}</p>
+          </ContentHeaderMotionItem>
+        )}
       </div>
-    </div>
+    </ContentHeaderMotionRoot>
   );
 };
 
