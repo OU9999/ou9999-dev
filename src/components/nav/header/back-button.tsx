@@ -14,7 +14,7 @@ const BackButton = () => {
     <button
       type="button"
       aria-label="뒤로 가기"
-      className="fixed top-10 right-10 w-10 h-10 fill-black dark:fill-white"
+      className="fixed top-10 right-10 w-10 h-10 fill-white"
       onClick={handleBackClick}
     >
       <XIcon />

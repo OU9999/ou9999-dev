@@ -44,7 +44,7 @@ const ProjectLayout = ({
 }: ProjectLayoutProps) => {
   return (
     <div className="w-full flex">
-      <div className="flex flex-col md:flex-row w-3/12 text-slate-500 dark:text-slate-400">
+      <div className="flex flex-col md:flex-row w-3/12 text-slate-400">
         {dateFrom && <p>{dateFrom} -&nbsp;</p>}
         {dateTo && <p>{dateTo}</p>}
         {date && <p>{date}</p>}
@@ -57,7 +57,7 @@ const ProjectLayout = ({
               <Link href={link}>
                 <p className="cursor-pointer hover:underline">{projectTitle}</p>
               </Link>
-              <div className="w-3 h-3 fill-black dark:fill-white stroke-black dark:stroke-white">
+              <div className="w-3 h-3 fill-white stroke-white">
                 <LinkIcon />
               </div>
             </>
@@ -65,7 +65,7 @@ const ProjectLayout = ({
             <p className="">{projectTitle}</p>
           )}
         </div>
-        <div className="w-full flex flex-col justify-start text-slate-500 dark:text-slate-400">
+        <div className="w-full flex flex-col justify-start text-slate-400">
           <p>{projectType}</p>
           {stack && <CarouselStack stack={stack} />}
           {imgs && <CarouselImg imgs={imgs} />}

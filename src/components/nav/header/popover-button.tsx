@@ -5,7 +5,7 @@ const PopoverButton = () => {
     <div className="flex md:hidden">
       <Link
         href={"/popover"}
-        className="text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
+        className="text-slate-400 hover:text-slate-300"
         aria-label="open-pop-over"
       >
         <svg width="24" height="24">

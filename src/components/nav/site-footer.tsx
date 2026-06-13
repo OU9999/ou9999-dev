@@ -13,7 +13,7 @@ const IconBox = ({ link, icon }: IIconBoxProps) => {
     <Link href={link}>
       <div
         aria-label={`link-for-${link}`}
-        className="w-4 h-4 md:w-5 md:h-5 cursor-pointer fill-black dark:fill-white hover:fill-gradient-end hover:dark:fill-gradient-start"
+        className="w-4 h-4 md:w-5 md:h-5 cursor-pointer fill-white hover:fill-gradient-start"
       >
         {icon}
       </div>
@@ -25,9 +25,9 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="w-full mt-20 flex justify-center border-t-1 border-slate-300 dark:border-slate-700">
+    <div className="w-full mt-20 flex justify-center border-t-1 border-slate-700">
       <div className="w-full max-w-276 p-5 flex justify-between items-center">
-        <div className="flex flex-col space-y-1  text-slate-500 dark:text-slate-400">
+        <div className="flex flex-col space-y-1 text-slate-400">
           <div className="flex text-sm">
             <p>{currentYear}﹒©</p>
             <p className="font-bold">&nbsp;OU9999</p>

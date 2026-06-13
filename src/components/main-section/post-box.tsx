@@ -14,7 +14,7 @@ interface PostBoxProps {
 
 const PostBox = ({ title, tags, description, date, slug }: PostBoxProps) => {
   return (
-    <article className="w-full flex flex-col p-5 border-b-1 border-slate-300 dark:border-slate-700">
+    <article className="w-full flex flex-col p-5 border-b-1 border-slate-700">
       <div className="w-full">
         <Link href={`/p/${slug}`}>
           <p
@@ -32,10 +32,10 @@ const PostBox = ({ title, tags, description, date, slug }: PostBoxProps) => {
           <Tag key={"tag" + idx} tag={tag} />
         ))}
       </div>
-      <div className="w-full mt-5 text-sm sm:text-base md:text-lg text-slate-500 dark:text-slate-400">
+      <div className="w-full mt-5 text-sm sm:text-base md:text-lg text-slate-400">
         <p>{description}</p>
       </div>
-      <div className="w-full mt-10 sm:mt-12 md:mt-14 text-xs sm:text-sm md:text-base text-slate-500 dark:text-slate-400">
+      <div className="w-full mt-10 sm:mt-12 md:mt-14 text-xs sm:text-sm md:text-base text-slate-400">
         <p>{formatDateToString(date)}</p>
       </div>
     </article>

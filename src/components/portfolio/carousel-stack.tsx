@@ -7,7 +7,7 @@ interface BadgeProps {
 
 const Badge = ({ text }: BadgeProps) => {
   return (
-    <div className="inline-flex whitespace-nowrap w-auto h-5 max-h-5 items-center rounded-md border border-slate-300 dark:border-slate-600 px-2.5 py-0.5 text-xs text-slate-900 dark:text-slate-50 bg-[#E4E7EB] dark:bg-[#111827]">
+    <div className="inline-flex whitespace-nowrap w-auto h-5 max-h-5 items-center rounded-md border border-slate-600 px-2.5 py-0.5 text-xs text-slate-50 bg-[#111827]">
       {text}
     </div>
   );

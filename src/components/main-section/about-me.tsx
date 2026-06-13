@@ -15,12 +15,9 @@ interface IconBoxProps {
 const IconBox = ({ link, icon, owl, subText }: IconBoxProps) => {
   return (
     <Link href={link}>
-      <div className="cursor-pointer flex justify-center p-2 rounded-md items-center space-x-1 hover:bg-gray-200 hover:dark:bg-gray-700">
+      <div className="cursor-pointer flex justify-center p-2 rounded-md items-center space-x-1 hover:bg-gray-700">
         <div
-          className={cn(
-            "w-5 h-5 fill-black",
-            owl ? "dark:fill-black" : "dark:fill-white"
-          )}
+          className={cn("w-5 h-5", owl ? "fill-black" : "fill-white")}
         >
           {icon}
         </div>
@@ -33,7 +30,7 @@ const IconBox = ({ link, icon, owl, subText }: IconBoxProps) => {
 const AboutMe = () => {
   return (
     <div className="w-full mt-14 md:mt-20 flex flex-col justify-center items-center">
-      <div className="w-full max-w-138 flex flex-col mt-10 space-y-10 text-xs md:text-sm text-slate-500 dark:text-slate-400">
+      <div className="w-full max-w-138 flex flex-col mt-10 space-y-10 text-xs md:text-sm text-slate-400">
         <p>
           어머니가 작고 사소한 일이라도 불편한 부분이 있다면 개선하시는
           사람이라는 것. 그것은 나에게 특별한 감정을 불러일으킨다. 다른

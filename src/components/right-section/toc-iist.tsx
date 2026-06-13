@@ -33,8 +33,8 @@ const TOCList = () => {
             className={cn(
               "inline-block cursor-pointer pl-2 py-1 border-l-2 hover:underline",
               currentId === id
-                ? "text-gradient-end border-gradient-end dark:text-gradient-start dark:border-gradient-start"
-                : "text-slate-500 dark:text-slate-400",
+                ? "text-gradient-start border-gradient-start"
+                : "text-slate-400",
               nodeName === "H3" && "pl-4"
             )}
           >

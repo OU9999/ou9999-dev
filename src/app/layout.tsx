@@ -4,7 +4,6 @@ import { Noto_Sans_KR } from "next/font/google";
 import "@/css/tailwind.css";
 import "@/css/prettyCode.css";
 import { defaultOpenGraph, defaultTwitter } from "@/constant/meta-data";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Footer } from "@/components/nav/site-footer";
 import { myDomain } from "@/constant/domain";
 import { Header } from "@/components/nav/site-header";
@@ -39,18 +38,11 @@ const RootLayout = ({
   children: ReactNode;
 }) => {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "bg-white-bg dark:bg-dark-bg text-slate-900 dark:text-slate-50",
-          notoSans.className
-        )}
-      >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <Header />
-          {children}
-          <Footer />
-        </ThemeProvider>
+    <html lang="en">
+      <body className={cn("bg-dark-bg text-slate-50", notoSans.className)}>
+        <Header />
+        {children}
+        <Footer />
       </body>
     </html>
   );

@@ -15,7 +15,7 @@ const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
         blurDataURL={base64Data.base64}
       />
       {props.alt && (
-        <p className="my-1 text-gray-400 dark:text-gray-600 text-sm ">
+        <p className="my-1 text-gray-600 text-sm ">
           {props.alt}
         </p>
       )}
