@@ -1,3 +1,4 @@
+import { ContentHeader } from "@/components/content-header/content-header";
 import { GiscusComment } from "@/components/main-section/giscus-comment";
 import { Mdx } from "@/components/main-section/mdx-components";
 import {
@@ -56,8 +57,17 @@ const PostPage = async ({ params }: IPostPageProps) => {
 
   return (
     <>
-      <article className="mx-auto w-full max-w-[684px] px-6 py-20 prose prose-invert prose-img:mb-0 prose-headings:font-normal prose-h2:text-5xl prose-h2:leading-tight prose-blockquote:not-italic prose-blockquote:font-normal prose-a:text-gradient-start prose-quoteless prose-blockquote:border-gradient-start prose-strong:text-[rgb(249,204,117)] prose-video:mb-0 md:px-0 md:py-28">
-        <Mdx Component={MdxComponent} />
+      <article className="w-full overflow-x-hidden bg-content-header-black">
+        <ContentHeader
+          title={post.title}
+          text={post.description}
+          img={post.thumbnail}
+          tags={post.tags}
+          date={post.date}
+        />
+        <div className="mx-auto w-full max-w-[684px] px-6 pb-20 pt-28 prose prose-invert prose-img:mb-0 prose-p:my-6 prose-p:text-xl prose-p:font-normal prose-p:leading-7 prose-headings:font-normal prose-h2:mb-10 prose-h2:mt-20 prose-h2:text-5xl prose-h2:leading-tight prose-blockquote:not-italic prose-blockquote:font-normal prose-a:text-gradient-start prose-quoteless prose-blockquote:border-gradient-start prose-strong:text-[rgb(249,204,117)] prose-video:mb-0 md:px-0 md:pb-28 md:pt-[327px] md:prose-h2:text-[64px] md:prose-h2:leading-[67px] 2xl:max-w-[804px] 2xl:pt-[361px]">
+          <Mdx Component={MdxComponent} />
+        </div>
       </article>
       <div className="mx-auto w-full max-w-[684px] px-6 md:px-0">
         <GiscusComment />

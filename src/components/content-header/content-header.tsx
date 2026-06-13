@@ -31,20 +31,22 @@ const ContentHeader = ({
     <ContentHeaderMotionRoot
       className={cn(
         "w-full bg-content-header-black px-6",
-        main ? "pb-8 pt-32 md:pb-8 md:pt-32" : "pb-16 pt-24 md:pb-24 md:pt-28"
+        main
+          ? "pb-8 pt-32 md:pb-8 md:pt-32"
+          : "pb-16 pt-24 md:pb-24 md:pt-[126px]"
       )}
     >
-      <div className="w-full">
+      <div className="mx-auto w-full max-w-[1632px]">
         <ContentHeaderMotionText className="w-full">
           {date && (
-            <ContentHeaderMotionItem className="font-mono text-xs uppercase leading-none tracking-normal text-slate-400 md:text-sm">
+            <ContentHeaderMotionItem className="font-mono text-xs uppercase leading-none tracking-normal text-slate-400 md:text-base">
               <time dateTime={date}>{formatDateToString(date)}</time>
             </ContentHeaderMotionItem>
           )}
           <ContentHeaderMotionTitle
             className={cn(
-              "max-w-[1392px] text-5xl font-normal leading-none text-slate-50 sm:text-6xl md:text-7xl lg:text-[90px]",
-              date ? "mt-10 md:mt-14" : "mt-0"
+              "w-full text-5xl font-normal leading-none text-slate-50 sm:text-6xl md:text-7xl lg:text-[90px] lg:leading-[0.95]",
+              date ? "mt-10 md:mt-[51px]" : "mt-0"
             )}
           >
             {title}
@@ -52,7 +54,7 @@ const ContentHeader = ({
           <ContentHeaderMotionItem
             className={cn(
               "mt-10 flex w-full flex-col gap-6 md:flex-row md:items-end md:justify-between",
-              !main && "md:mt-12"
+              !main && "md:mt-16"
             )}
           >
             <div className="max-w-2xl text-base text-slate-300 md:text-lg">

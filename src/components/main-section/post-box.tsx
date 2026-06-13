@@ -3,7 +3,7 @@ import { hoverGradient } from "../common/styles";
 import { Tag } from "../common/tag-link";
 import { formatDateToString } from "@/utils/date-util";
 import { cn } from "@/utils/tailwind-util";
-import { ImageWithPlaceholderHeader } from "../head-section/image-with-placeholder-header";
+import { ImageWithPlaceholderHeader } from "../content-header/image-with-placeholder-header";
 
 interface PostBoxProps {
   title: string;
