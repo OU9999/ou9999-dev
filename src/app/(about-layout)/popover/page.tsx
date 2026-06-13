@@ -1,6 +1,6 @@
-import BackButton from "@/components/nav/header/BackButton";
-import ModeToggle from "@/components/nav/header/ModeToggle";
-import { getTagsFromPosts } from "@/utils/postUtil";
+import { BackButton } from "@/components/nav/header/back-button";
+import { ModeToggle } from "@/components/nav/header/mode-toggle";
+import { getTagsFromPosts } from "@/utils/post-util";
 
 import type { Metadata } from "next";
 import Link from "next/link";

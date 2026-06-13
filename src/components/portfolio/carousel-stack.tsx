@@ -1,6 +1,5 @@
 "use client";
 import useEmblaCarousel from "embla-carousel-react";
-import { useEffect } from "react";
 
 interface BadgeProps {
   text: string;
@@ -19,14 +18,10 @@ interface CarouselProps {
 }
 
 const CarouselStack = ({ stack }: CarouselProps) => {
-  const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
+  const [emblaThumbsRef] = useEmblaCarousel({
     containScroll: "keepSnaps",
     dragFree: true,
   });
-
-  useEffect(() => {
-    if (!emblaThumbsApi) return;
-  }, [emblaThumbsApi]);
 
   return (
     <div ref={emblaThumbsRef} className="w-auto overflow-x-scroll mt-2">
@@ -39,4 +34,4 @@ const CarouselStack = ({ stack }: CarouselProps) => {
   );
 };
 
-export default CarouselStack;
+export { CarouselStack };

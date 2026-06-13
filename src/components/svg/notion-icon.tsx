@@ -6,4 +6,4 @@ const NotionIcon = () => {
   );
 };
 
-export default NotionIcon;
+export { NotionIcon };

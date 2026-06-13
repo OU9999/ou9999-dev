@@ -15,4 +15,4 @@ const Tag = ({ tag }: TagProps) => {
   );
 };
 
-export default Tag;
+export { Tag };

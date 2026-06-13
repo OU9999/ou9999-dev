@@ -9,4 +9,4 @@ const LinkIcon = () => {
   );
 };
 
-export default LinkIcon;
+export { LinkIcon };

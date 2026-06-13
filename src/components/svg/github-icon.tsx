@@ -7,4 +7,4 @@ const GithubIcon = () => {
   );
 };
 
-export default GithubIcon;
+export { GithubIcon };

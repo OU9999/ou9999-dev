@@ -11,7 +11,7 @@
     "build": "pnpm generate && next build",
     "start": "next start",
     "lint": "eslint .",
-    "generate": "node src/scripts/generateBase64.mjs"
+    "generate": "node src/scripts/generate-base64.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

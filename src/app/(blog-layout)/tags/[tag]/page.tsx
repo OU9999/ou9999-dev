@@ -1,15 +1,18 @@
-import PostBox from "@/components/mainSection/post-box";
+import { PostBox } from "@/components/main-section/post-box";
 import {
   getAllPosts,
   getPostsFromParamsByTag,
   type TagParams,
-} from "@/utils/postUtil";
+} from "@/utils/post-util";
+import type { Metadata } from "next";
 
 interface ITagPageProps {
   params: Promise<TagParams>;
 }
 
-export const generateMetadata = async ({ params }: ITagPageProps) => {
+export const generateMetadata = async ({
+  params,
+}: ITagPageProps): Promise<Metadata> => {
   const slug = decodeURI((await params).tag);
   const title = `${slug.toUpperCase()} | ou9999.dev`;
 
@@ -18,7 +21,7 @@ export const generateMetadata = async ({ params }: ITagPageProps) => {
   };
 };
 
-export const generateStaticParams = async () => {
+export const generateStaticParams = async (): Promise<TagParams[]> => {
   const tags = new Set<string>();
 
   getAllPosts().forEach((post) => {

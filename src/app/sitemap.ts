@@ -1,5 +1,5 @@
 import { myDomain } from "@/constant/domain";
-import { getAllPosts, getTagsFromPosts } from "@/utils/postUtil";
+import { getAllPosts, getTagsFromPosts } from "@/utils/post-util";
 import { MetadataRoute } from "next";
 
 export const dynamic = "force-static";
