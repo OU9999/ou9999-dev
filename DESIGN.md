@@ -59,7 +59,8 @@
 - 진입, stagger, viewport reveal, overlay 전환에 Motion 사용
 - 사진 reveal은 `clip-path: inset(0% 0% 100%)` → `inset(0%)` 마스크 방식 우선
 - 글 상세 대표 이미지는 preload 후 reveal 적용
-- 짧은 텍스트 인용문 reveal은 단어 단위 opacity stagger 사용
+- 짧은 텍스트 인용문 reveal은 Figma pull quote처럼 데스크톱 `90px/0.95`, 최대 `1032px`, 중앙 정렬 사용
+- 텍스트 인용문은 opening quote → 단어 → closing quote 순서로 opacity stagger 적용
 - MDX 텍스트 reveal은 서버 wrapper에서 적용 가능 여부를 판정하고 client 컴포넌트에는 문자열만 전달
 - 단순 hover·focus transition은 Tailwind 우선
 - 기본 preset: `/Users/ou9999/Documents/My Project/simple-blog/src/constant/motion-preset.ts`

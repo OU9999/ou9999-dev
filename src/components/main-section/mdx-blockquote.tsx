@@ -19,6 +19,11 @@ type TextPart =
 
 type MdxBlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
 
+interface PullQuotePayload {
+  attribution?: string;
+  text: string;
+}
+
 const maxRevealTokenCount = 32;
 const supportedElementNames = new Set(["p", "span"]);
 
@@ -96,15 +101,66 @@ const getRevealText = (parts: TextPart[]): string | null => {
   return text;
 };
 
-const MdxBlockquote = ({ children, ...props }: MdxBlockquoteProps) => {
-  const parts = getPlainTextParts(Children.toArray(children));
-  const text = parts ? getRevealText(parts) : null;
+const getDirectChildren = (children: ReactNode): ReactNode[] => {
+  return Children.toArray(children).filter((child) => {
+    if (typeof child !== "string") {
+      return true;
+    }
 
-  if (!text) {
+    return child.trim().length > 0;
+  });
+};
+
+const getTextFromElement = (node: ReactNode): string | null => {
+  const parts = getPlainTextParts(node);
+
+  if (!parts) {
+    return null;
+  }
+
+  return getRevealText(parts);
+};
+
+const getPullQuotePayload = (
+  children: ReactNode,
+): PullQuotePayload | null => {
+  const directChildren = getDirectChildren(children);
+  const paragraphChildren = directChildren.filter((child) => {
+    return isReactElement(child) && child.type === "p";
+  });
+
+  if (directChildren.length === 1 && paragraphChildren.length === 1) {
+    const quoteText = getTextFromElement(paragraphChildren[0]);
+
+    if (!quoteText) {
+      return null;
+    }
+
+    return { text: quoteText };
+  }
+
+  if (directChildren.length === 2 && paragraphChildren.length === 2) {
+    const quoteText = getTextFromElement(paragraphChildren[0]);
+    const attribution = getTextFromElement(paragraphChildren[1]);
+
+    if (!quoteText || !attribution) {
+      return null;
+    }
+
+    return { attribution, text: quoteText };
+  }
+
+  return null;
+};
+
+const MdxBlockquote = ({ children, ...props }: MdxBlockquoteProps) => {
+  const payload = getPullQuotePayload(children);
+
+  if (!payload) {
     return <blockquote {...props}>{children}</blockquote>;
   }
 
-  return <TextRevealBlockquote {...props} text={text} />;
+  return <TextRevealBlockquote {...props} {...payload} />;
 };
 
 export { MdxBlockquote };
