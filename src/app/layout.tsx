@@ -36,7 +36,7 @@ const RootLayout = ({
 }) => {
   return (
     <html lang="en">
-      <body className="bg-dark-bg text-slate-50 font-sans">
+      <body className="bg-google-ink text-google-paper font-sans">
         <Header />
         {children}
         <Footer />

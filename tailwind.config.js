@@ -19,6 +19,11 @@ const config = {
         "2vh": "120dvh",
       },
       colors: {
+        "google-ink": "#12110C",
+        "google-paper": "#FFFFFF",
+        "google-blue": "#1A73E8",
+        "google-muted": "#5F6368",
+        "google-yellow": "#FAE366",
         "gradient-start": "#93A1F7",
         "gradient-end": "#52C7C6",
       },
@@ -34,6 +39,26 @@ const config = {
         "276": "68rem",
       },
       typography: {
+        google: {
+          css: {
+            "--tw-prose-body": "#FFFFFF",
+            "--tw-prose-headings": "#FFFFFF",
+            "--tw-prose-lead": "#FFFFFF",
+            "--tw-prose-links": "#1A73E8",
+            "--tw-prose-bold": "#FFFFFF",
+            "--tw-prose-counters": "#FFFFFF",
+            "--tw-prose-bullets": "#FFFFFF",
+            "--tw-prose-hr": "rgba(255, 255, 255, 0.2)",
+            "--tw-prose-quotes": "#FFFFFF",
+            "--tw-prose-quote-borders": "#1A73E8",
+            "--tw-prose-captions": "#FFFFFF",
+            "--tw-prose-code": "#FAE366",
+            "--tw-prose-pre-code": "#FFFFFF",
+            "--tw-prose-pre-bg": "rgba(255, 255, 255, 0.08)",
+            "--tw-prose-th-borders": "rgba(255, 255, 255, 0.2)",
+            "--tw-prose-td-borders": "rgba(255, 255, 255, 0.2)",
+          },
+        },
         quoteless: {
           css: {
             "blockquote p:first-of-type::before": { content: "none" },

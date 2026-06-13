@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import {
   fadeUpPreset,
-  heroBackgroundPreset,
   heroImagePreset,
   heroTitlePreset,
   staggerContainerPreset,
@@ -25,7 +24,6 @@ const ContentHeaderMotionRoot = ({
   return (
     <motion.section
       className={className}
-      variants={heroBackgroundPreset}
       initial={initialState}
       animate="visible"
     >

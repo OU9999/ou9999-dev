@@ -75,19 +75,6 @@ const overlayPreset = {
   },
 };
 
-const heroBackgroundPreset = {
-  hidden: {
-    backgroundColor: "#0f0f0f",
-  },
-  visible: {
-    backgroundColor: "#1b1a1e",
-    transition: {
-      duration: motionDuration.entrance,
-      ease: editorialEase,
-    },
-  },
-};
-
 const heroImagePreset = {
   hidden: {
     opacity: 0,
@@ -111,12 +98,10 @@ const heroTitlePreset = {
   hidden: {
     opacity: 0,
     y: 34,
-    color: "#52525b",
   },
   visible: {
     opacity: 1,
     y: 0,
-    color: "#f8fafc",
     transition: {
       duration: motionDuration.entrance,
       ease: editorialEase,
@@ -127,7 +112,6 @@ const heroTitlePreset = {
 export {
   editorialEase,
   fadeUpPreset,
-  heroBackgroundPreset,
   heroImagePreset,
   heroTitlePreset,
   motionDuration,

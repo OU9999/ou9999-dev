@@ -1,13 +1,24 @@
 import Link from "next/link";
+import { cn } from "@/utils/tailwind-util";
 
 interface TagProps {
   tag: string;
+  variant?: "ink" | "paper";
 }
-const Tag = ({ tag }: TagProps) => {
+
+const Tag = ({ tag, variant = "paper" }: TagProps) => {
   return (
     <>
       <Link href={`/tags/${tag}`}>
-        <p className="cursor-pointer rounded-full border border-slate-600 px-3 py-1 font-mono text-xs uppercase leading-none text-gradient-start transition-colors hover:border-gradient-start hover:bg-gradient-start hover:text-dark-bg">
+        <p
+          className={cn(
+            "cursor-pointer rounded-full border px-3 py-1.5 font-mono text-base uppercase leading-none transition-colors",
+            variant === "ink" &&
+              "border-google-ink/40 text-google-ink hover:bg-google-ink hover:text-google-paper",
+            variant === "paper" &&
+              "border-white/40 text-google-paper hover:border-google-yellow hover:bg-google-paper hover:text-google-ink"
+          )}
+        >
           {tag.toUpperCase()}
         </p>
       </Link>

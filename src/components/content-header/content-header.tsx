@@ -30,7 +30,7 @@ const ContentHeader = ({
   return (
     <ContentHeaderMotionRoot
       className={cn(
-        "w-full bg-content-header-black px-6",
+        "w-full bg-google-ink px-6 text-google-paper",
         main
           ? "pb-8 pt-32 md:pb-8 md:pt-32"
           : "pb-16 pt-24 md:pb-24 md:pt-[126px]"
@@ -39,13 +39,13 @@ const ContentHeader = ({
       <div className="mx-auto w-full max-w-[1632px]">
         <ContentHeaderMotionText className="w-full">
           {date && (
-            <ContentHeaderMotionItem className="font-mono text-xs uppercase leading-none tracking-normal text-slate-400 md:text-base">
+            <ContentHeaderMotionItem className="font-mono text-xs uppercase leading-none tracking-normal text-current md:text-base">
               <time dateTime={date}>{formatDateToString(date)}</time>
             </ContentHeaderMotionItem>
           )}
           <ContentHeaderMotionTitle
             className={cn(
-              "w-full text-5xl font-normal leading-none text-slate-50 sm:text-6xl md:text-7xl lg:text-[90px] lg:leading-[0.95]",
+              "w-full text-5xl font-normal leading-none text-current sm:text-6xl md:text-7xl lg:text-[90px] lg:leading-[0.95]",
               date ? "mt-10 md:mt-[51px]" : "mt-0"
             )}
           >
@@ -57,13 +57,13 @@ const ContentHeader = ({
               !main && "md:mt-16"
             )}
           >
-            <div className="max-w-2xl text-base text-slate-300 md:text-lg">
+            <div className="max-w-2xl text-base text-current md:text-lg">
               <p>{main ? text : "OU9999"}</p>
             </div>
             {tags && (
               <div className="flex flex-wrap gap-2 md:justify-end">
                 {tags.map((tag) => (
-                  <Tag key={"ITEM" + tag} tag={tag} />
+                  <Tag key={"ITEM" + tag} tag={tag} variant="paper" />
                 ))}
               </div>
             )}
@@ -82,7 +82,7 @@ const ContentHeader = ({
         )}
 
         {text && !main && (
-          <ContentHeaderMotionItem className="mx-auto mt-14 max-w-[684px] text-2xl leading-snug text-slate-200 md:mt-20 md:text-3xl">
+          <ContentHeaderMotionItem className="mx-auto mt-14 max-w-[684px] text-2xl leading-snug text-current md:mt-20 md:text-3xl">
             <p>{text}</p>
           </ContentHeaderMotionItem>
         )}

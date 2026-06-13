@@ -4,23 +4,24 @@
 
 ## Mode
 
-- 다크모드 단일 운영
-- 라이트모드 미지원
-- 신규 UI 라이트 대응 className 작성 금지
-- 기존 라이트 토큰과 테마 variant 제거
-- 브라우저 기본 UI는 `color-scheme: dark` 기준
+- Google Design 컬러 우선
+- warm black 배경과 white 텍스트를 기본 표면으로 사용
+- 링크·행동 색상은 Google blue 사용
+- 강조 색상은 Google yellow를 제한적으로 사용
+- 테마 모드 명칭보다 레퍼런스 색상 일치 우선
+- 브라우저 기본 UI는 dark color-scheme 기준
 
 ## Tokens
 
 - 배경
-  - `bg-dark-bg`
-  - `bg-blur-black`
-  - `bg-content-header-black`
+  - `bg-google-ink`
+  - `bg-google-paper`
 - 색상
-  - `text-gradient-start`
-  - `text-gradient-end`
-  - `from-gradient-start`
-  - `to-gradient-end`
+  - `text-google-ink`
+  - `text-google-paper`
+  - `text-google-blue`
+  - `text-google-muted`
+  - `text-google-yellow`
 - 폰트
   - `font-sans`
   - `LINE Seed Sans KR`
