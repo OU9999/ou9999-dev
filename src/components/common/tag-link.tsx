@@ -1,13 +1,28 @@
 import Link from "next/link";
+import { hoverNacreTextGradient } from "@/components/common/styles";
+import { cn } from "@/utils/tailwind-util";
 
 interface TagProps {
   tag: string;
+  variant?: "ink" | "paper";
 }
-const Tag = ({ tag }: TagProps) => {
+
+const Tag = ({ tag, variant = "paper" }: TagProps) => {
   return (
     <>
       <Link href={`/tags/${tag}`}>
-        <p className="text-xs md:text-sm cursor-pointer text-gradient-end dark:text-gradient-start hover:underline">
+        <p
+          className={cn(
+            "cursor-pointer rounded-full border px-3 py-1.5 font-mono text-base uppercase leading-none transition-colors",
+            variant === "ink" &&
+              "border-google-ink/40 text-google-ink hover:bg-google-ink hover:text-google-paper",
+            variant === "paper" &&
+              cn(
+                "border-white/40 text-google-paper hover:border-white/80",
+                hoverNacreTextGradient
+              )
+          )}
+        >
           {tag.toUpperCase()}
         </p>
       </Link>

@@ -18,7 +18,7 @@ const CarouselImg = ({ imgs }: CarouselProps) => {
         {imgs.map((img) => (
           <div
             key={"carousel" + img}
-            className="relative w-52 min-w-52 border border-slate-200 dark:border-slate-800 h-full rounded-md overflow-hidden"
+            className="relative w-52 min-w-52 border border-slate-800 h-full rounded-md overflow-hidden"
           >
             <Image
               alt={`Portfolio screenshot: ${img}`}

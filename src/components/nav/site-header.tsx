@@ -1,41 +1,58 @@
 import Link from "next/link";
-import { ModeToggle } from "./header/mode-toggle";
+import { hoverNacreTextGradient, nacreTextGradient } from "../common/styles";
+import { cn } from "@/utils/tailwind-util";
 import { PopoverButton } from "./header/popover-button";
 
 const Header = () => {
   return (
-    <header className="z-40 w-full h-14 md:h-20 flex justify-center fixed backdrop-blur-md bg-blur-white dark:bg-blur-black">
-      <div className="w-full max-w-276 px-5 xl:px-0 h-full flex justify-between items-center">
-        <Link href={"/"}>
-          <div className="flex justify-center items-center font-bold text-2xl md:text-3xl cursor-pointer hover:group group">
-            <p className="text-gradient-start">&lt;</p>
-            <p className="hidden sm:inline-block bg-gradient-to-r from-gradient-start to-gradient-end dark:from-white dark:to-white text-transparent bg-clip-text group-hover:from-violet-500 group-hover:to-teal-500 group-hover:dark:from-gradient-start group-hover:dark:to-gradient-end">
-              OU9999
-            </p>
-            <p className="text-gradient-end">/&gt;</p>
-          </div>
+    <header className="z-40 flex h-14 w-full items-center bg-google-ink px-6 text-google-paper md:h-[100px]">
+      <nav className="mx-auto flex h-full w-full max-w-[1632px] items-center justify-between">
+        <Link
+          href={"/"}
+          className={cn(
+            "flex cursor-pointer items-center justify-center text-2xl font-bold md:text-3xl",
+            nacreTextGradient
+          )}
+        >
+          <span>&lt;</span>
+          <span className="hidden sm:inline-block">OU9999</span>
+          <span>/&gt;</span>
         </Link>
 
-        <div className="hidden space-x-10 md:flex">
+        <div className="hidden items-center gap-10 md:flex">
           <Link href={"/"}>
-            <p className=" text-lg font-semibold hover:text-slate-500 hover:dark:text-slate-400">
+            <p
+              className={cn(
+                "text-lg font-semibold text-google-paper",
+                hoverNacreTextGradient
+              )}
+            >
               Home
             </p>
           </Link>
           <Link href={"/about"}>
-            <p className=" text-lg font-semibold hover:text-slate-500 hover:dark:text-slate-400">
+            <p
+              className={cn(
+                "text-lg font-semibold text-google-paper",
+                hoverNacreTextGradient
+              )}
+            >
               About
             </p>
           </Link>
           <Link href={"/portfolio"}>
-            <p className=" text-lg font-semibold hover:text-slate-500 hover:dark:text-slate-400">
+            <p
+              className={cn(
+                "text-lg font-semibold text-google-paper",
+                hoverNacreTextGradient
+              )}
+            >
               Portfolio
             </p>
           </Link>
-          <ModeToggle />
         </div>
         <PopoverButton />
-      </div>
+      </nav>
     </header>
   );
 };
