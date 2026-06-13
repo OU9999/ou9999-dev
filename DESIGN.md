@@ -2,14 +2,19 @@
 
 블로그 디자인·스타일링 기준. 구현 시 `tailwind.config.js` 토큰 우선.
 
+## Mode
+
+- 다크모드 단일 운영
+- 라이트모드 미지원
+- 신규 UI 라이트 대응 className 작성 금지
+- 기존 라이트 토큰과 테마 variant 제거
+- 브라우저 기본 UI는 `color-scheme: dark` 기준
+
 ## Tokens
 
 - 배경
-  - `bg-white-bg`
   - `bg-dark-bg`
-  - `bg-blur-white`
   - `bg-blur-black`
-  - `bg-content-header-white`
   - `bg-content-header-black`
 - 색상
   - `text-gradient-start`
@@ -43,4 +48,5 @@
 
 - Figma 스타일 개편 TODO: `/Users/ou9999/Documents/My Project/simple-blog/.progress/260613/figma-blog-redesign-todo.md`
 - Figma 레퍼런스 탐색 기록: `/Users/ou9999/Documents/My Project/simple-blog/.progress/260613/figma-blog-style.md`
+- Figma 비주얼 아이덴티티: `/Users/ou9999/Documents/My Project/simple-blog/.progress/260613/figma-visual-identity.md`
 - 구아슈 썸네일 시스템 확정 후 이 문서의 Tokens 보강
