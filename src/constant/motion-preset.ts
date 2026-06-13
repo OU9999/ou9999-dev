@@ -1,0 +1,86 @@
+const editorialEase = [0.8, 0, 0.2, 1];
+
+const motionDuration = {
+  fast: 0.2,
+  base: 0.4,
+  entrance: 0.7,
+};
+
+const motionStagger = {
+  tight: 0.08,
+  base: 0.12,
+};
+
+const fadeUpPreset = {
+  hidden: {
+    opacity: 0,
+    y: 28,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: motionDuration.entrance,
+      ease: editorialEase,
+    },
+  },
+};
+
+const staggerContainerPreset = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: motionStagger.tight,
+      delayChildren: motionStagger.tight,
+    },
+  },
+};
+
+const viewportImagePreset = {
+  hidden: {
+    opacity: 0,
+    y: 72,
+    scale: 0.98,
+    clipPath: "inset(12% 0 0 0)",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    clipPath: "inset(0% 0 0 0)",
+    transition: {
+      duration: motionDuration.entrance,
+      ease: editorialEase,
+    },
+  },
+};
+
+const overlayPreset = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: motionDuration.base,
+      ease: editorialEase,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: motionDuration.fast,
+      ease: editorialEase,
+    },
+  },
+};
+
+export {
+  editorialEase,
+  fadeUpPreset,
+  motionDuration,
+  motionStagger,
+  overlayPreset,
+  staggerContainerPreset,
+  viewportImagePreset,
+};

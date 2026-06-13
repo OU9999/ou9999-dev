@@ -47,6 +47,15 @@
 - inline style 금지
 - SVG 고정 색상은 SVG 속성 사용
 
+## Motion
+
+- React 애니메이션 패키지 `motion` 사용
+- import 경로 `motion/react` 사용
+- 진입, stagger, viewport reveal, overlay 전환에 Motion 사용
+- 단순 hover·focus transition은 Tailwind 우선
+- 기본 preset: `/Users/ou9999/Documents/My Project/simple-blog/src/constant/motion-preset.ts`
+- `prefers-reduced-motion` 대응 시 `useReducedMotion` 우선
+
 ## Redesign Notes
 
 - Figma 스타일 개편 TODO: `/Users/ou9999/Documents/My Project/simple-blog/.progress/260613/figma-blog-redesign-todo.md`
