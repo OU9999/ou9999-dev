@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gouache Thumbnail"
+  short_description: "구아슈 블로그 썸네일 생성·변환 절차"
+  default_prompt: "Use $gouache-thumbnail to create a gouache art blog thumbnail and convert it for this blog."
