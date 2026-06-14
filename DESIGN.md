@@ -5,7 +5,7 @@
 ## Mode
 
 - Google Design 컬러 우선
-- warm black 배경과 white 텍스트를 기본 표면으로 사용
+- 나전칠기 흑칠처럼 순검정보다 살짝 밝은 warm lacquer black 배경과 white 텍스트를 기본 표면으로 사용
 - 링크·행동 색상은 Google blue 사용
 - 강조 색상은 Google yellow를 제한적으로 사용
 - 테마 모드 명칭보다 레퍼런스 색상 일치 우선
@@ -26,6 +26,7 @@
   - `bg-nacre-moonlit`
   - `bg-clip-text`
   - `text-transparent`
+  - 자개 그라데이션은 흰 자개·연분홍·연보라·은청색 비중을 높이고 강한 청록·네온 블루는 제한
 - 폰트
   - `font-sans`
   - `LINE Seed Sans KR`
