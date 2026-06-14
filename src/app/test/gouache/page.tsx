@@ -12,18 +12,50 @@ interface LayerCard {
   body: string;
 }
 
+interface PaletteChip {
+  name: string;
+  className: string;
+}
+
 const layerCards: LayerCard[] = [
   {
-    title: "Paper",
-    body: "fixed grain, warm base, lifted white pigment",
+    title: "Carbon",
+    body: "warm black paper with uneven pigment load",
   },
   {
-    title: "Wash",
-    body: "large blurred shapes with multiply blending",
+    title: "Mineral",
+    body: "oxidized teal and olive washes over dark ground",
   },
   {
-    title: "Brush",
-    body: "distorted streaks from SVG turbulence",
+    title: "Bloom",
+    body: "rose ash, ochre, and ivory dry-brush accents",
+  },
+];
+
+const paletteChips: PaletteChip[] = [
+  {
+    name: "carbon",
+    className: "bg-[#11100c]",
+  },
+  {
+    name: "teal",
+    className: "bg-[#4f7f73]",
+  },
+  {
+    name: "olive",
+    className: "bg-[#7f8054]",
+  },
+  {
+    name: "rose",
+    className: "bg-[#8d5a62]",
+  },
+  {
+    name: "ochre",
+    className: "bg-[#b18a4a]",
+  },
+  {
+    name: "ivory",
+    className: "bg-[#ece1c8]",
   },
 ];
 
@@ -76,7 +108,7 @@ const GouacheFilters = () => {
 
 const GouachePage = () => {
   return (
-    <main className="min-h-screen overflow-hidden bg-google-paper text-google-ink">
+    <main className="min-h-screen overflow-hidden bg-google-ink text-google-paper">
       <section
         className={cn(
           "relative isolate min-h-[calc(100dvh-56px)] overflow-hidden px-6 py-14 md:min-h-[calc(100dvh-100px)] md:px-10 md:py-20",
@@ -84,50 +116,64 @@ const GouachePage = () => {
         )}
       >
         <GouacheFilters />
-        <div className={cn(styles.wash, styles.washDark)} />
-        <div className={cn(styles.wash, styles.washMiddle)} />
-        <div className={cn(styles.wash, styles.washLight)} />
+        <div className={cn(styles.wash, styles.washShadow)} />
+        <div className={cn(styles.wash, styles.washTeal)} />
+        <div className={cn(styles.wash, styles.washRose)} />
+        <div className={cn(styles.wash, styles.washOchre)} />
+        <div className={cn(styles.wash, styles.washIvory)} />
         <div className={styles.dryBrush} />
         <div className={styles.paperLift} />
         <div className={styles.inkBloom} />
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1632px] flex-col gap-12 lg:min-h-[720px] lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-186">
-            <p className="mb-5 text-sm font-semibold uppercase text-google-ink/60">
+            <p className="mb-5 text-sm font-semibold uppercase text-google-paper/58">
               Gouache Lab
             </p>
-            <h1 className="max-w-[900px] break-keep text-[44px] font-normal leading-[1.08] text-google-ink md:text-[88px] md:leading-[0.98]">
-              붓칠을 이미지 없이 쌓아보기
+            <h1 className="max-w-[980px] break-keep text-[44px] font-normal leading-[1.08] text-google-paper md:text-[88px] md:leading-[0.98]">
+              검은 종이에 구아슈 쌓아보기
             </h1>
-            <p className="mt-8 max-w-186 break-keep text-lg leading-8 text-google-ink/72 md:text-xl md:leading-9">
-              CSS gradient, SVG turbulence, blend-mode만으로 만든 절차형
-              구아슈 배경입니다. 최종 블로그 디자인으로 옮기기 전에 이
-              페이지에서 밀도와 대비를 계속 조정합니다.
+            <p className="mt-8 max-w-186 break-keep text-lg leading-8 text-google-paper/72 md:text-xl md:leading-9">
+              흰 종이 질감 대신 warm black을 바닥으로 두고, 탁한 색 물감이
+              겹쳐진 배경을 테스트합니다. 이미지 자산 없이 CSS gradient, SVG
+              turbulence, blend-mode로만 만든 절차형 레이어입니다.
             </p>
           </div>
 
-          <aside className="w-full max-w-[420px] border-1 border-google-ink/25 bg-white/42 p-6 shadow-[0_24px_80px_rgb(18_17_12/0.16)] backdrop-blur-sm md:p-8">
-            <p className="text-sm font-semibold uppercase text-google-ink/52">
-              v0 surface
+          <aside className="w-full max-w-[420px] border-1 border-white/18 bg-google-ink/42 p-6 shadow-[0_24px_90px_rgb(0_0_0/0.34)] backdrop-blur-sm md:p-8">
+            <p className="text-sm font-semibold uppercase text-google-paper/52">
+              v1 dark surface
             </p>
             <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 text-sm">
               <div>
-                <dt className="text-google-ink/48">image assets</dt>
+                <dt className="text-google-paper/46">image assets</dt>
                 <dd className="mt-1 text-2xl font-semibold">0</dd>
               </div>
               <div>
-                <dt className="text-google-ink/48">z layers</dt>
-                <dd className="mt-1 text-2xl font-semibold">8</dd>
+                <dt className="text-google-paper/46">z layers</dt>
+                <dd className="mt-1 text-2xl font-semibold">11</dd>
               </div>
               <div>
-                <dt className="text-google-ink/48">base</dt>
+                <dt className="text-google-paper/46">base</dt>
                 <dd className="mt-1 text-2xl font-semibold">CSS</dd>
               </div>
               <div>
-                <dt className="text-google-ink/48">grain</dt>
+                <dt className="text-google-paper/46">grain</dt>
                 <dd className="mt-1 text-2xl font-semibold">SVG</dd>
               </div>
             </dl>
+            <div className="mt-8 flex flex-wrap gap-2">
+              {paletteChips.map((chip) => (
+                <span
+                  aria-label={chip.name}
+                  className={cn(
+                    "block h-9 w-9 border-1 border-white/24",
+                    chip.className
+                  )}
+                  key={chip.name}
+                />
+              ))}
+            </div>
           </aside>
         </div>
 
@@ -135,13 +181,13 @@ const GouachePage = () => {
           {layerCards.map((card) => (
             <article
               className={cn(
-                "min-h-[190px] border-1 border-google-ink/22 p-5 text-google-ink shadow-[0_18px_60px_rgb(18_17_12/0.13)]",
+                "min-h-[190px] border-1 border-white/18 p-5 text-google-paper shadow-[0_18px_70px_rgb(0_0_0/0.28)]",
                 styles.strokeCard
               )}
               key={card.title}
             >
               <h2 className="text-2xl font-semibold">{card.title}</h2>
-              <p className="mt-20 max-w-[260px] text-sm leading-6 text-google-ink/64">
+              <p className="mt-20 max-w-[260px] text-sm leading-6 text-google-paper/62">
                 {card.body}
               </p>
             </article>
