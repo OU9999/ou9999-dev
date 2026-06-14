@@ -26,7 +26,7 @@ const PostBox = ({
     <article className="w-full flex flex-col">
       <Link
         href={`/p/${slug}`}
-        className="relative block aspect-[16/9] w-full overflow-hidden"
+        className="relative block aspect-[16/9] w-full overflow-hidden rounded-lg border-1 border-white/15 bg-white/5 shadow-[0_18px_60px_rgb(0_0_0/0.22)] transition-transform duration-200 hover:-translate-y-1"
       >
         <ImageWithPlaceholderHeader alt={title} img={thumbnail} />
       </Link>

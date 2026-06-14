@@ -19,7 +19,7 @@ const config = {
         "2vh": "120dvh",
       },
       colors: {
-        "google-ink": "#12110C",
+        "google-ink": "#1B1915",
         "google-paper": "#FFFFFF",
         "google-blue": "#1A73E8",
         "google-muted": "#BDC1C6",
@@ -29,7 +29,7 @@ const config = {
       },
       backgroundImage: {
         "nacre-moonlit":
-          "linear-gradient(135deg, #EDF7F3 0%, #9DF4E6 24%, #B7B9FF 52%, #F4B9DE 76%, #FFF4CA 100%)",
+          "linear-gradient(112deg, #FFFDF7 0%, #FFEAF4 8%, #F7CFE3 15%, #DCD6FF 24%, #C8DFFF 32%, #F7FFFF 41%, #FFF5EC 49%, #F4C8DC 58%, #DFD4FF 68%, #D7F3FF 77%, #FFF1E4 86%, #E8E9FF 94%, #FFFDF8 100%)",
       },
       fontFamily: {
         sans: ["LINE Seed Sans KR", "system-ui", "sans-serif"],

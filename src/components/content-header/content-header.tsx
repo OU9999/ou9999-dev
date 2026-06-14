@@ -75,7 +75,7 @@ const ContentHeader = ({
         {img && (
           <ContentHeaderMotionImage
             className={cn(
-              "relative mt-10 aspect-[16/9] w-full overflow-hidden md:mt-12",
+              "relative mt-10 aspect-[16/9] w-full overflow-hidden rounded-lg border-1 border-white/15 bg-white/5 shadow-[0_28px_90px_rgb(0_0_0/0.26)] md:mt-12",
               main && "bg-gradient-to-t from-gray-100 via-gray-300 to-gray-400"
             )}
           >

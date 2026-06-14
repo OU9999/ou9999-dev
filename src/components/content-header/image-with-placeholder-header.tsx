@@ -20,6 +20,7 @@ const ImageWithPlaceholderHeader = ({
       alt={alt ?? "image" + img}
       src={imgSrc}
       fill
+      className="object-cover"
       sizes="(max-width: 768px) 100vw, 96vw"
       preload={preload}
       placeholder="blur"
