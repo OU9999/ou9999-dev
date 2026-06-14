@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { hoverNacreTextGradient } from "@/components/common/styles";
+import { hoverMineralTextGradient } from "@/components/common/styles";
 import { cn } from "@/utils/tailwind-util";
 
 interface TagProps {
@@ -15,11 +15,11 @@ const Tag = ({ tag, variant = "paper" }: TagProps) => {
           className={cn(
             "cursor-pointer rounded-full border px-3 py-1.5 font-mono text-base uppercase leading-none transition-colors",
             variant === "ink" &&
-              "border-google-ink/40 text-google-ink hover:bg-google-ink hover:text-google-paper",
+              "border-mineral-ink/40 text-mineral-ink hover:bg-mineral-ink hover:text-mineral-bone",
             variant === "paper" &&
               cn(
-                "border-white/40 text-google-paper hover:border-white/80",
-                hoverNacreTextGradient
+                "border-mineral-blue/32 text-google-paper hover:border-mineral-blue/70",
+                hoverMineralTextGradient
               )
           )}
         >

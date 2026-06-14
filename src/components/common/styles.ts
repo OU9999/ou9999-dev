@@ -6,4 +6,16 @@ const nacreTextGradient = "bg-nacre-moonlit bg-clip-text text-transparent";
 const hoverNacreTextGradient =
   "transition-colors hover:bg-nacre-moonlit hover:bg-clip-text hover:text-transparent";
 
-export { hoverGradient, hoverNacreTextGradient, nacreTextGradient };
+const mineralTextGradient =
+  "text-google-paper md:bg-mineral-lettering md:bg-clip-text md:text-transparent";
+
+const hoverMineralTextGradient =
+  "transition-colors hover:bg-mineral-lettering hover:bg-clip-text hover:text-transparent";
+
+export {
+  hoverGradient,
+  hoverMineralTextGradient,
+  hoverNacreTextGradient,
+  mineralTextGradient,
+  nacreTextGradient,
+};

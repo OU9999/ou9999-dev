@@ -8,7 +8,7 @@ const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
 
   return (
     <div className="relative flex flex-col justify-center items-center">
-      <MediaReveal className="inline-flex max-w-full overflow-hidden rounded-lg border-1 border-white/15 bg-white/5 shadow-[0_18px_60px_rgb(0_0_0/0.22)]">
+      <MediaReveal className="inline-flex max-w-full overflow-hidden rounded-lg border-1 border-mineral-blue/18 bg-mineral-frame shadow-[0_18px_60px_rgb(4_8_8/0.3)]">
         <Image
           {...props}
           alt={props.alt}
@@ -19,7 +19,7 @@ const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
         />
       </MediaReveal>
       {props.alt && (
-        <p className="my-1 text-gray-600 text-sm ">
+        <p className="my-1 text-sm text-google-muted">
           {props.alt}
         </p>
       )}

@@ -9,14 +9,16 @@ interface ContactLinkProps {
 
 const ContactLink = ({ title, link, linkText }: ContactLinkProps) => {
   return (
-    <div className="w-full flex">
-      <p className="w-3/12 text-slate-400">{title}</p>
+    <div className="flex w-full">
+      <p className="w-3/12 text-google-muted">{title}</p>
 
-      <div className="w-9/12 flex justify-start items-center space-x-[0.5px]">
+      <div className="flex w-9/12 items-center justify-start space-x-[0.5px]">
         <Link href={link}>
-          <p className="cursor-pointer hover:underline">{linkText}</p>
+          <p className="cursor-pointer text-google-paper hover:text-mineral-blue hover:underline">
+            {linkText}
+          </p>
         </Link>
-        <div className="w-3 h-3 fill-white stroke-white">
+        <div className="h-3 w-3 fill-mineral-blue stroke-mineral-blue">
           <LinkIcon />
         </div>
       </div>

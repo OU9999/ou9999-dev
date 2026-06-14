@@ -28,7 +28,7 @@
       rgb(0 0 0 / 0.24) 0 1px,
       transparent 1px 17px
     );
-  filter: url("#gouache-paper") contrast(1.18);
+  filter: url("#mineral-gouache-paper") contrast(1.18);
   mix-blend-mode: soft-light;
 }
 
@@ -47,7 +47,7 @@
 .textureLayer {
   position: absolute;
   pointer-events: none;
-  filter: url("#gouache-bristle") blur(0.4px);
+  filter: url("#mineral-gouache-bristle") blur(0.4px);
   transform-origin: center;
 }
 
@@ -112,7 +112,7 @@
       rgb(232 236 236 / 0.16) 22px 24px,
       transparent 26px 54px
     );
-  filter: url("#gouache-bristle") blur(1px);
+  filter: url("#mineral-gouache-bristle") blur(1px);
   mix-blend-mode: screen;
   transform: rotate(3deg);
 }
@@ -126,29 +126,4 @@
   height: 100%;
   pointer-events: none;
   background: linear-gradient(90deg, rgb(7 7 7 / 0.94) 0%, rgb(7 7 7 / 0.7) 58%, transparent 100%);
-}
-
-.strokeCard {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  background:
-    linear-gradient(145deg, rgb(232 236 236 / 0.035), rgb(255 255 255 / 0.01)),
-    #070707;
-}
-
-.strokeCard::before {
-  position: absolute;
-  inset: auto -16% -34% -16%;
-  z-index: -1;
-  height: 74%;
-  content: "";
-  background:
-    radial-gradient(ellipse at 20% 68%, rgb(31 42 40 / 0.24), transparent 36%),
-    radial-gradient(ellipse at 58% 44%, rgb(32 38 50 / 0.2), transparent 42%),
-    radial-gradient(ellipse at 84% 30%, rgb(162 173 179 / 0.12), transparent 34%),
-    linear-gradient(108deg, transparent 0 18%, rgb(232 236 236 / 0.05) 28%, transparent 44% 100%);
-  filter: url("#gouache-bristle") blur(0.7px);
-  mix-blend-mode: screen;
-  transform: rotate(-5deg);
 }

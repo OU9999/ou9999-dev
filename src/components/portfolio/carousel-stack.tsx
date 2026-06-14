@@ -7,7 +7,7 @@ interface BadgeProps {
 
 const Badge = ({ text }: BadgeProps) => {
   return (
-    <div className="inline-flex whitespace-nowrap w-auto h-5 max-h-5 items-center rounded-md border border-slate-600 px-2.5 py-0.5 text-xs text-slate-50 bg-[#111827]">
+    <div className="inline-flex h-5 max-h-5 w-auto items-center whitespace-nowrap rounded-md border border-mineral-blue/24 bg-mineral-teal/18 px-2.5 py-0.5 text-xs text-google-paper">
       {text}
     </div>
   );
@@ -24,8 +24,8 @@ const CarouselStack = ({ stack }: CarouselProps) => {
   });
 
   return (
-    <div ref={emblaThumbsRef} className="w-auto overflow-x-scroll mt-2">
-      <div className="w-auto flex flex-row space-x-2 h-auto">
+    <div ref={emblaThumbsRef} className="mt-2 w-auto overflow-x-scroll">
+      <div className="flex h-auto w-auto flex-row space-x-2">
         {stack.map((skill, idx) => (
           <Badge key={skill + idx} text={skill} />
         ))}

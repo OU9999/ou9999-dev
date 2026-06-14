@@ -4,7 +4,7 @@ import styles from "./gouache.module.css";
 
 export const metadata: Metadata = {
   title: "Gouache Test | ou9999.dev",
-  description: "Procedural gouache background test page",
+  description: "Mineral Wash gouache layer test page",
 };
 
 interface LayerCard {
@@ -19,51 +19,51 @@ interface PaletteChip {
 
 const layerCards: LayerCard[] = [
   {
-    title: "Lacquer",
-    body: "quiet warm black field for long-form reading",
+    title: "Graphite",
+    body: "near-black field that keeps long-form reading stable",
   },
   {
-    title: "Nacre",
-    body: "thin pearl, blush, lilac, and silver-blue glaze",
+    title: "Mineral",
+    body: "thin teal and slate wash kept below visible text",
   },
   {
     title: "Gouache",
-    body: "matte hand-painted grain kept away from body text",
+    body: "matte paper grain and dry brush edges following the viewport",
   },
 ];
 
 const paletteChips: PaletteChip[] = [
   {
-    name: "lacquer",
-    className: "bg-[#1b1915]",
+    name: "soot",
+    className: "bg-[#020303]",
   },
   {
-    name: "pearl",
-    className: "bg-[#fffdf7]",
+    name: "graphite black",
+    className: "bg-[#070707]",
   },
   {
-    name: "blush",
-    className: "bg-[#ffeaf4]",
+    name: "graphite surface",
+    className: "bg-[#101211]",
   },
   {
-    name: "rose",
-    className: "bg-[#f7cfe3]",
+    name: "mineral teal",
+    className: "bg-[#1F2A28]",
   },
   {
-    name: "lilac",
-    className: "bg-[#dcd6ff]",
+    name: "slate mineral",
+    className: "bg-[#202632]",
   },
   {
-    name: "ice blue",
-    className: "bg-[#c8dfff]",
+    name: "cool ash",
+    className: "bg-[#8B9290]",
   },
   {
-    name: "silver",
-    className: "bg-[#f7ffff]",
+    name: "chalk blue",
+    className: "bg-[#A2ADB3]",
   },
   {
-    name: "cream",
-    className: "bg-[#fff1e4]",
+    name: "cold paper",
+    className: "bg-[#E8ECEC]",
   },
 ];
 
@@ -86,7 +86,7 @@ const GouacheFilters = () => {
           in="noise"
           result="paper"
           type="matrix"
-          values="0.35 0 0 0 0.58 0 0.35 0 0 0.58 0 0 0.35 0 0.58 0 0 0 0.24 0"
+          values="0.35 0 0 0 0.5 0 0.35 0 0 0.5 0 0 0.35 0 0.5 0 0 0 0.2 0"
         />
         <feBlend in="SourceGraphic" in2="paper" mode="multiply" />
       </filter>
@@ -107,7 +107,7 @@ const GouacheFilters = () => {
         />
         <feColorMatrix
           type="matrix"
-          values="1.08 0 0 0 -0.02 0 1.08 0 0 -0.02 0 0 1.08 0 -0.02 0 0 0 1 0"
+          values="1.05 0 0 0 -0.02 0 1.05 0 0 -0.02 0 0 1.05 0 -0.02 0 0 0 1 0"
         />
       </filter>
     </svg>
@@ -133,21 +133,21 @@ const GouachePage = () => {
         <div className="relative z-10 mx-auto flex w-full max-w-[1632px] flex-col gap-12 lg:min-h-[720px] lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-186">
             <p className="mb-5 text-sm font-semibold uppercase text-google-paper/58">
-              Gouache Lab
+              Gouache Layer
             </p>
             <h1 className="max-w-[980px] break-keep text-[44px] font-normal leading-[1.08] text-google-paper md:text-[88px] md:leading-[0.98]">
-              자개빛 구아슈를 최소한으로
+              검은 Mineral Wash 레이어
             </h1>
             <p className="mt-8 max-w-186 break-keep text-lg leading-8 text-google-paper/72 md:text-xl md:leading-9">
-              흰 자개, 연분홍, 연보라, 은청색을 검은 옻칠 표면 위에 아주
-              얇게 얹어봅니다. 본문 뒤는 비워두고 가장자리, 구분선,
-              프레임에서만 손으로 칠한 결을 드러냅니다.
+              이 레이어가 최상단 layout에 배치되어 viewport를 따라다니는 최종
+              배경입니다. 색은 `/test/color`의 Mineral Wash만 사용하고, 구아슈
+              질감은 거의 검은 표면 안에서 낮은 농도로만 드러냅니다.
             </p>
           </div>
 
-          <aside className="w-full max-w-[420px] border-1 border-white/18 bg-google-ink/42 p-6 shadow-[0_24px_90px_rgb(0_0_0/0.34)] backdrop-blur-sm md:p-8">
+          <aside className="w-full max-w-[420px] border-1 border-mineral-blue/18 bg-google-ink/52 p-6 shadow-[0_24px_90px_rgb(0_0_0/0.34)] backdrop-blur-sm md:p-8">
             <p className="text-sm font-semibold uppercase text-google-paper/52">
-              v2 quiet nacre
+              global fixed layer
             </p>
             <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 text-sm">
               <div>
@@ -163,8 +163,8 @@ const GouachePage = () => {
                 <dd className="mt-1 text-2xl font-semibold">CSS</dd>
               </div>
               <div>
-                <dt className="text-google-paper/46">grain</dt>
-                <dd className="mt-1 text-2xl font-semibold">SVG</dd>
+                <dt className="text-google-paper/46">position</dt>
+                <dd className="mt-1 text-2xl font-semibold">fixed</dd>
               </div>
             </dl>
             <div className="mt-8 flex flex-wrap gap-2">
@@ -172,7 +172,7 @@ const GouachePage = () => {
                 <span
                   aria-label={chip.name}
                   className={cn(
-                    "block h-8 w-8 border-1 border-white/24",
+                    "block h-8 w-8 border-1 border-mineral-blue/24",
                     chip.className
                   )}
                   key={chip.name}
@@ -186,7 +186,7 @@ const GouachePage = () => {
           {layerCards.map((card) => (
             <article
               className={cn(
-                "min-h-[190px] border-1 border-white/14 p-5 text-google-paper shadow-[0_18px_70px_rgb(0_0_0/0.2)]",
+                "min-h-[190px] border-1 border-mineral-blue/14 p-5 text-google-paper shadow-[0_18px_70px_rgb(0_0_0/0.2)]",
                 styles.strokeCard
               )}
               key={card.title}

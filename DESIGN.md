@@ -4,10 +4,10 @@
 
 ## Mode
 
-- Google Design 컬러 우선
-- 나전칠기 흑칠처럼 순검정보다 살짝 밝은 warm lacquer black 배경과 white 텍스트를 기본 표면으로 사용
-- 링크·행동 색상은 Google blue 사용
-- 강조 색상은 Google yellow를 제한적으로 사용
+- Mineral Wash 컬러 우선
+- 거의 검정에 가까운 graphite black 배경과 cool off-white 텍스트를 기본 표면으로 사용
+- 링크·행동 색상은 저채도 cool gray-blue 계열 사용
+- 강조 색상은 graphite/oxide 계열을 제한적으로 사용하고 노란 기운은 피함
 - 테마 모드 명칭보다 레퍼런스 색상 일치 우선
 - 브라우저 기본 UI는 dark color-scheme 기준
 
@@ -16,17 +16,28 @@
 - 배경
   - `bg-google-ink`
   - `bg-google-paper`
+  - `bg-mineral-canvas`
+  - `bg-mineral-frame`
 - 색상
   - `text-google-ink`
   - `text-google-paper`
   - `text-google-blue`
   - `text-google-muted`
   - `text-google-yellow`
+  - `text-mineral-teal`
+  - `text-mineral-blue`
+  - `text-mineral-bone`
 - 텍스트 그라데이션
+  - `bg-mineral-wash`
+  - `bg-mineral-lettering`
   - `bg-nacre-moonlit`
   - `bg-clip-text`
   - `text-transparent`
+  - Mineral Wash 표면 그라데이션은 거의 단색의 black/graphite 범위로 제한
+  - 텍스트 그라데이션은 `bg-mineral-lettering`으로 분리하고 cool off-white 내부 명도 차만 사용
+  - 붓질 질감은 fixed viewport 배경 레이어 또는 프레임에만 낮은 opacity로 제한
   - 자개 그라데이션은 흰 자개·연분홍·연보라·은청색 비중을 높이고 강한 청록·네온 블루는 제한
+  - 자개 토큰은 `/test/jagae`와 실험 보존용이며 기본 블로그 UI에는 Mineral Wash 토큰 우선
 - 폰트
   - `font-sans`
   - `LINE Seed Sans KR`
@@ -72,4 +83,5 @@
 - Figma 스타일 개편 TODO: `/Users/ou9999/Documents/My Project/simple-blog/.progress/260613/figma-blog-redesign-todo.md`
 - Figma 레퍼런스 탐색 기록: `/Users/ou9999/Documents/My Project/simple-blog/.progress/260613/figma-blog-style.md`
 - Figma 비주얼 아이덴티티: `/Users/ou9999/Documents/My Project/simple-blog/.progress/260613/figma-visual-identity.md`
-- 구아슈 썸네일 시스템 확정 후 이 문서의 Tokens 보강
+- `/test/color`의 Mineral Wash 후보를 기본 블로그 컬러 방향으로 적용
+- `/test/jagae`와 `/test/gouache`는 보존하되 기본 블로그 UI에는 직접 적용하지 않음

@@ -12,7 +12,7 @@ const HomePage = () => {
         text="노력과 고민을 담아 기록한 글"
         main
       />
-      <section className="w-full bg-google-ink px-6 py-16 text-google-paper">
+      <section className="w-full bg-transparent px-6 py-16 text-google-paper">
         <div className="mx-auto w-full max-w-[1632px]">
           <div className="mb-14 flex flex-col gap-3 md:mb-20 md:flex-row md:items-end md:justify-between">
             <h2 className="text-4xl font-normal leading-tight text-current md:text-[64px] md:leading-[67px]">
