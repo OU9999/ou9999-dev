@@ -19,43 +19,51 @@ interface PaletteChip {
 
 const layerCards: LayerCard[] = [
   {
-    title: "Carbon",
-    body: "warm black paper with uneven pigment load",
+    title: "Lacquer",
+    body: "quiet warm black field for long-form reading",
   },
   {
-    title: "Mineral",
-    body: "oxidized teal and olive washes over dark ground",
+    title: "Nacre",
+    body: "thin pearl, blush, lilac, and silver-blue glaze",
   },
   {
-    title: "Bloom",
-    body: "rose ash, ochre, and ivory dry-brush accents",
+    title: "Gouache",
+    body: "matte hand-painted grain kept away from body text",
   },
 ];
 
 const paletteChips: PaletteChip[] = [
   {
-    name: "carbon",
-    className: "bg-[#11100c]",
+    name: "lacquer",
+    className: "bg-[#1b1915]",
   },
   {
-    name: "teal",
-    className: "bg-[#4f7f73]",
+    name: "pearl",
+    className: "bg-[#fffdf7]",
   },
   {
-    name: "olive",
-    className: "bg-[#7f8054]",
+    name: "blush",
+    className: "bg-[#ffeaf4]",
   },
   {
     name: "rose",
-    className: "bg-[#8d5a62]",
+    className: "bg-[#f7cfe3]",
   },
   {
-    name: "ochre",
-    className: "bg-[#b18a4a]",
+    name: "lilac",
+    className: "bg-[#dcd6ff]",
   },
   {
-    name: "ivory",
-    className: "bg-[#ece1c8]",
+    name: "ice blue",
+    className: "bg-[#c8dfff]",
+  },
+  {
+    name: "silver",
+    className: "bg-[#f7ffff]",
+  },
+  {
+    name: "cream",
+    className: "bg-[#fff1e4]",
   },
 ];
 
@@ -116,14 +124,11 @@ const GouachePage = () => {
         )}
       >
         <GouacheFilters />
-        <div className={cn(styles.wash, styles.washShadow)} />
-        <div className={cn(styles.wash, styles.washTeal)} />
-        <div className={cn(styles.wash, styles.washRose)} />
-        <div className={cn(styles.wash, styles.washOchre)} />
-        <div className={cn(styles.wash, styles.washIvory)} />
-        <div className={styles.dryBrush} />
-        <div className={styles.paperLift} />
-        <div className={styles.inkBloom} />
+        <div className={cn(styles.textureLayer, styles.lacquerBloom)} />
+        <div className={cn(styles.textureLayer, styles.nacreVeil)} />
+        <div className={cn(styles.textureLayer, styles.shellMist)} />
+        <div className={styles.dryLine} />
+        <div className={styles.readingField} />
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1632px] flex-col gap-12 lg:min-h-[720px] lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-186">
@@ -131,18 +136,18 @@ const GouachePage = () => {
               Gouache Lab
             </p>
             <h1 className="max-w-[980px] break-keep text-[44px] font-normal leading-[1.08] text-google-paper md:text-[88px] md:leading-[0.98]">
-              검은 종이에 구아슈 쌓아보기
+              자개빛 구아슈를 최소한으로
             </h1>
             <p className="mt-8 max-w-186 break-keep text-lg leading-8 text-google-paper/72 md:text-xl md:leading-9">
-              흰 종이 질감 대신 warm black을 바닥으로 두고, 탁한 색 물감이
-              겹쳐진 배경을 테스트합니다. 이미지 자산 없이 CSS gradient, SVG
-              turbulence, blend-mode로만 만든 절차형 레이어입니다.
+              흰 자개, 연분홍, 연보라, 은청색을 검은 옻칠 표면 위에 아주
+              얇게 얹어봅니다. 본문 뒤는 비워두고 가장자리, 구분선,
+              프레임에서만 손으로 칠한 결을 드러냅니다.
             </p>
           </div>
 
           <aside className="w-full max-w-[420px] border-1 border-white/18 bg-google-ink/42 p-6 shadow-[0_24px_90px_rgb(0_0_0/0.34)] backdrop-blur-sm md:p-8">
             <p className="text-sm font-semibold uppercase text-google-paper/52">
-              v1 dark surface
+              v2 quiet nacre
             </p>
             <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 text-sm">
               <div>
@@ -151,7 +156,7 @@ const GouachePage = () => {
               </div>
               <div>
                 <dt className="text-google-paper/46">z layers</dt>
-                <dd className="mt-1 text-2xl font-semibold">11</dd>
+                <dd className="mt-1 text-2xl font-semibold">7</dd>
               </div>
               <div>
                 <dt className="text-google-paper/46">base</dt>
@@ -167,7 +172,7 @@ const GouachePage = () => {
                 <span
                   aria-label={chip.name}
                   className={cn(
-                    "block h-9 w-9 border-1 border-white/24",
+                    "block h-8 w-8 border-1 border-white/24",
                     chip.className
                   )}
                   key={chip.name}
@@ -181,7 +186,7 @@ const GouachePage = () => {
           {layerCards.map((card) => (
             <article
               className={cn(
-                "min-h-[190px] border-1 border-white/18 p-5 text-google-paper shadow-[0_18px_70px_rgb(0_0_0/0.28)]",
+                "min-h-[190px] border-1 border-white/14 p-5 text-google-paper shadow-[0_18px_70px_rgb(0_0_0/0.2)]",
                 styles.strokeCard
               )}
               key={card.title}
