@@ -8,11 +8,11 @@ export const metadata: Metadata = {
 
 const PortfolioLink = () => {
   return (
-    <div className="w-full flex justify-center mt-14">
+    <div className="mt-14 flex w-full justify-center">
       <Link href={"/portfolio"}>
-        <div className="rotated_gradient_box font-semibold rounded-md p-[1px] cursor-pointer hover:group group">
-          <div className="flex justify-center items-center w-full bg-content-header-black rounded-md px-3 py-1">
-            <p className="inline-block bg-gradient-to-r from-white to-white text-transparent bg-clip-text group-hover:from-gradient-start group-hover:to-gradient-end">
+        <div className="group cursor-pointer rounded-md bg-mineral-lettering p-[1px] font-semibold shadow-[0_18px_60px_rgb(4_8_8/0.22)]">
+          <div className="flex w-full items-center justify-center rounded-md bg-content-header-black px-3 py-1">
+            <p className="inline-block bg-gradient-to-r from-google-paper to-google-paper bg-clip-text text-transparent group-hover:from-gradient-start group-hover:to-gradient-end">
               Portfolio
             </p>
           </div>

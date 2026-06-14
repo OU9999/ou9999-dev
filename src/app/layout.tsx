@@ -4,6 +4,7 @@ import "@kfonts/line-seed-sans-kr/index.css";
 import "@/css/tailwind.css";
 import "@/css/prettyCode.css";
 import { defaultOpenGraph, defaultTwitter } from "@/constant/meta-data";
+import { MineralWashBackground } from "@/components/background/mineral-wash-background";
 import { Footer } from "@/components/nav/site-footer";
 import { myDomain } from "@/constant/domain";
 import { Header } from "@/components/nav/site-header";
@@ -36,9 +37,10 @@ const RootLayout = ({
 }) => {
   return (
     <html lang="en">
-      <body className="bg-google-ink text-google-paper font-sans">
+      <body className="min-h-dvh overflow-x-hidden bg-google-ink text-google-paper font-sans antialiased">
+        <MineralWashBackground />
         <Header />
-        {children}
+        <div className="relative z-10">{children}</div>
         <Footer />
       </body>
     </html>

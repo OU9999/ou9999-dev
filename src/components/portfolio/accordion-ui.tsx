@@ -17,7 +17,7 @@ const AccordionTrigger = ({
     <button
       type="button"
       onClick={clickFn}
-      className="flex cursor-pointer hover:underline"
+      className="flex cursor-pointer hover:text-mineral-blue hover:underline"
     >
       <p>{triggerText}</p>
       <div className="w-3 h-3">

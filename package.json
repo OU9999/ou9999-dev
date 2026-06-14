@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm generate && next build",
+    "build": "pnpm generate && next build && node src/scripts/remove-test-output.mjs",
     "start": "next start",
     "lint": "eslint .",
     "generate": "node src/scripts/generate-base64.mjs"

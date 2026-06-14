@@ -1,5 +1,5 @@
 import { Tag } from "@/components/common/tag-link";
-import { nacreTextGradient } from "@/components/common/styles";
+import { mineralTextGradient } from "@/components/common/styles";
 import { formatDateToString } from "@/utils/date-util";
 import { cn } from "@/utils/tailwind-util";
 import {
@@ -31,7 +31,7 @@ const ContentHeader = ({
   return (
     <ContentHeaderMotionRoot
       className={cn(
-        "w-full bg-google-ink px-6 text-google-paper",
+        "w-full bg-transparent px-6 text-google-paper",
         main
           ? "pb-8 pt-32 md:pb-8 md:pt-32"
           : "pb-16 pt-24 md:pb-24 md:pt-[126px]"
@@ -47,7 +47,7 @@ const ContentHeader = ({
           <ContentHeaderMotionTitle
             className={cn(
               "w-full text-5xl font-normal leading-none sm:text-6xl md:text-7xl lg:text-[90px] lg:leading-[0.95]",
-              nacreTextGradient,
+              mineralTextGradient,
               date ? "mt-10 md:mt-[51px]" : "mt-0"
             )}
           >
@@ -59,7 +59,7 @@ const ContentHeader = ({
               !main && "md:mt-16"
             )}
           >
-            <div className="max-w-2xl text-base text-current md:text-lg">
+            <div className="max-w-2xl text-base text-google-paper/78 md:text-lg">
               <p>{main ? text : "OU9999"}</p>
             </div>
             {tags && (
@@ -75,8 +75,8 @@ const ContentHeader = ({
         {img && (
           <ContentHeaderMotionImage
             className={cn(
-              "relative mt-10 aspect-[16/9] w-full overflow-hidden md:mt-12",
-              main && "bg-gradient-to-t from-gray-100 via-gray-300 to-gray-400"
+              "relative mt-10 aspect-[16/9] w-full overflow-hidden rounded-lg border-1 border-mineral-blue/20 bg-mineral-frame shadow-[0_28px_90px_rgb(4_8_8/0.34)] ring-1 ring-mineral-bone/5 md:mt-12",
+              main && "bg-mineral-brush-soft"
             )}
           >
             <ImageWithPlaceholderHeader alt={title} img={img} preload />
@@ -84,7 +84,7 @@ const ContentHeader = ({
         )}
 
         {text && !main && (
-          <ContentHeaderMotionItem className="mx-auto mt-14 max-w-[684px] text-2xl leading-snug text-current md:mt-20 md:text-3xl">
+          <ContentHeaderMotionItem className="mx-auto mt-14 max-w-[684px] text-2xl leading-snug text-google-paper/82 md:mt-20 md:text-3xl">
             <p>{text}</p>
           </ContentHeaderMotionItem>
         )}

@@ -15,9 +15,9 @@ interface IconBoxProps {
 const IconBox = ({ link, icon, owl, subText }: IconBoxProps) => {
   return (
     <Link href={link}>
-      <div className="cursor-pointer flex justify-center p-2 rounded-md items-center space-x-1 hover:bg-gray-700">
+      <div className="flex cursor-pointer items-center justify-center space-x-1 rounded-md p-2 transition-colors hover:bg-mineral-teal/22">
         <div
-          className={cn("w-5 h-5", owl ? "fill-black" : "fill-white")}
+          className={cn("h-5 w-5", owl ? "fill-mineral-ink" : "fill-google-paper")}
         >
           {icon}
         </div>
@@ -29,8 +29,8 @@ const IconBox = ({ link, icon, owl, subText }: IconBoxProps) => {
 
 const AboutMe = () => {
   return (
-    <div className="w-full mt-14 md:mt-20 flex flex-col justify-center items-center">
-      <div className="w-full max-w-138 flex flex-col mt-10 space-y-10 text-xs md:text-sm text-slate-400">
+    <div className="mt-14 flex w-full flex-col items-center justify-center md:mt-20">
+      <div className="mt-10 flex w-full max-w-138 flex-col space-y-10 text-xs text-google-muted md:text-sm">
         <p>
           어머니가 작고 사소한 일이라도 불편한 부분이 있다면 개선하시는
           사람이라는 것. 그것은 나에게 특별한 감정을 불러일으킨다. 다른
@@ -42,7 +42,7 @@ const AboutMe = () => {
         </p>
       </div>
 
-      <p className="mt-16 md:mt-20 text-md md:text-lg text-center">
+      <p className="text-md mt-16 text-center text-google-paper md:mt-20 md:text-lg">
         오유진﹒FrontEnd Developer
       </p>
       <div className="mt-1 flex space-x-1">

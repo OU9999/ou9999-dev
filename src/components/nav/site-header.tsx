@@ -1,17 +1,20 @@
 import Link from "next/link";
-import { hoverNacreTextGradient, nacreTextGradient } from "../common/styles";
+import {
+  hoverMineralTextGradient,
+  mineralTextGradient,
+} from "../common/styles";
 import { cn } from "@/utils/tailwind-util";
 import { PopoverButton } from "./header/popover-button";
 
 const Header = () => {
   return (
-    <header className="z-40 flex h-14 w-full items-center bg-google-ink px-6 text-google-paper md:h-[100px]">
+    <header className="relative z-40 flex h-14 w-full items-center border-b-1 border-mineral-blue/10 bg-google-ink/92 px-6 text-google-paper backdrop-blur-md md:h-[100px]">
       <nav className="mx-auto flex h-full w-full max-w-[1632px] items-center justify-between">
         <Link
           href={"/"}
           className={cn(
             "flex cursor-pointer items-center justify-center text-2xl font-bold md:text-3xl",
-            nacreTextGradient
+            mineralTextGradient
           )}
         >
           <span>&lt;</span>
@@ -24,7 +27,7 @@ const Header = () => {
             <p
               className={cn(
                 "text-lg font-semibold text-google-paper",
-                hoverNacreTextGradient
+                hoverMineralTextGradient
               )}
             >
               Home
@@ -34,7 +37,7 @@ const Header = () => {
             <p
               className={cn(
                 "text-lg font-semibold text-google-paper",
-                hoverNacreTextGradient
+                hoverMineralTextGradient
               )}
             >
               About
@@ -44,7 +47,7 @@ const Header = () => {
             <p
               className={cn(
                 "text-lg font-semibold text-google-paper",
-                hoverNacreTextGradient
+                hoverMineralTextGradient
               )}
             >
               Portfolio
