@@ -1,0 +1,173 @@
+.surface {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 24% 18%, rgb(255 255 255 / 0.72), transparent 24%),
+    radial-gradient(circle at 74% 16%, rgb(230 232 229 / 0.72), transparent 28%),
+    radial-gradient(circle at 82% 78%, rgb(186 188 184 / 0.34), transparent 32%),
+    linear-gradient(145deg, #f5f1e8 0%, #ebe7dd 48%, #d8d5cb 100%);
+}
+
+.surface::before,
+.surface::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.surface::before {
+  z-index: 1;
+  opacity: 0.28;
+  background:
+    repeating-linear-gradient(
+      106deg,
+      rgb(18 17 12 / 0.05) 0 1px,
+      transparent 1px 8px
+    ),
+    repeating-linear-gradient(
+      11deg,
+      rgb(255 255 255 / 0.34) 0 1px,
+      transparent 1px 11px
+    ),
+    radial-gradient(circle at 30% 60%, rgb(18 17 12 / 0.11), transparent 26%);
+  filter: url("#gouache-paper") contrast(1.32);
+  mix-blend-mode: multiply;
+}
+
+.surface::after {
+  z-index: 2;
+  opacity: 0.16;
+  background:
+    radial-gradient(circle at 20% 40%, rgb(18 17 12 / 0.34) 0 1px, transparent 1px 4px),
+    radial-gradient(circle at 80% 20%, rgb(255 255 255 / 0.4) 0 1px, transparent 1px 5px);
+  background-size:
+    7px 7px,
+    11px 11px;
+  mix-blend-mode: overlay;
+}
+
+.wash {
+  position: absolute;
+  pointer-events: none;
+  filter: url("#gouache-bristle") blur(0.4px);
+  mix-blend-mode: multiply;
+  transform-origin: center;
+}
+
+.washDark {
+  left: -12%;
+  bottom: -30%;
+  z-index: 3;
+  width: 72%;
+  height: 70%;
+  opacity: 0.52;
+  background:
+    radial-gradient(ellipse at 36% 58%, rgb(18 17 12 / 0.92) 0 18%, rgb(58 57 51 / 0.58) 35%, transparent 66%),
+    conic-gradient(from 232deg at 48% 44%, transparent 0 15%, rgb(18 17 12 / 0.62) 19% 31%, transparent 40% 100%);
+  border-radius: 50% 42% 48% 38%;
+  transform: rotate(-13deg) skewX(-9deg);
+}
+
+.washMiddle {
+  left: 10%;
+  top: 10%;
+  z-index: 4;
+  width: 58%;
+  height: 82%;
+  opacity: 0.42;
+  background:
+    linear-gradient(103deg, transparent 0 10%, rgb(45 44 39 / 0.56) 20%, rgb(121 121 113 / 0.3) 44%, transparent 70%),
+    radial-gradient(ellipse at 50% 50%, rgb(255 255 255 / 0.34) 0 15%, transparent 42%);
+  border-radius: 44% 54% 48% 60%;
+  transform: rotate(19deg) skewY(-11deg);
+}
+
+.washLight {
+  right: -8%;
+  top: -15%;
+  z-index: 5;
+  width: 62%;
+  height: 68%;
+  opacity: 0.48;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.84) 0 16%, transparent 38%),
+    radial-gradient(ellipse at 44% 45%, rgb(216 217 212 / 0.54) 0 27%, transparent 64%);
+  border-radius: 38% 54% 44% 50%;
+  transform: rotate(16deg) skewX(8deg);
+}
+
+.dryBrush {
+  position: absolute;
+  left: 32%;
+  top: 3%;
+  z-index: 6;
+  width: 46%;
+  height: 90%;
+  pointer-events: none;
+  opacity: 0.13;
+  background:
+    repeating-linear-gradient(
+      101deg,
+      transparent 0 18px,
+      rgb(18 17 12 / 0.24) 20px 22px,
+      transparent 24px 46px
+    );
+  clip-path: polygon(11% 0, 62% 5%, 92% 20%, 78% 44%, 99% 66%, 56% 91%, 22% 100%, 0 72%, 16% 42%);
+  filter: url("#gouache-bristle") blur(1.8px);
+  mix-blend-mode: multiply;
+  transform: rotate(13deg);
+}
+
+.paperLift {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+  opacity: 0.32;
+  background:
+    radial-gradient(circle at 50% 28%, rgb(255 255 255 / 0.72), transparent 18%),
+    radial-gradient(circle at 62% 48%, rgb(255 255 255 / 0.44), transparent 24%),
+    linear-gradient(116deg, transparent 0 46%, rgb(255 255 255 / 0.32) 48% 53%, transparent 59%);
+  filter: url("#gouache-paper") blur(0.2px);
+  mix-blend-mode: screen;
+}
+
+.strokeCard {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 0.72), rgb(230 228 219 / 0.56)),
+    #ede8dd;
+}
+
+.strokeCard::before {
+  position: absolute;
+  inset: -22%;
+  z-index: -1;
+  content: "";
+  background:
+    radial-gradient(ellipse at 22% 70%, rgb(18 17 12 / 0.56), transparent 34%),
+    radial-gradient(ellipse at 74% 28%, rgb(255 255 255 / 0.76), transparent 30%),
+    repeating-linear-gradient(112deg, transparent 0 11px, rgb(18 17 12 / 0.16) 12px 15px, transparent 16px 28px);
+  filter: url("#gouache-bristle") blur(0.6px);
+  mix-blend-mode: multiply;
+  transform: rotate(-8deg);
+}
+
+.inkBloom {
+  position: absolute;
+  right: 7%;
+  bottom: 7%;
+  z-index: 8;
+  width: 30%;
+  aspect-ratio: 1;
+  pointer-events: none;
+  opacity: 0.34;
+  background:
+    radial-gradient(circle at 48% 42%, rgb(18 17 12 / 0.46) 0 16%, rgb(18 17 12 / 0.14) 32%, transparent 63%),
+    conic-gradient(from 64deg, transparent 0 18%, rgb(255 255 255 / 0.48) 23% 30%, transparent 35% 100%);
+  border-radius: 48% 52% 43% 57%;
+  filter: url("#gouache-paper") blur(1px);
+  mix-blend-mode: multiply;
+}
