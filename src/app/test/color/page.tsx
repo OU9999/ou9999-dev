@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { cn } from "@/utils/tailwind-util";
+import { HighlightBrushText } from "./highlight-brush-text";
 import styles from "./color.module.css";
 
 export const metadata: Metadata = {
@@ -61,10 +62,10 @@ const mineralWashColors: ColorChip[] = [
     textClassName: "text-[#020303]",
   },
   {
-    name: "chalk blue",
+    name: "blue steel",
     value: "#A2ADB3",
     className: "bg-[#A2ADB3]",
-    usage: "links, thin border",
+    usage: "links, highlight core",
     textClassName: "text-[#020303]",
   },
   {
@@ -85,7 +86,7 @@ const textGradientCandidates: TextGradientCandidate[] = [
   },
   {
     name: "Blue Steel",
-    tone: "cooler accent",
+    tone: "selected highlight",
     className: styles.gradientBlueSteel,
     intent: "링크와 포스트 제목에 쓸 때 가장 또렷하게 보이는 은청색 강조 후보입니다.",
   },
@@ -147,15 +148,13 @@ const TextGradientCandidateCard = ({
             <p className="text-sm font-semibold uppercase text-google-paper/52">
               {candidate.tone}
             </p>
-            <h3
-              className={cn(
-                "mt-4 break-keep text-5xl font-normal leading-none md:text-6xl",
-                styles.gradientText,
-                candidate.className
-              )}
+            <HighlightBrushText
+              as="h3"
+              className="mt-4 break-keep text-5xl font-normal leading-none md:text-6xl"
+              textClassName={candidate.className}
             >
               {candidate.name}
-            </h3>
+            </HighlightBrushText>
           </div>
           <span className="border-1 border-mineral-blue/18 px-3 py-1 text-xs font-semibold uppercase text-google-paper/58">
             text
@@ -260,15 +259,13 @@ const ColorPage = () => {
               <p className="text-sm font-semibold uppercase text-google-paper/56">
                 /test/color
               </p>
-              <h1
-                className={cn(
-                  "mt-8 max-w-[900px] break-keep text-[52px] font-normal leading-[1.02] md:text-[104px] md:leading-[0.95]",
-                  styles.gradientText,
-                  styles.gradientColdPearl
-                )}
+              <HighlightBrushText
+                as="h1"
+                className="mt-8 max-w-[900px] break-keep text-[52px] font-normal leading-[1.02] md:text-[104px] md:leading-[0.95]"
+                textClassName={styles.gradientBlueSteel}
               >
                 Mineral Wash
-              </h1>
+              </HighlightBrushText>
               <p className="mt-8 max-w-186 break-keep text-lg leading-8 text-google-paper/72 md:text-xl md:leading-9">
                 블로그에서 사용할 최종 컬러만 남긴 기준표입니다. 색 변화는
                 거의 검은 graphite 안에서 움직이고, 구아슈 느낌은 viewport를
@@ -309,9 +306,9 @@ const ColorPage = () => {
                 Text Gradient
               </h2>
               <p className="max-w-[560px] break-keep text-sm leading-6 text-google-paper/60 md:text-base md:leading-7">
-                하이라이트가 약해 보이는 문제를 보강하기 위한 후보입니다.
-                배경은 검게 유지하고, 강조 텍스트 안에서만 차가운 광택과 붓질
-                명도 차를 만듭니다.
+                Blue Steel을 실제 하이라이트 기준으로 선택했습니다. 배경은
+                검게 유지하고, 강조 텍스트 안에서만 차가운 광택과 붓질 명도
+                차를 만듭니다.
               </p>
             </div>
             <div className="grid gap-4 xl:grid-cols-2">

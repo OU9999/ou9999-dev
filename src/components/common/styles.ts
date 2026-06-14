@@ -7,7 +7,7 @@ const hoverNacreTextGradient =
   "transition-colors hover:bg-nacre-moonlit hover:bg-clip-text hover:text-transparent";
 
 const mineralTextGradient =
-  "text-google-paper md:bg-mineral-lettering md:bg-clip-text md:text-transparent";
+  "bg-mineral-lettering bg-clip-text text-transparent";
 
 const hoverMineralTextGradient =
   "transition-colors hover:bg-mineral-lettering hover:bg-clip-text hover:text-transparent";

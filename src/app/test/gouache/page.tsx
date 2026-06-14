@@ -58,7 +58,7 @@ const paletteChips: PaletteChip[] = [
     className: "bg-[#8B9290]",
   },
   {
-    name: "chalk blue",
+    name: "blue steel",
     className: "bg-[#A2ADB3]",
   },
   {

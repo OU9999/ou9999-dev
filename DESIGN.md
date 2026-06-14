@@ -6,7 +6,7 @@
 
 - Mineral Wash 컬러 우선
 - 거의 검정에 가까운 graphite black 배경과 cool off-white 텍스트를 기본 표면으로 사용
-- 링크·행동 색상은 저채도 cool gray-blue 계열 사용
+- 링크·행동 색상은 Blue Steel 기반의 저채도 cool gray-blue 계열 사용
 - 강조 색상은 graphite/oxide 계열을 제한적으로 사용하고 노란 기운은 피함
 - 테마 모드 명칭보다 레퍼런스 색상 일치 우선
 - 브라우저 기본 UI는 dark color-scheme 기준
@@ -34,7 +34,7 @@
   - `bg-clip-text`
   - `text-transparent`
   - Mineral Wash 표면 그라데이션은 거의 단색의 black/graphite 범위로 제한
-  - 텍스트 그라데이션은 `bg-mineral-lettering`으로 분리하고 cool off-white 내부 명도 차만 사용
+  - 텍스트 그라데이션은 `bg-mineral-lettering`으로 분리하고 Blue Steel 기준의 silver-blue 명도 차만 사용
   - 붓질 질감은 fixed viewport 배경 레이어 또는 프레임에만 낮은 opacity로 제한
   - 자개 그라데이션은 흰 자개·연분홍·연보라·은청색 비중을 높이고 강한 청록·네온 블루는 제한
   - 자개 토큰은 `/test/jagae`와 실험 보존용이며 기본 블로그 UI에는 Mineral Wash 토큰 우선

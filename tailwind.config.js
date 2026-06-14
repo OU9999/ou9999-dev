@@ -24,8 +24,8 @@ const config = {
         "google-blue": "#A2ADB3",
         "google-muted": "#8B9290",
         "google-yellow": "#8D8173",
-        "gradient-start": "#E8ECEC",
-        "gradient-end": "#C8D1D2",
+        "gradient-start": "#F8FBFB",
+        "gradient-end": "#A2ADB3",
         "mineral-ink": "#070707",
         "mineral-soot": "#020303",
         "mineral-graphite": "#101211",
@@ -43,7 +43,7 @@ const config = {
         "mineral-wash":
           "linear-gradient(112deg, #0A0B0A 0%, #101211 48%, #080909 100%)",
         "mineral-lettering":
-          "linear-gradient(112deg, #E8ECEC 0%, #DDE2E2 52%, #EEF1F0 100%)",
+          "linear-gradient(112deg, #F8FBFB 0%, #D4E5EC 24%, #A2ADB3 48%, #E5EEF1 72%, #FFFFFF 100%)",
         "mineral-canvas":
           "radial-gradient(circle at 78% 12%, rgb(31 42 40 / 0.12), transparent 28%), radial-gradient(circle at 12% 84%, rgb(32 38 50 / 0.1), transparent 30%), linear-gradient(145deg, #070707 0%, #030404 48%, #0C0D0C 100%)",
         "mineral-brush":

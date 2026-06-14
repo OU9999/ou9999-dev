@@ -86,6 +86,67 @@
   -webkit-background-clip: text;
 }
 
+.highlightBrushText {
+  position: relative;
+  isolation: isolate;
+  width: fit-content;
+}
+
+.highlightBrushText .gradientText {
+  position: relative;
+  z-index: 3;
+}
+
+.highlightPaintLayer {
+  position: absolute;
+  left: -0.03em;
+  right: -0.03em;
+  top: 43%;
+  z-index: 1;
+  height: 0.44em;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%) rotate(-1.2deg);
+  will-change: opacity, transform;
+}
+
+.highlightPaintSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: url("#color-gouache-bristle") drop-shadow(0 0 18px rgb(162 173 179 / 0.18));
+  mix-blend-mode: screen;
+}
+
+.highlightPaintBody,
+.highlightPaintBodyLight,
+.highlightPaintDry {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.highlightPaintBody {
+  stroke: rgb(162 173 179 / 0.58);
+  stroke-width: 8.5;
+}
+
+.highlightPaintBodyLight {
+  stroke: rgb(248 251 251 / 0.34);
+  stroke-width: 3.8;
+}
+
+.highlightPaintDry {
+  stroke: rgb(248 251 251 / 0.28);
+  stroke-dasharray: 10 9 2 13;
+  stroke-width: 1.5;
+}
+
+.highlightPaintFleck {
+  fill: rgb(248 251 251 / 0.44);
+}
+
 .gradientColdPearl {
   background-image: linear-gradient(
     112deg,
