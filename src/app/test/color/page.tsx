@@ -15,6 +15,13 @@ interface ColorChip {
   textClassName?: string;
 }
 
+interface TextGradientCandidate {
+  name: string;
+  tone: string;
+  className: string;
+  intent: string;
+}
+
 const mineralWashColors: ColorChip[] = [
   {
     name: "soot",
@@ -69,6 +76,39 @@ const mineralWashColors: ColorChip[] = [
   },
 ];
 
+const textGradientCandidates: TextGradientCandidate[] = [
+  {
+    name: "Cold Pearl",
+    tone: "recommended baseline",
+    className: styles.gradientColdPearl,
+    intent: "현재 Mineral Wash의 차가운 흰 글자를 유지하면서 명도 차만 더 키운 기본 후보입니다.",
+  },
+  {
+    name: "Blue Steel",
+    tone: "cooler accent",
+    className: styles.gradientBlueSteel,
+    intent: "링크와 포스트 제목에 쓸 때 가장 또렷하게 보이는 은청색 강조 후보입니다.",
+  },
+  {
+    name: "Mineral Teal",
+    tone: "gouache aligned",
+    className: styles.gradientMineralTeal,
+    intent: "구아슈 레이어의 teal wash를 텍스트 쪽으로 조금 끌어올린 후보입니다.",
+  },
+  {
+    name: "Oxide Ash",
+    tone: "analog warmth",
+    className: styles.gradientOxideAsh,
+    intent: "노란 기운은 피하고, 붓칠의 아날로그 질감만 약간 따뜻하게 보강한 후보입니다.",
+  },
+  {
+    name: "Hard Chalk",
+    tone: "highest contrast",
+    className: styles.gradientHardChalk,
+    intent: "검은 배경 위에서 가장 강하게 튀는 후보입니다. 포인트가 약하다고 느낄 때 비교용입니다.",
+  },
+];
+
 const ColorChipCard = ({ color }: { color: ColorChip }) => {
   return (
     <article
@@ -85,6 +125,61 @@ const ColorChipCard = ({ color }: { color: ColorChip }) => {
         </p>
       </div>
       <p className="font-mono text-sm uppercase opacity-72">{color.value}</p>
+    </article>
+  );
+};
+
+const TextGradientCandidateCard = ({
+  candidate,
+}: {
+  candidate: TextGradientCandidate;
+}) => {
+  return (
+    <article
+      className={cn(
+        "relative overflow-hidden border-1 border-mineral-blue/18 bg-mineral-frame p-5",
+        styles.gradientCard
+      )}
+    >
+      <div className="relative z-10">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold uppercase text-google-paper/52">
+              {candidate.tone}
+            </p>
+            <h3
+              className={cn(
+                "mt-4 break-keep text-5xl font-normal leading-none md:text-6xl",
+                styles.gradientText,
+                candidate.className
+              )}
+            >
+              {candidate.name}
+            </h3>
+          </div>
+          <span className="border-1 border-mineral-blue/18 px-3 py-1 text-xs font-semibold uppercase text-google-paper/58">
+            text
+          </span>
+        </div>
+        <p className="mt-8 break-keep text-sm leading-6 text-google-paper/62">
+          {candidate.intent}
+        </p>
+        <div className="mt-8 grid gap-4 md:grid-cols-[1fr_0.78fr]">
+          <p
+            className={cn(
+              "break-keep text-3xl font-normal leading-tight",
+              styles.gradientText,
+              candidate.className
+            )}
+          >
+            조용한 검은 붓질 위의 강조 문장
+          </p>
+          <p className="break-keep text-base leading-7 text-google-paper/66">
+            일반 본문은 그대로 두고, 제목·링크·짧은 인용문 같은 순간에만
+            적용합니다.
+          </p>
+        </div>
+      </div>
     </article>
   );
 };
@@ -165,7 +260,13 @@ const ColorPage = () => {
               <p className="text-sm font-semibold uppercase text-google-paper/56">
                 /test/color
               </p>
-              <h1 className="mt-8 max-w-[900px] break-keep text-[52px] font-normal leading-[1.02] md:text-[104px] md:leading-[0.95]">
+              <h1
+                className={cn(
+                  "mt-8 max-w-[900px] break-keep text-[52px] font-normal leading-[1.02] md:text-[104px] md:leading-[0.95]",
+                  styles.gradientText,
+                  styles.gradientColdPearl
+                )}
+              >
                 Mineral Wash
               </h1>
               <p className="mt-8 max-w-186 break-keep text-lg leading-8 text-google-paper/72 md:text-xl md:leading-9">
@@ -198,6 +299,27 @@ const ColorPage = () => {
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
               {mineralWashColors.map((color) => (
                 <ColorChipCard color={color} key={color.name} />
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-20">
+            <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <h2 className="text-4xl font-normal leading-tight md:text-6xl">
+                Text Gradient
+              </h2>
+              <p className="max-w-[560px] break-keep text-sm leading-6 text-google-paper/60 md:text-base md:leading-7">
+                하이라이트가 약해 보이는 문제를 보강하기 위한 후보입니다.
+                배경은 검게 유지하고, 강조 텍스트 안에서만 차가운 광택과 붓질
+                명도 차를 만듭니다.
+              </p>
+            </div>
+            <div className="grid gap-4 xl:grid-cols-2">
+              {textGradientCandidates.map((candidate) => (
+                <TextGradientCandidateCard
+                  candidate={candidate}
+                  key={candidate.name}
+                />
               ))}
             </div>
           </section>

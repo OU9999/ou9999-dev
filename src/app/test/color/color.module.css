@@ -53,6 +53,95 @@
   transform: rotate(-5deg);
 }
 
+.gradientCard {
+  isolation: isolate;
+}
+
+.gradientCard::before {
+  position: absolute;
+  inset: -22% -14% auto;
+  z-index: 0;
+  height: 58%;
+  pointer-events: none;
+  content: "";
+  opacity: 0.5;
+  background:
+    radial-gradient(ellipse at 20% 56%, rgb(162 173 179 / 0.12), transparent 36%),
+    radial-gradient(ellipse at 70% 32%, rgb(31 42 40 / 0.18), transparent 42%),
+    linear-gradient(104deg, transparent 0 18%, rgb(232 236 236 / 0.055) 28%, transparent 46% 100%);
+  filter: url("#color-gouache-bristle") blur(0.7px);
+  mix-blend-mode: screen;
+  transform: rotate(-4deg);
+}
+
+.gradientText {
+  display: inline-block;
+  color: transparent;
+  text-wrap: balance;
+  background-size: 132% 100%;
+  background-position: 50% 50%;
+  background-clip: text;
+  filter: drop-shadow(0 0 18px rgb(162 173 179 / 0.16));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+.gradientColdPearl {
+  background-image: linear-gradient(
+    112deg,
+    #ffffff 0%,
+    #eef2f2 20%,
+    #aebbc0 48%,
+    #fbfdfd 72%,
+    #cad4d6 100%
+  );
+}
+
+.gradientBlueSteel {
+  background-image: linear-gradient(
+    112deg,
+    #f8fbfb 0%,
+    #d4e5ec 24%,
+    #a2adb3 48%,
+    #e5eef1 72%,
+    #ffffff 100%
+  );
+}
+
+.gradientMineralTeal {
+  background-image: linear-gradient(
+    112deg,
+    #f2f7f5 0%,
+    #bfd2cf 24%,
+    #7f9f99 48%,
+    #e8ecec 72%,
+    #a2adb3 100%
+  );
+}
+
+.gradientOxideAsh {
+  background-image: linear-gradient(
+    112deg,
+    #faf8f3 0%,
+    #d4cbc3 24%,
+    #988d86 48%,
+    #e8ecec 74%,
+    #b9c2c4 100%
+  );
+}
+
+.gradientHardChalk {
+  background-image: linear-gradient(
+    112deg,
+    #ffffff 0%,
+    #ffffff 18%,
+    #e8ecec 36%,
+    #a2adb3 54%,
+    #fdfefe 74%,
+    #c4d0d3 100%
+  );
+}
+
 .previewSurface {
   isolation: isolate;
   --gouache-primary: 31 42 40;
