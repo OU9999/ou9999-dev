@@ -72,6 +72,242 @@
       96deg,
       rgb(25 23 20 / 0.1) 0 1px,
       transparent 1px 13px
-    );
+  );
   mix-blend-mode: multiply;
+}
+
+.candidateSurface {
+  isolation: isolate;
+  --gouache-primary: 245 238 222;
+  --gouache-secondary: 156 116 80;
+  --gouache-light: 245 238 222;
+  --gouache-shadow: 0 0 0;
+  background:
+    linear-gradient(145deg, rgb(245 238 222 / 0.045), rgb(255 255 255 / 0.015)),
+    #191714;
+}
+
+.candidateInkBone {
+  --gouache-primary: 156 116 80;
+  --gouache-secondary: 58 50 42;
+  --gouache-light: 245 238 222;
+  --gouache-shadow: 0 0 0;
+}
+
+.candidateMineral {
+  --gouache-primary: 66 83 79;
+  --gouache-secondary: 75 89 121;
+  --gouache-light: 157 175 197;
+  --gouache-shadow: 4 8 8;
+}
+
+.candidateSienna {
+  --gouache-primary: 126 69 61;
+  --gouache-secondary: 183 127 82;
+  --gouache-light: 245 238 222;
+  --gouache-shadow: 16 8 5;
+}
+
+.candidateViolet {
+  --gouache-primary: 109 83 98;
+  --gouache-secondary: 154 107 112;
+  --gouache-light: 185 172 201;
+  --gouache-shadow: 8 5 10;
+}
+
+.gouacheLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.gouacheLayer::before,
+.gouacheLayer::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.gouacheLayer::before {
+  z-index: 1;
+  opacity: 0.28;
+  background:
+    repeating-linear-gradient(
+      108deg,
+      rgb(var(--gouache-light) / 0.08) 0 1px,
+      transparent 1px 13px
+    ),
+    repeating-linear-gradient(
+      18deg,
+      rgb(0 0 0 / 0.28) 0 1px,
+      transparent 1px 17px
+    );
+  filter: url("#color-gouache-paper") contrast(1.18);
+  mix-blend-mode: soft-light;
+}
+
+.gouacheLayer::after {
+  z-index: 2;
+  opacity: 0.2;
+  background:
+    radial-gradient(circle at 18% 42%, rgb(var(--gouache-light) / 0.22) 0 1px, transparent 1px 5px),
+    radial-gradient(circle at 78% 18%, rgb(var(--gouache-secondary) / 0.18) 0 1px, transparent 1px 6px);
+  background-size:
+    10px 10px,
+    15px 15px;
+  mix-blend-mode: screen;
+}
+
+.gouacheTexture {
+  position: absolute;
+  pointer-events: none;
+  filter: url("#color-gouache-bristle") blur(0.4px);
+  transform-origin: center;
+}
+
+.gouacheShadow {
+  left: -20%;
+  bottom: -40%;
+  z-index: 3;
+  width: 68%;
+  height: 58%;
+  opacity: 0.5;
+  background:
+    radial-gradient(ellipse at 38% 50%, rgb(var(--gouache-shadow) / 0.78) 0 22%, rgb(var(--gouache-primary) / 0.1) 44%, transparent 72%),
+    conic-gradient(from 224deg at 52% 54%, transparent 0 20%, rgb(var(--gouache-secondary) / 0.16) 28% 38%, transparent 48% 100%);
+  border-radius: 54% 42% 56% 38%;
+  mix-blend-mode: multiply;
+  transform: rotate(-10deg) skewX(-6deg);
+}
+
+.gouachePrimary {
+  right: -22%;
+  top: -20%;
+  z-index: 4;
+  width: 60%;
+  height: 70%;
+  opacity: 0.56;
+  background:
+    radial-gradient(ellipse at 42% 48%, rgb(var(--gouache-primary) / 0.58) 0 13%, rgb(var(--gouache-secondary) / 0.28) 30%, transparent 64%),
+    conic-gradient(from 218deg at 44% 48%, transparent 0 18%, rgb(var(--gouache-light) / 0.2) 24% 31%, rgb(var(--gouache-primary) / 0.26) 38% 48%, transparent 58% 100%);
+  border-radius: 44% 58% 40% 54%;
+  mix-blend-mode: screen;
+  transform: rotate(15deg) skewX(4deg);
+}
+
+.gouacheSecondary {
+  left: -12%;
+  top: 4%;
+  z-index: 5;
+  width: 62%;
+  height: 72%;
+  opacity: 0.4;
+  background:
+    linear-gradient(62deg, transparent 0 13%, rgb(var(--gouache-secondary) / 0.58) 27%, rgb(var(--gouache-primary) / 0.26) 49%, transparent 73%),
+    radial-gradient(ellipse at 38% 46%, rgb(var(--gouache-light) / 0.13) 0 16%, transparent 45%);
+  border-radius: 58% 42% 54% 38%;
+  mix-blend-mode: screen;
+  transform: rotate(-18deg) skewY(7deg);
+}
+
+.gouacheLight {
+  left: 33%;
+  top: 3%;
+  z-index: 6;
+  width: 50%;
+  height: 86%;
+  opacity: 0.24;
+  background:
+    radial-gradient(ellipse at 42% 38%, rgb(var(--gouache-light) / 0.46) 0 12%, rgb(var(--gouache-light) / 0.2) 30%, transparent 62%),
+    conic-gradient(from 194deg at 52% 48%, transparent 0 18%, rgb(var(--gouache-light) / 0.22) 23% 31%, transparent 39% 100%),
+    repeating-linear-gradient(
+      103deg,
+      transparent 0 15px,
+      rgb(var(--gouache-light) / 0.16) 17px 20px,
+      transparent 23px 44px
+    );
+  border-radius: 44% 58% 38% 54%;
+  mix-blend-mode: screen;
+  transform: rotate(14deg) skewY(-6deg);
+}
+
+.gouacheDryLine {
+  position: absolute;
+  right: -8%;
+  top: 0;
+  z-index: 7;
+  width: 44%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.18;
+  background:
+    repeating-linear-gradient(
+      103deg,
+      transparent 0 20px,
+      rgb(var(--gouache-light) / 0.22) 22px 24px,
+      transparent 26px 54px
+    );
+  filter: url("#color-gouache-bristle") blur(1px);
+  mix-blend-mode: screen;
+  transform: rotate(3deg);
+}
+
+.gouacheReadingField {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 8;
+  width: min(34rem, 72%);
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgb(25 23 20 / 0.88) 0%, rgb(25 23 20 / 0.56) 58%, transparent 100%);
+}
+
+.previewStrip {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #191714;
+}
+
+.previewStrip::before {
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  content: "";
+  opacity: 0.78;
+  filter: blur(0.7px);
+  mix-blend-mode: screen;
+  transform: rotate(-5deg);
+}
+
+.stripInkBone::before {
+  background:
+    radial-gradient(ellipse at 22% 74%, rgb(245 238 222 / 0.18), transparent 38%),
+    radial-gradient(ellipse at 74% 32%, rgb(156 116 80 / 0.22), transparent 34%),
+    repeating-linear-gradient(104deg, transparent 0 16px, rgb(245 238 222 / 0.14) 17px 20px, transparent 22px 45px);
+}
+
+.stripMineral::before {
+  background:
+    radial-gradient(ellipse at 24% 72%, rgb(66 83 79 / 0.5), transparent 38%),
+    radial-gradient(ellipse at 74% 32%, rgb(75 89 121 / 0.42), transparent 34%),
+    repeating-linear-gradient(104deg, transparent 0 16px, rgb(157 175 197 / 0.16) 17px 20px, transparent 22px 45px);
+}
+
+.stripSienna::before {
+  background:
+    radial-gradient(ellipse at 24% 74%, rgb(126 69 61 / 0.52), transparent 38%),
+    radial-gradient(ellipse at 76% 32%, rgb(183 127 82 / 0.42), transparent 34%),
+    repeating-linear-gradient(104deg, transparent 0 16px, rgb(245 238 222 / 0.14) 17px 20px, transparent 22px 45px);
+}
+
+.stripViolet::before {
+  background:
+    radial-gradient(ellipse at 24% 74%, rgb(109 83 98 / 0.52), transparent 38%),
+    radial-gradient(ellipse at 76% 32%, rgb(154 107 112 / 0.34), transparent 34%),
+    repeating-linear-gradient(104deg, transparent 0 16px, rgb(185 172 201 / 0.16) 17px 20px, transparent 22px 45px);
 }
