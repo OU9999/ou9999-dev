@@ -21,7 +21,7 @@ const ImageWithPlaceholderHeader = ({
       src={imgSrc}
       fill
       className="object-cover"
-      sizes="(max-width: 768px) 100vw, 96vw"
+      sizes="(max-width: 768px) calc(100vw - 48px), 976px"
       preload={preload}
       placeholder="blur"
       blurDataURL={base64Data.base64}
