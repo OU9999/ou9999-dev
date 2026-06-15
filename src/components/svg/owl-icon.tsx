@@ -3,10 +3,11 @@ const OwlIcon = () => {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.756 192.756">
       <defs>
         <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style={{ stopColor: "#C0E4DF", stopOpacity: 1 }} />
+          <stop offset="0%" stopColor="#C0E4DF" stopOpacity={1} />
           <stop
             offset="100%"
-            style={{ stopColor: "#BBBEE9", stopOpacity: 1 }}
+            stopColor="#BBBEE9"
+            stopOpacity={1}
           />
         </linearGradient>
       </defs>
@@ -29,4 +30,4 @@ const OwlIcon = () => {
   );
 };
 
-export default OwlIcon;
+export { OwlIcon };

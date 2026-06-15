@@ -1,29 +1,24 @@
 "use client";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import { useEffect } from "react";
 
 interface CarouselProps {
   imgs: string[];
 }
 
 const CarouselImg = ({ imgs }: CarouselProps) => {
-  const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
+  const [emblaThumbsRef] = useEmblaCarousel({
     containScroll: "keepSnaps",
     dragFree: true,
   });
 
-  useEffect(() => {
-    if (!emblaThumbsApi) return;
-  }, [emblaThumbsApi]);
-
   return (
-    <div ref={emblaThumbsRef} className="w-auto overflow-x-scroll mt-3 mb-5">
-      <div className="w-auto flex flex-row space-x-2 h-32 py-1">
+    <div ref={emblaThumbsRef} className="mb-5 mt-3 w-auto overflow-x-scroll">
+      <div className="flex h-32 w-auto flex-row space-x-2 py-1">
         {imgs.map((img) => (
           <div
             key={"carousel" + img}
-            className="relative w-52 min-w-52 border border-slate-200 dark:border-slate-800 h-full rounded-md overflow-hidden"
+            className="relative h-full w-52 min-w-52 overflow-hidden rounded-md border border-mineral-blue/18 bg-mineral-frame"
           >
             <Image
               alt={`Portfolio screenshot: ${img}`}
@@ -38,4 +33,4 @@ const CarouselImg = ({ imgs }: CarouselProps) => {
   );
 };
 
-export default CarouselImg;
+export { CarouselImg };

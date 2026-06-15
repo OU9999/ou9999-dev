@@ -5,13 +5,13 @@ PR 제목과 본문 작성 전 체크리스트 작성.
 ## 검사 대상 확인
 
 ```bash
-git diff --name-status --find-renames origin/main...HEAD -- CLAUDE.md AGENTS.md .claude .agents
+git diff --name-status --find-renames origin/develop...HEAD -- CLAUDE.md AGENTS.md .claude .agents
 ```
 
-`origin/main`을 사용할 수 없는 경우:
+`origin/develop`을 사용할 수 없는 경우:
 
 ```bash
-git diff --name-status --find-renames main...HEAD -- CLAUDE.md AGENTS.md .claude .agents
+git diff --name-status --find-renames develop...HEAD -- CLAUDE.md AGENTS.md .claude .agents
 ```
 
 ## 필수 체크리스트

@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @config "../../tailwind.config.js";
 
+html {
+  color-scheme: dark;
+}
+
 @keyframes huerotate {
   0% {
     filter: hue-rotate(0deg);

@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR } from "next/font/google";
+import type { ReactNode } from "react";
+import "@kfonts/line-seed-sans-kr/index.css";
 import "@/css/tailwind.css";
 import "@/css/prettyCode.css";
 import { defaultOpenGraph, defaultTwitter } from "@/constant/meta-data";
-import { ThemeProvider } from "@/components/theme-provider";
-import Footer from "@/components/nav/Footer";
+import { MineralWashBackground } from "@/components/background/mineral-wash-background";
+import { Footer } from "@/components/nav/site-footer";
 import { myDomain } from "@/constant/domain";
-import Header from "@/components/nav/Header";
-
-const notoSans = Noto_Sans_KR({ subsets: ["latin"] });
+import { Header } from "@/components/nav/site-header";
 
 export const metadata: Metadata = {
   metadataBase: new URL(myDomain),
@@ -31,22 +30,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: {
-  children: React.ReactNode;
-}) {
+  children: ReactNode;
+}) => {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`bg-white-bg dark:bg-dark-bg text-slate-900 dark:text-slate-50 ${notoSans.className}`}
-      >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <Header />
-          {children}
-          <Footer />
-        </ThemeProvider>
+    <html lang="en">
+      <body className="min-h-dvh overflow-x-hidden bg-google-ink text-google-paper font-sans antialiased">
+        <MineralWashBackground />
+        <Header />
+        <div className="relative z-10">{children}</div>
+        <Footer />
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

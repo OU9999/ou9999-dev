@@ -14,12 +14,16 @@ const AccordionTrigger = ({
   isOpen,
 }: AccordionTriggerProps) => {
   return (
-    <div onClick={clickFn} className="flex cursor-pointer hover:underline">
+    <button
+      type="button"
+      onClick={clickFn}
+      className="flex cursor-pointer hover:text-mineral-blue hover:underline"
+    >
       <p>{triggerText}</p>
-      <div className={`w-3 h-3`}>
+      <div className="w-3 h-3">
         {isOpen ? <AccordionIconUp /> : <AccordionIconDown />}
       </div>
-    </div>
+    </button>
   );
 };
 
@@ -38,7 +42,7 @@ interface AccordionProps {
 const Accordion = ({ triggerText, children }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const changeOpenState = () => setIsOpen((prev) => !prev);
+  const changeOpenState = (): void => setIsOpen((prev) => !prev);
 
   return (
     <div className="flex flex-col">
@@ -52,4 +56,4 @@ const Accordion = ({ triggerText, children }: AccordionProps) => {
   );
 };
 
-export default Accordion;
+export { Accordion };

@@ -1,14 +1,14 @@
-import AboutMe from "@/components/mainSection/about-me";
-import Accordion from "@/components/portfolio/accordion-ui";
-import ContactLink from "@/components/portfolio/contact-link";
-import LinkText from "@/components/portfolio/link-text";
+import { AboutMe } from "@/components/main-section/about-me";
+import { Accordion } from "@/components/portfolio/accordion-ui";
+import { ContactLink } from "@/components/portfolio/contact-link";
+import { LinkText } from "@/components/portfolio/link-text";
 import { ListBox, ListItem } from "@/components/portfolio/list-ui";
 import {
   PortfolioContent,
   PortfolioTitle,
   ProjectLayout,
 } from "@/components/portfolio/portfolio-ui";
-import XIcon from "@/components/svg/x-icon";
+import { XIcon } from "@/components/svg/x-icon";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -341,7 +341,7 @@ const PortfolioPage = () => {
       <div className="mt-10 w-full flex justify-center">
         <div className="w-full max-w-138 flex flex-col relative space-y-5">
           <Link href={"/about"}>
-            <div className="absolute cursor-pointer top-14 right-0 w-5 h-5 fill-black dark:fill-white">
+            <div className="absolute cursor-pointer top-14 right-0 w-5 h-5 fill-white">
               <XIcon />
             </div>
           </Link>
