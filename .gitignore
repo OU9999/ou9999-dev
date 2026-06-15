@@ -46,3 +46,7 @@ testJS.mjs
 .progress/
 .progrss/
 .playwright-cli/
+
+#tmp
+tmp/
+.tmp/

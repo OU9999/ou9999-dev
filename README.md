@@ -1,3 +1,5 @@
+![ou9999-dev brand brush image](docs/asset/brand-brush-stack-16x9.png)
+
 # ou9999-dev
 
 https://ou9999-dev.com
