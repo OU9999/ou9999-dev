@@ -8,18 +8,17 @@ import {
 } from "@/constant/motion-preset";
 import { cn } from "@/utils/tailwind-util";
 
-interface TextRevealBlockquoteProps
-  extends ComponentPropsWithoutRef<"blockquote"> {
+interface HighlightQuoteProps extends ComponentPropsWithoutRef<"blockquote"> {
   attribution?: string;
   text: string;
 }
 
-const TextRevealBlockquote = ({
+const HighlightQuote = ({
   attribution,
   className,
   text,
   ...props
-}: TextRevealBlockquoteProps) => {
+}: HighlightQuoteProps) => {
   const tokens = ["“", ...(text.match(/\S+\s*/g) ?? []), "”"];
 
   return (
@@ -65,4 +64,4 @@ const TextRevealBlockquote = ({
   );
 };
 
-export { TextRevealBlockquote };
+export { HighlightQuote };

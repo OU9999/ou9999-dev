@@ -7,13 +7,13 @@ const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
   const base64Data = getBase64(props.src as string);
 
   return (
-    <div className="relative flex flex-col justify-center items-center">
-      <MediaReveal className="inline-flex max-w-full overflow-hidden rounded-lg border-1 border-mineral-blue/18 bg-mineral-frame shadow-[0_18px_60px_rgb(4_8_8/0.3)]">
+    <div className="not-prose relative my-12 flex w-full flex-col items-start justify-center md:my-14">
+      <MediaReveal className="flex w-full overflow-hidden rounded-lg bg-mineral-frame shadow-[0_18px_60px_rgb(4_8_8/0.3)] ring-1 ring-mineral-blue/18">
         <Image
           {...props}
           alt={props.alt}
-          className={cn("h-auto max-w-full rounded-lg", props.className)}
-          sizes={props.sizes ?? "(max-width: 768px) 100vw, 804px"}
+          className={cn("h-auto w-full rounded-lg", props.className)}
+          sizes={props.sizes ?? "(max-width: 768px) calc(100vw - 48px), 624px"}
           placeholder="blur"
           blurDataURL={base64Data.base64}
         />

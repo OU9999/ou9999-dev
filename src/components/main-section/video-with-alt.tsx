@@ -1,8 +1,8 @@
 const VideoWithAlt: React.FC<HTMLVideoElement> = (props) => {
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <div className="not-prose relative my-12 flex w-full flex-col items-start justify-center md:my-14">
       <video
-        className="rounded-lg"
+        className="h-auto w-full rounded-lg"
         width={props.width}
         height={props.height}
         controls

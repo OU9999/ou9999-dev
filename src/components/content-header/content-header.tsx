@@ -2,6 +2,7 @@ import { Tag } from "@/components/common/tag-link";
 import { mineralTextGradient } from "@/components/common/styles";
 import { formatDateToString } from "@/utils/date-util";
 import { cn } from "@/utils/tailwind-util";
+import Link from "next/link";
 import {
   ContentHeaderMotionImage,
   ContentHeaderMotionItem,
@@ -28,6 +29,59 @@ const ContentHeader = ({
   date,
   main,
 }: ContentHeaderProps) => {
+  if (!main) {
+    return (
+      <ContentHeaderMotionRoot className="w-full bg-transparent pb-0 pt-[88px] text-google-paper md:pt-[51px]">
+        <div className="w-full">
+          <ContentHeaderMotionText className="w-full text-left">
+            {tags && (
+              <ContentHeaderMotionItem className="flex flex-wrap items-center justify-start gap-3 font-mono text-xs uppercase leading-none tracking-normal text-google-paper/70 md:text-sm">
+                {tags.map((tag) => (
+                  <Link
+                    key={"POST_TAG" + tag}
+                    href={`/tags/${tag}`}
+                    className="transition-colors hover:text-google-paper"
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </ContentHeaderMotionItem>
+            )}
+            <ContentHeaderMotionTitle
+              className={cn(
+                "w-full max-w-[900px] text-[32px] font-normal leading-9 sm:text-4xl sm:leading-10 md:text-5xl md:leading-none",
+                mineralTextGradient,
+                tags ? "mt-5 md:mt-4" : "mt-0"
+              )}
+            >
+              {title}
+            </ContentHeaderMotionTitle>
+          </ContentHeaderMotionText>
+
+          {img && (
+            <ContentHeaderMotionImage className="relative mt-10 aspect-[342/186] w-full overflow-hidden rounded-lg bg-mineral-frame shadow-[0_28px_90px_rgb(4_8_8/0.34)] ring-1 ring-mineral-blue/20 md:mt-14 md:aspect-[61/30]">
+              <ImageWithPlaceholderHeader alt={title} img={img} preload />
+            </ContentHeaderMotionImage>
+          )}
+
+          {date && (
+            <ContentHeaderMotionItem className="mx-auto mt-8 flex w-full max-w-[624px] flex-col items-start justify-start gap-1 font-mono text-xs uppercase leading-[21px] tracking-normal text-google-paper/72 md:flex-row md:gap-2 md:text-[15px] md:leading-6">
+              <span>OU9999</span>
+              <span className="hidden md:inline">·</span>
+              <time dateTime={date}>{formatDateToString(date)}</time>
+            </ContentHeaderMotionItem>
+          )}
+
+          {text && (
+            <ContentHeaderMotionItem className="mx-auto mt-14 max-w-[624px] text-left text-[15px] leading-6 text-google-paper/82 md:text-[17px] md:leading-[27px]">
+              <p>{text}</p>
+            </ContentHeaderMotionItem>
+          )}
+        </div>
+      </ContentHeaderMotionRoot>
+    );
+  }
+
   return (
     <ContentHeaderMotionRoot
       className={cn(
