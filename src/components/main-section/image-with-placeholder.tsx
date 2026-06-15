@@ -13,7 +13,7 @@ const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
           {...props}
           alt={props.alt}
           className={cn("h-auto w-full rounded-lg", props.className)}
-          sizes={props.sizes ?? "(max-width: 768px) calc(100vw - 48px), 976px"}
+          sizes={props.sizes ?? "(max-width: 768px) calc(100vw - 48px), 624px"}
           placeholder="blur"
           blurDataURL={base64Data.base64}
         />

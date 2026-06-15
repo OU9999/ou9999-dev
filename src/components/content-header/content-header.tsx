@@ -65,7 +65,7 @@ const ContentHeader = ({
           )}
 
           {date && (
-            <ContentHeaderMotionItem className="mt-8 flex flex-col items-start justify-start gap-1 font-mono text-xs uppercase leading-[21px] tracking-normal text-google-paper/72 md:flex-row md:gap-2 md:text-[15px] md:leading-6">
+            <ContentHeaderMotionItem className="mx-auto mt-8 flex w-full max-w-[624px] flex-col items-start justify-start gap-1 font-mono text-xs uppercase leading-[21px] tracking-normal text-google-paper/72 md:flex-row md:gap-2 md:text-[15px] md:leading-6">
               <span>OU9999</span>
               <span className="hidden md:inline">·</span>
               <time dateTime={date}>{formatDateToString(date)}</time>
@@ -73,7 +73,7 @@ const ContentHeader = ({
           )}
 
           {text && (
-            <ContentHeaderMotionItem className="mt-14 max-w-[624px] text-left text-[15px] leading-6 text-google-paper/82 md:text-[17px] md:leading-[27px]">
+            <ContentHeaderMotionItem className="mx-auto mt-14 max-w-[624px] text-left text-[15px] leading-6 text-google-paper/82 md:text-[17px] md:leading-[27px]">
               <p>{text}</p>
             </ContentHeaderMotionItem>
           )}
