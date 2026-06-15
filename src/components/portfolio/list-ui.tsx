@@ -1,14 +1,16 @@
-import { cn } from "@/utils/tailwindUtil";
+import { cn } from "@/utils/tailwind-util";
 
-type ListBoxProps = React.HTMLAttributes<HTMLUListElement>;
-
-const ListBox = ({ className, ...props }: ListBoxProps) => {
+const ListBox = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLUListElement>) => {
   return <ul className={cn("pl-4 mt-1 space-y-1", className)} {...props} />;
 };
 
-type ListItemProps = React.HTMLAttributes<HTMLLIElement>;
-
-const ListItem = ({ className, ...props }: ListItemProps) => {
+const ListItem = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLLIElement>) => {
   return <li className={className} {...props} />;
 };
 

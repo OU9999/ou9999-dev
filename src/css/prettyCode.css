@@ -38,7 +38,7 @@
 }
 
 .prose code span[data-highlighted-line] {
-  @apply bg-indigo-400/10 rounded-sm;
+  @apply rounded-sm bg-mineral-blue/10;
 }
 
 .prose :not(pre) > code::before,
@@ -47,9 +47,9 @@
 }
 
 .prose :not(pre) > code {
-  @apply dark:bg-gray-900 bg-gray-200 border border-gray-300 dark:border-gray-700 text-sm font-normal align-middle py-0.5 px-1 rounded;
+  @apply rounded border border-mineral-blue/18 bg-mineral-teal/14 px-1 py-0.5 align-middle text-sm font-normal;
 }
 
 figcaption[data-rehype-pretty-code-title] {
-  @apply bg-[rgb(26,34,39)] py-2 px-6 rounded-t-md border-b-1 border-b-slate-800 text-slate-400 translate-y-1;
+  @apply translate-y-1 rounded-t-md border-b-1 border-b-mineral-blue/16 bg-mineral-teal/16 px-6 py-2 text-google-muted;
 }

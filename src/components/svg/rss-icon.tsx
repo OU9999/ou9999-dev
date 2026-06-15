@@ -27,4 +27,4 @@ const RssIcon = () => {
   );
 };
 
-export default RssIcon;
+export { RssIcon };

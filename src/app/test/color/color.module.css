@@ -1,0 +1,406 @@
+.surface {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 78% 12%, rgb(31 42 40 / 0.12), transparent 25%),
+    radial-gradient(circle at 10% 88%, rgb(32 38 50 / 0.1), transparent 27%),
+    linear-gradient(145deg, #070707 0%, #030404 48%, #0c0d0c 100%);
+}
+
+.surface::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  content: "";
+  opacity: 0.18;
+  background:
+    repeating-linear-gradient(
+      108deg,
+      rgb(232 236 236 / 0.026) 0 1px,
+      transparent 1px 18px
+    ),
+    repeating-linear-gradient(
+      21deg,
+      rgb(0 0 0 / 0.3) 0 1px,
+      transparent 1px 21px
+    );
+  mix-blend-mode: soft-light;
+}
+
+.brushField {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 24% 68%, rgb(31 42 40 / 0.24), transparent 36%),
+    radial-gradient(ellipse at 66% 22%, rgb(32 38 50 / 0.2), transparent 34%),
+    linear-gradient(145deg, rgb(232 236 236 / 0.028), rgb(255 255 255 / 0.01)),
+    #070707;
+}
+
+.brushField::before {
+  position: absolute;
+  inset: -16%;
+  z-index: -1;
+  content: "";
+  opacity: 0.34;
+  background:
+    radial-gradient(ellipse at 18% 68%, rgb(58 48 48 / 0.12), transparent 36%),
+    radial-gradient(ellipse at 58% 46%, rgb(32 38 50 / 0.18), transparent 42%),
+    linear-gradient(106deg, transparent 0 18%, rgb(232 236 236 / 0.055) 28%, transparent 46% 100%);
+  filter: blur(0.6px);
+  mix-blend-mode: screen;
+  transform: rotate(-5deg);
+}
+
+.gradientCard {
+  isolation: isolate;
+}
+
+.gradientCard::before {
+  position: absolute;
+  inset: -22% -14% auto;
+  z-index: 0;
+  height: 58%;
+  pointer-events: none;
+  content: "";
+  opacity: 0.5;
+  background:
+    radial-gradient(ellipse at 20% 56%, rgb(162 173 179 / 0.12), transparent 36%),
+    radial-gradient(ellipse at 70% 32%, rgb(31 42 40 / 0.18), transparent 42%),
+    linear-gradient(104deg, transparent 0 18%, rgb(232 236 236 / 0.055) 28%, transparent 46% 100%);
+  filter: url("#color-gouache-bristle") blur(0.7px);
+  mix-blend-mode: screen;
+  transform: rotate(-4deg);
+}
+
+.gradientText {
+  display: inline-block;
+  color: transparent;
+  text-wrap: balance;
+  background-size: 132% 100%;
+  background-position: 50% 50%;
+  background-clip: text;
+  filter: drop-shadow(0 0 18px rgb(162 173 179 / 0.16));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+.highlightBrushText {
+  position: relative;
+  isolation: isolate;
+  width: fit-content;
+}
+
+.highlightBrushText .gradientText {
+  position: relative;
+  z-index: 3;
+}
+
+.highlightPaintLayer {
+  position: absolute;
+  left: -0.03em;
+  right: -0.03em;
+  top: 43%;
+  z-index: 1;
+  height: 0.44em;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%) rotate(-1.2deg);
+  will-change: opacity, transform;
+}
+
+.highlightPaintSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: url("#color-gouache-bristle") drop-shadow(0 0 18px rgb(162 173 179 / 0.18));
+  mix-blend-mode: screen;
+}
+
+.highlightPaintBody,
+.highlightPaintBodyLight,
+.highlightPaintDry {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.highlightPaintBody {
+  stroke: rgb(162 173 179 / 0.58);
+  stroke-width: 8.5;
+}
+
+.highlightPaintBodyLight {
+  stroke: rgb(248 251 251 / 0.34);
+  stroke-width: 3.8;
+}
+
+.highlightPaintDry {
+  stroke: rgb(248 251 251 / 0.28);
+  stroke-dasharray: 10 9 2 13;
+  stroke-width: 1.5;
+}
+
+.highlightPaintFleck {
+  fill: rgb(248 251 251 / 0.44);
+}
+
+.gradientColdPearl {
+  background-image: linear-gradient(
+    112deg,
+    #ffffff 0%,
+    #eef2f2 20%,
+    #aebbc0 48%,
+    #fbfdfd 72%,
+    #cad4d6 100%
+  );
+}
+
+.gradientBlueSteel {
+  background-image: linear-gradient(
+    112deg,
+    #f8fbfb 0%,
+    #d4e5ec 24%,
+    #a2adb3 48%,
+    #e5eef1 72%,
+    #ffffff 100%
+  );
+}
+
+.gradientMineralTeal {
+  background-image: linear-gradient(
+    112deg,
+    #f2f7f5 0%,
+    #bfd2cf 24%,
+    #7f9f99 48%,
+    #e8ecec 72%,
+    #a2adb3 100%
+  );
+}
+
+.gradientOxideAsh {
+  background-image: linear-gradient(
+    112deg,
+    #faf8f3 0%,
+    #d4cbc3 24%,
+    #988d86 48%,
+    #e8ecec 74%,
+    #b9c2c4 100%
+  );
+}
+
+.gradientHardChalk {
+  background-image: linear-gradient(
+    112deg,
+    #ffffff 0%,
+    #ffffff 18%,
+    #e8ecec 36%,
+    #a2adb3 54%,
+    #fdfefe 74%,
+    #c4d0d3 100%
+  );
+}
+
+.previewSurface {
+  isolation: isolate;
+  --gouache-primary: 31 42 40;
+  --gouache-secondary: 32 38 50;
+  --gouache-light: 162 173 179;
+  --gouache-shadow: 2 3 3;
+  background:
+    linear-gradient(145deg, rgb(232 236 236 / 0.028), rgb(255 255 255 / 0.01)),
+    #070707;
+}
+
+.gouacheLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.gouacheLayer::before,
+.gouacheLayer::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.gouacheLayer::before {
+  z-index: 1;
+  opacity: 0.22;
+  background:
+    repeating-linear-gradient(
+      108deg,
+      rgb(var(--gouache-light) / 0.05) 0 1px,
+      transparent 1px 18px
+    ),
+    repeating-linear-gradient(
+      18deg,
+      rgb(0 0 0 / 0.3) 0 1px,
+      transparent 1px 21px
+    );
+  filter: url("#color-gouache-paper") contrast(1.08);
+  mix-blend-mode: soft-light;
+}
+
+.gouacheLayer::after {
+  z-index: 2;
+  opacity: 0.12;
+  background:
+    radial-gradient(circle at 18% 42%, rgb(var(--gouache-light) / 0.1) 0 1px, transparent 1px 6px),
+    radial-gradient(circle at 78% 18%, rgb(var(--gouache-secondary) / 0.1) 0 1px, transparent 1px 7px);
+  background-size:
+    12px 12px,
+    17px 17px;
+  mix-blend-mode: screen;
+}
+
+.gouacheTexture {
+  position: absolute;
+  pointer-events: none;
+  filter: url("#color-gouache-bristle") blur(0.5px);
+  transform-origin: center;
+}
+
+.gouacheShadow {
+  left: -24%;
+  bottom: -42%;
+  z-index: 3;
+  width: 72%;
+  height: 62%;
+  opacity: 0.62;
+  background:
+    radial-gradient(ellipse at 38% 50%, rgb(var(--gouache-shadow) / 0.86) 0 24%, rgb(18 20 19 / 0.2) 46%, transparent 74%),
+    conic-gradient(from 224deg at 52% 54%, transparent 0 22%, rgb(var(--gouache-primary) / 0.12) 30% 38%, transparent 48% 100%);
+  border-radius: 54% 42% 56% 38%;
+  mix-blend-mode: multiply;
+  transform: rotate(-10deg) skewX(-6deg);
+}
+
+.gouachePrimary {
+  right: -24%;
+  top: -18%;
+  z-index: 4;
+  width: 62%;
+  height: 72%;
+  opacity: 0.16;
+  background:
+    radial-gradient(ellipse at 42% 48%, rgb(var(--gouache-light) / 0.18) 0 13%, rgb(var(--gouache-primary) / 0.16) 32%, transparent 66%),
+    conic-gradient(from 218deg at 44% 48%, transparent 0 20%, rgb(var(--gouache-secondary) / 0.18) 26% 33%, rgb(var(--gouache-light) / 0.1) 40% 48%, transparent 58% 100%);
+  border-radius: 44% 58% 40% 54%;
+  mix-blend-mode: screen;
+  transform: rotate(15deg) skewX(4deg);
+}
+
+.gouacheSecondary {
+  left: -14%;
+  top: 4%;
+  z-index: 5;
+  width: 62%;
+  height: 72%;
+  opacity: 0.14;
+  background:
+    linear-gradient(62deg, transparent 0 13%, rgb(var(--gouache-secondary) / 0.28) 27%, rgb(var(--gouache-primary) / 0.14) 49%, transparent 73%),
+    radial-gradient(ellipse at 38% 46%, rgb(var(--gouache-light) / 0.06) 0 16%, transparent 45%);
+  border-radius: 58% 42% 54% 38%;
+  mix-blend-mode: screen;
+  transform: rotate(-18deg) skewY(7deg);
+}
+
+.gouacheLight {
+  left: 33%;
+  top: 3%;
+  z-index: 6;
+  width: 50%;
+  height: 86%;
+  opacity: 0.11;
+  background:
+    radial-gradient(ellipse at 42% 38%, rgb(var(--gouache-light) / 0.22) 0 12%, rgb(var(--gouache-light) / 0.1) 30%, transparent 62%),
+    conic-gradient(from 194deg at 52% 48%, transparent 0 18%, rgb(var(--gouache-light) / 0.12) 23% 31%, transparent 39% 100%);
+  border-radius: 44% 58% 38% 54%;
+  mix-blend-mode: screen;
+  transform: rotate(14deg) skewY(-6deg);
+}
+
+.gouacheDryLine {
+  position: absolute;
+  right: -10%;
+  top: 0;
+  z-index: 7;
+  width: 44%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.05;
+  background:
+    repeating-linear-gradient(
+      103deg,
+      transparent 0 26px,
+      rgb(var(--gouache-light) / 0.18) 28px 30px,
+      transparent 32px 72px
+    );
+  filter: url("#color-gouache-bristle") blur(1px);
+  mix-blend-mode: screen;
+  transform: rotate(3deg);
+}
+
+.gouacheReadingField {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 8;
+  width: min(34rem, 72%);
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgb(7 7 7 / 0.9) 0%, rgb(7 7 7 / 0.62) 58%, transparent 100%);
+}
+
+.previewStrip {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #070707;
+}
+
+.previewStrip::before {
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  content: "";
+  opacity: 0.56;
+  background:
+    radial-gradient(ellipse at 24% 72%, rgb(31 42 40 / 0.42), transparent 38%),
+    radial-gradient(ellipse at 74% 32%, rgb(32 38 50 / 0.34), transparent 36%),
+    linear-gradient(104deg, transparent 0 18%, rgb(162 173 179 / 0.07) 27%, transparent 43% 100%);
+  filter: blur(0.7px);
+  mix-blend-mode: screen;
+  transform: rotate(-5deg);
+}
+
+.graphiteStrip {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 24% 72%, rgb(31 42 40 / 0.36), transparent 38%),
+    radial-gradient(ellipse at 74% 32%, rgb(32 38 50 / 0.28), transparent 36%),
+    linear-gradient(145deg, #101211, #070707);
+}
+
+.graphiteStrip::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  opacity: 0.24;
+  background:
+    repeating-linear-gradient(
+      96deg,
+      rgb(232 236 236 / 0.04) 0 1px,
+      transparent 1px 16px
+    );
+  mix-blend-mode: soft-light;
+}

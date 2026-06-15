@@ -60,6 +60,13 @@ git cherry -v origin/release origin/develop
 
 사용자가 명시적으로 지시한 경우에만 PR 생성·재오픈·merge 진행.
 
+Release PR 본문은 `$pr` 스킬의 PR 본문 형식과 동일한 구조 사용.
+
+- `## 요약`에 release 대상 변경 단위 요약
+- `### ...` 섹션에 승격 범위와 검증 계획 작성
+- `## Checks` 같은 별도 체크박스 섹션 사용 금지
+- 함수명, 파일 경로 등 세부 코드 명칭 포함 금지
+
 ```bash
 gh pr create \
   --repo OU9999/ou9999-dev \
@@ -67,14 +74,18 @@ gh pr create \
   --head develop \
   --title "release: YYYY-MM-DD" \
   --body "$(cat <<'BODY'
-## Summary
+## 요약
 
-- Promote develop to release
+- develop 변경사항을 release로 승격
+- CI와 Vercel Production 배포 검증 진행
 
-## Checks
+### Release 승격
 
-- [ ] CI passed
-- [ ] Vercel Production deployment verified after merge
+- develop의 검증된 변경사항을 release 브랜치에 반영함
+
+### 배포 검증
+
+- merge 후 release 브랜치 CI와 Vercel Production 배포 상태를 확인함
 BODY
 )"
 ```
@@ -163,4 +174,3 @@ gh secret set VERCEL_TOKEN --repo OU9999/ou9999-dev
 - `git diff origin/release origin/develop` 우선 확인
 - `git cherry -v origin/release origin/develop`로 patch-equivalent 확인
 - 사용자 명시 승인 없는 `release` force-push 금지
-

@@ -1,1 +1,3 @@
-export const myDomain = "https://ou9999-dev.com";
+const myDomain = "https://ou9999-dev.com";
+
+export { myDomain };

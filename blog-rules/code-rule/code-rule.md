@@ -1,32 +1,48 @@
 # Code Rule
 
-코드 작성·수정 규칙. 기존 코드 스타일 우선, 새 규칙은 점진 적용.
+코드 작성·수정 규칙. Web Code Rules 우선.
 
-## 선언·문법
+## 파일·디렉터리
 
-- 가독성 위한 early return 우선
-- 함수형 컴포넌트와 유틸은 기존 파일 스타일 유지
-- 타입 정의는 주변 코드의 `type`·`interface` 사용 방식 우선
-- App Router 라우트 파일은 Next.js 요구 형식 우선
+- 파일 이름 kebab-case
+- React 컴포넌트 파일 kebab-case
+- 디렉터리 이름 kebab-case
+- 컴포넌트 디렉터리 `index.ts` 재export 금지
+- 상대 경로 `../..`까지만 허용
+- `../../..` 이상 path alias 사용
+
+## TypeScript
+
+- 객체 타입 `interface` 우선
+- 함수 선언보다 `const` 화살표 함수 우선
+- 함수·이벤트 핸들러 명시적 타입 우선
+- inline export 금지
+- 파일 끝 named export 사용
+- 타입 export는 파일 끝 `export type` 사용
+- App Router 예약 export는 Next.js 요구 형태 우선
+- `metadata`, `generateMetadata`, `generateStaticParams`, `dynamic`, route handler는 직접 export 허용
+- App Router default export는 선언 후 파일 끝 `export default` 사용
 
 ## React·훅
 
-- `useMemo`·`useCallback`은 실제 렌더링 비용이나 참조 안정성 필요 시에만 사용
-- `useRef`는 DOM 접근·외부 인스턴스 보관 등 필요한 상황에만 사용
-- `useEffect` 추가 시 서버/클라이언트 경계와 cleanup 필요성 확인
-
-## 컴포넌트·JSX
-
+- early return 우선
+- `useMemo` 사용 금지
+- `useCallback` 사용 금지
+- React 19.2+와 React Compiler 자동 메모이제이션 전제
+- `useEffect` 추가 시 JSDoc 의도 설명 필수
+- `useEffect`는 컴포넌트 하단, `return` 직전 배치
+- JSX props inline 함수 전달 금지
+- 이벤트 핸들러는 컴포넌트 내부 `const handleXxx = () => {}` 선언 후 전달
 - 불필요한 wrapper 지양
 - 가능한 경우 시맨틱 HTML 태그 사용
-- 반복 UI는 기존 컴포넌트·유틸 패턴 우선
-- 단일 사용 코드에 성급한 추상화 금지
 
 ## 스타일링
 
-- Tailwind className 우선
-- 조건부 className 조합은 기존 `cn`·`clsx`·`tailwind-merge` 패턴 우선
-- inline style은 동적 CSS 값처럼 불가피한 경우만 사용
+- HTML 요소 스타일링 Tailwind className만 사용
+- inline style 금지
+- Tailwind className 조합·조건부 전달 시 `cn` 유틸 사용
+- template literal 문자열 결합 금지
+- 디자인·스타일링 작업 시 `DESIGN.md` 토큰·레이아웃·컴포넌트 규칙 준수
 
 ## 단순함·설계
 

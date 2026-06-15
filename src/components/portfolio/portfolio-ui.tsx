@@ -1,20 +1,21 @@
-import { cn } from "@/utils/tailwindUtil";
+import { cn } from "@/utils/tailwind-util";
 import Link from "next/link";
-import LinkIcon from "../svg/link-icon";
-import CarouselImg from "./carousel-img";
-import CarouselStack from "./carousel-stack";
+import { LinkIcon } from "../svg/link-icon";
+import { CarouselImg } from "./carousel-img";
+import { CarouselStack } from "./carousel-stack";
 
 interface PortfolioTitleProps {
   text: string;
 }
 
 const PortfolioTitle = ({ text }: PortfolioTitleProps) => {
-  return <p className="text-lg mt-14 mb-5">{text}</p>;
+  return <p className="mb-5 mt-14 text-lg text-google-paper">{text}</p>;
 };
 
-type PortfolioContentProps = React.HTMLAttributes<HTMLDivElement>;
-
-const PortfolioContent = ({ className, ...props }: PortfolioContentProps) => {
+const PortfolioContent = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => {
   return <div className={cn("space-y-5", className)} {...props} />;
 };
 
@@ -42,21 +43,23 @@ const ProjectLayout = ({
   children,
 }: ProjectLayoutProps) => {
   return (
-    <div className="w-full flex">
-      <div className="flex flex-col md:flex-row w-3/12 text-slate-500 dark:text-slate-400">
+    <div className="flex w-full">
+      <div className="flex w-3/12 flex-col text-google-muted md:flex-row">
         {dateFrom && <p>{dateFrom} -&nbsp;</p>}
         {dateTo && <p>{dateTo}</p>}
         {date && <p>{date}</p>}
       </div>
 
-      <div className="w-9/12 flex flex-col justify-start">
-        <div className="w-full flex justify-start items-center space-x-[0.5px]">
+      <div className="flex w-9/12 flex-col justify-start">
+        <div className="flex w-full items-center justify-start space-x-[0.5px]">
           {link ? (
             <>
               <Link href={link}>
-                <p className="cursor-pointer hover:underline">{projectTitle}</p>
+                <p className="cursor-pointer text-google-paper hover:text-mineral-blue hover:underline">
+                  {projectTitle}
+                </p>
               </Link>
-              <div className="w-3 h-3 fill-black dark:fill-white stroke-black dark:stroke-white">
+              <div className="h-3 w-3 fill-mineral-blue stroke-mineral-blue">
                 <LinkIcon />
               </div>
             </>
@@ -64,7 +67,7 @@ const ProjectLayout = ({
             <p className="">{projectTitle}</p>
           )}
         </div>
-        <div className="w-full flex flex-col justify-start text-slate-500 dark:text-slate-400">
+        <div className="flex w-full flex-col justify-start text-google-muted">
           <p>{projectType}</p>
           {stack && <CarouselStack stack={stack} />}
           {imgs && <CarouselImg imgs={imgs} />}
