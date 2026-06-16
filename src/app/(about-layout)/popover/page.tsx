@@ -50,7 +50,6 @@ const MobilePopover = async () => {
         <div className="flex flex-col items-center justify-center space-y-3">
           <LinkButton text="Home" link="/" />
           <LinkButton text="About" link="/about" />
-          <LinkButton text="Portfolio" link="/portfolio" />
         </div>
         <p className="mb-7 mt-20 text-4xl font-bold">Tag</p>
         <div className="flex flex-col items-center justify-center space-y-3">
