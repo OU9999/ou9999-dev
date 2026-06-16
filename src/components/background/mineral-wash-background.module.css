@@ -57,10 +57,10 @@
   z-index: 3;
   width: 66%;
   height: 66%;
-  opacity: 0.32;
+  opacity: 0.46;
   background:
-    radial-gradient(ellipse at 46% 48%, rgb(162 173 179 / 0.14) 0 10%, rgb(31 42 40 / 0.19) 28%, transparent 66%),
-    conic-gradient(from 34deg at 42% 50%, transparent 0 18%, rgb(32 38 50 / 0.18) 25% 36%, rgb(232 236 236 / 0.08) 44% 52%, transparent 62% 100%);
+    radial-gradient(ellipse at 46% 48%, rgb(162 173 179 / 0.2) 0 10%, rgb(31 42 40 / 0.32) 28%, transparent 66%),
+    conic-gradient(from 34deg at 42% 50%, transparent 0 18%, rgb(32 38 50 / 0.3) 25% 36%, rgb(232 236 236 / 0.12) 44% 52%, transparent 62% 100%);
   border-radius: 50% 44% 58% 40%;
   mix-blend-mode: screen;
   transform: rotate(-16deg) skewX(-5deg);
@@ -72,10 +72,10 @@
   z-index: 4;
   width: 60%;
   height: 70%;
-  opacity: 0.34;
+  opacity: 0.44;
   background:
-    radial-gradient(ellipse at 42% 48%, rgb(232 236 236 / 0.16) 0 13%, rgb(31 42 40 / 0.2) 30%, transparent 64%),
-    conic-gradient(from 218deg at 44% 48%, transparent 0 18%, rgb(162 173 179 / 0.14) 24% 31%, rgb(32 38 50 / 0.2) 38% 48%, transparent 58% 100%);
+    radial-gradient(ellipse at 42% 48%, rgb(232 236 236 / 0.2) 0 13%, rgb(31 42 40 / 0.3) 30%, transparent 64%),
+    conic-gradient(from 218deg at 44% 48%, transparent 0 18%, rgb(162 173 179 / 0.2) 24% 31%, rgb(32 38 50 / 0.3) 38% 48%, transparent 58% 100%);
   border-radius: 44% 58% 40% 54%;
   mix-blend-mode: screen;
   transform: rotate(15deg) skewX(4deg);
@@ -136,10 +136,10 @@
   height: min(30rem, 50vh);
   pointer-events: none;
   content: "";
-  opacity: 0.32;
+  opacity: 0.48;
   background:
-    radial-gradient(ellipse at 44% 46%, rgb(162 173 179 / 0.18) 0 10%, rgb(31 42 40 / 0.23) 30%, transparent 68%),
-    conic-gradient(from 42deg at 43% 50%, transparent 0 20%, rgb(32 38 50 / 0.18) 27% 38%, rgb(232 236 236 / 0.08) 45% 52%, transparent 62% 100%);
+    radial-gradient(ellipse at 44% 46%, rgb(162 173 179 / 0.24) 0 10%, rgb(31 42 40 / 0.34) 30%, transparent 68%),
+    conic-gradient(from 42deg at 43% 50%, transparent 0 20%, rgb(32 38 50 / 0.3) 27% 38%, rgb(232 236 236 / 0.12) 45% 52%, transparent 62% 100%);
   filter: url("#mineral-gouache-bristle") blur(0.7px);
   mix-blend-mode: screen;
   transform: rotate(-14deg);
