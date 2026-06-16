@@ -43,16 +43,6 @@ const Header = () => {
               About
             </p>
           </Link>
-          <Link href={"/portfolio"}>
-            <p
-              className={cn(
-                "text-lg font-semibold text-google-paper",
-                hoverMineralTextGradient
-              )}
-            >
-              Portfolio
-            </p>
-          </Link>
         </div>
         <PopoverButton />
       </nav>

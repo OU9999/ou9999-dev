@@ -1,6 +1,5 @@
 User-agent: *
 disallow: /imgs
 disallow: /about
-disallow: /portfolio
 allow: /
 sitemap: https://ou9999-dev.com/sitemap.xml
