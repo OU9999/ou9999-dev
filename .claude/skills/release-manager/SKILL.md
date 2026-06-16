@@ -50,11 +50,14 @@ Tree diff 우선. `release`와 `develop`은 동일 변경이 서로 다른 SHA�
 git diff --stat origin/release origin/develop
 git diff --name-status origin/release origin/develop
 git cherry -v origin/release origin/develop
+git merge-tree origin/release origin/develop > /tmp/release-merge-tree.txt || cat /tmp/release-merge-tree.txt
 ```
 
 - `git diff origin/release origin/develop` empty → release 대상 없음
 - `git cherry -v`의 `-` 항목 → patch-equivalent commit
 - `git log origin/release..origin/develop` 단독 판단 금지
+- `git merge-tree` conflict → direct `develop -> release` PR 생성 금지
+- `mergeStateStatus: DIRTY` → conflict 상태
 
 ## Release 승격
 
@@ -66,6 +69,10 @@ Release PR 본문은 `$pr` 스킬의 PR 본문 형식과 동일한 구조 사용
 - `### ...` 섹션에 승격 범위와 검증 계획 작성
 - `## Checks` 같은 별도 체크박스 섹션 사용 금지
 - 함수명, 파일 경로 등 세부 코드 명칭 포함 금지
+
+### Direct PR
+
+`git merge-tree origin/release origin/develop`가 conflict 없이 통과할 때만 direct PR 생성.
 
 ```bash
 gh pr create \
@@ -89,6 +96,75 @@ gh pr create \
 BODY
 )"
 ```
+
+생성 후 `mergeStateStatus` 확인:
+
+```bash
+gh pr view <PR_NUMBER> --repo OU9999/ou9999-dev --json mergeStateStatus
+```
+
+`DIRTY`면 direct PR 유지 금지. 아래 promotion PR 생성 후 direct PR close.
+
+### Promotion PR
+
+`release`가 이전 squash 승격 커밋을 포함해 direct PR이 conflict 나는 경우 사용. 최종 tree는 `origin/develop`과 동일해야 함.
+
+```bash
+RELEASE_DATE="$(date +%F)"
+PROMOTE_BRANCH="promote-develop-to-release-${RELEASE_DATE}"
+PROMOTE_WORKTREE="/tmp/simple-blog-${PROMOTE_BRANCH}"
+
+git worktree add -b "${PROMOTE_BRANCH}" "${PROMOTE_WORKTREE}" origin/release
+cd "${PROMOTE_WORKTREE}"
+git read-tree --reset -u origin/develop
+git diff --quiet origin/develop --
+git diff --cached --quiet origin/develop --
+git commit -m "$(cat <<'EOF'
+release: YYYY-MM-DD
+EOF
+)"
+git push -u origin "${PROMOTE_BRANCH}"
+```
+
+Promotion PR 생성:
+
+```bash
+gh pr create \
+  --repo OU9999/ou9999-dev \
+  --base release \
+  --head "${PROMOTE_BRANCH}" \
+  --title "release: YYYY-MM-DD" \
+  --body "$(cat <<'BODY'
+## 요약
+
+- develop 변경사항을 release로 승격
+- CI와 Vercel Production 배포 검증 진행
+
+### Release 승격
+
+- develop의 검증된 변경사항을 release 브랜치에 반영함
+
+### 배포 검증
+
+- merge 후 release 브랜치 CI와 Vercel Production 배포 상태를 확인함
+BODY
+)"
+```
+
+기존 direct PR이 있으면 replacement PR 생성 후 close:
+
+```bash
+gh pr close <DIRECT_PR_NUMBER> \
+  --repo OU9999/ou9999-dev \
+  --comment "Superseded by #<PROMOTION_PR_NUMBER>."
+```
+
+금지:
+
+- `release/*` 브랜치 생성
+- `release` 직접 커밋
+- `release` force-push
+- conflict 해소 목적의 `develop` history 수정
 
 필수 체크 대기:
 
