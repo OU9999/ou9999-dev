@@ -52,18 +52,18 @@
 }
 
 .lacquerBloom {
-  left: -20%;
-  bottom: -40%;
+  left: -24%;
+  bottom: -30%;
   z-index: 3;
-  width: 68%;
-  height: 58%;
-  opacity: 0.5;
+  width: 66%;
+  height: 66%;
+  opacity: 0.32;
   background:
-    radial-gradient(ellipse at 38% 50%, rgb(0 0 0 / 0.78) 0 22%, rgb(31 42 40 / 0.11) 44%, transparent 72%),
-    conic-gradient(from 224deg at 52% 54%, transparent 0 20%, rgb(32 38 50 / 0.14) 28% 38%, transparent 48% 100%);
-  border-radius: 54% 42% 56% 38%;
-  mix-blend-mode: multiply;
-  transform: rotate(-10deg) skewX(-6deg);
+    radial-gradient(ellipse at 46% 48%, rgb(162 173 179 / 0.14) 0 10%, rgb(31 42 40 / 0.19) 28%, transparent 66%),
+    conic-gradient(from 34deg at 42% 50%, transparent 0 18%, rgb(32 38 50 / 0.18) 25% 36%, rgb(232 236 236 / 0.08) 44% 52%, transparent 62% 100%);
+  border-radius: 50% 44% 58% 40%;
+  mix-blend-mode: screen;
+  transform: rotate(-16deg) skewX(-5deg);
 }
 
 .nacreVeil {
@@ -126,6 +126,23 @@
   height: 100%;
   pointer-events: none;
   background: linear-gradient(90deg, rgb(7 7 7 / 0.94) 0%, rgb(7 7 7 / 0.7) 58%, transparent 100%);
+}
+
+.readingField::after {
+  position: absolute;
+  left: -14%;
+  bottom: -12%;
+  width: min(50rem, 64vw);
+  height: min(30rem, 50vh);
+  pointer-events: none;
+  content: "";
+  opacity: 0.32;
+  background:
+    radial-gradient(ellipse at 44% 46%, rgb(162 173 179 / 0.18) 0 10%, rgb(31 42 40 / 0.23) 30%, transparent 68%),
+    conic-gradient(from 42deg at 43% 50%, transparent 0 20%, rgb(32 38 50 / 0.18) 27% 38%, rgb(232 236 236 / 0.08) 45% 52%, transparent 62% 100%);
+  filter: url("#gouache-bristle") blur(0.7px);
+  mix-blend-mode: screen;
+  transform: rotate(-14deg);
 }
 
 .strokeCard {
