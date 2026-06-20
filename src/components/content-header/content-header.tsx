@@ -91,7 +91,7 @@ const ContentHeader = ({
           : "pb-16 pt-24 md:pb-24 md:pt-[126px]"
       )}
     >
-      <div className="mx-auto w-full max-w-[1632px]">
+      <div className="mx-auto w-full max-w-[1320px]">
         <ContentHeaderMotionText className="w-full">
           {date && (
             <ContentHeaderMotionItem className="font-mono text-xs uppercase leading-none tracking-normal text-current md:text-base">
