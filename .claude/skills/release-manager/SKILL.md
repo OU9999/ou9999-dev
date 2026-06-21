@@ -24,12 +24,22 @@ allowed-tools: ["Bash", "Read", "Grep"]
 - PR title 기반 commit history 유지
 - repository merge 설정은 squash-only 상태 유지
 
+## 운영 흐름
+
+- 사용자가 release 실행을 명시하지 않으면 운영 변경 없는 점검만 수행
+- release 대상 없음 → PR 생성 없이 종료
+- `merge-tree=clean` → Direct PR
+- `merge-tree=conflict` → Promotion PR
+- PR merge 후 release HEAD SHA 기준으로 CI와 Vercel Production 검증
+
 ## 사전 확인
 
 ```bash
 git status --short --branch
 git fetch origin --prune
 git branch -r --no-color | rg 'origin/(develop|release|main|release/)'
+git worktree prune
+git worktree list
 gh api repos/OU9999/ou9999-dev --jq '{default_branch, allow_merge_commit, allow_squash_merge, allow_rebase_merge, squash_merge_commit_title, squash_merge_commit_message}'
 ```
 
@@ -50,7 +60,14 @@ Tree diff 우선. `release`와 `develop`은 동일 변경이 서로 다른 SHA�
 git diff --stat origin/release origin/develop
 git diff --name-status origin/release origin/develop
 git cherry -v origin/release origin/develop
-git merge-tree origin/release origin/develop > /tmp/release-merge-tree.txt || cat /tmp/release-merge-tree.txt
+MERGE_TREE_OUT="/tmp/release-merge-tree.txt"
+if git merge-tree origin/release origin/develop > "${MERGE_TREE_OUT}"; then
+  MERGE_TREE_RESULT="clean"
+else
+  MERGE_TREE_RESULT="conflict"
+fi
+cat "${MERGE_TREE_OUT}"
+printf 'merge-tree=%s\n' "${MERGE_TREE_RESULT}"
 ```
 
 - `git diff origin/release origin/develop` empty → release 대상 없음
@@ -72,14 +89,15 @@ Release PR 본문은 `$pr` 스킬의 PR 본문 형식과 동일한 구조 사용
 
 ### Direct PR
 
-`git merge-tree origin/release origin/develop`가 conflict 없이 통과할 때만 direct PR 생성.
+`merge-tree=clean`일 때만 direct PR 생성.
 
 ```bash
+RELEASE_DATE="$(date +%F)"
 gh pr create \
   --repo OU9999/ou9999-dev \
   --base release \
   --head develop \
-  --title "release: YYYY-MM-DD" \
+  --title "release: ${RELEASE_DATE}" \
   --body "$(cat <<'BODY'
 ## 요약
 
@@ -111,29 +129,31 @@ gh pr view <PR_NUMBER> --repo OU9999/ou9999-dev --json mergeStateStatus
 
 ```bash
 RELEASE_DATE="$(date +%F)"
-PROMOTE_BRANCH="promote-develop-to-release-${RELEASE_DATE}"
+PROMOTE_STAMP="$(date +%Y%m%d%H%M%S)"
+PROMOTE_BRANCH="promote-develop-to-release-${RELEASE_DATE}-${PROMOTE_STAMP}"
 PROMOTE_WORKTREE="/tmp/simple-blog-${PROMOTE_BRANCH}"
+PROMOTE_STATE="/tmp/simple-blog-release-promotion.env"
 
 git worktree add -b "${PROMOTE_BRANCH}" "${PROMOTE_WORKTREE}" origin/release
 cd "${PROMOTE_WORKTREE}"
 git read-tree --reset -u origin/develop
 git diff --quiet origin/develop --
 git diff --cached --quiet origin/develop --
-git commit -m "$(cat <<'EOF'
-release: YYYY-MM-DD
-EOF
-)"
+git commit -m "release: ${RELEASE_DATE}"
 git push -u origin "${PROMOTE_BRANCH}"
+printf 'RELEASE_DATE=%s\nPROMOTE_BRANCH=%s\nPROMOTE_WORKTREE=%s\n' \
+  "${RELEASE_DATE}" "${PROMOTE_BRANCH}" "${PROMOTE_WORKTREE}" > "${PROMOTE_STATE}"
 ```
 
 Promotion PR 생성:
 
 ```bash
+. /tmp/simple-blog-release-promotion.env
 gh pr create \
   --repo OU9999/ou9999-dev \
   --base release \
   --head "${PROMOTE_BRANCH}" \
-  --title "release: YYYY-MM-DD" \
+  --title "release: ${RELEASE_DATE}" \
   --body "$(cat <<'BODY'
 ## 요약
 
@@ -180,17 +200,30 @@ gh pr merge <PR_NUMBER> --repo OU9999/ou9999-dev --squash --delete-branch
 
 `develop` head branch 삭제를 GitHub가 거부하면 `--delete-branch` 없이 재실행.
 
+Promotion PR merge 후 로컬 worktree 정리:
+
+```bash
+. /tmp/simple-blog-release-promotion.env
+cd "/Users/ou9999/Documents/My Project/simple-blog"
+git worktree remove "${PROMOTE_WORKTREE}"
+git branch -D "${PROMOTE_BRANCH}"
+rm -f /tmp/simple-blog-release-promotion.env
+```
+
 ## 배포 검증
 
 ```bash
+git fetch origin --prune
+RELEASE_SHA="$(git rev-parse origin/release)"
 gh run list \
   --repo OU9999/ou9999-dev \
   --branch release \
+  --commit "${RELEASE_SHA}" \
   --limit 10 \
   --json databaseId,workflowName,status,conclusion,displayTitle,headSha,url
 ```
 
-`CI`와 `Vercel Production` 최신 run 확인:
+`CI`와 `Vercel Production` run 확인:
 
 ```bash
 gh run watch <RUN_ID> --repo OU9999/ou9999-dev --interval 10
