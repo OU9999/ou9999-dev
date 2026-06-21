@@ -5,6 +5,7 @@ import {
   mineralTextGradient,
 } from "../common/styles";
 import { cn } from "@/utils/tailwind-util";
+import { LocaleSwitchLink } from "./header/locale-switch-link";
 import { PopoverButton } from "./header/popover-button";
 import { getLocalizedPath, type AppLocale } from "@/i18n/config";
 
@@ -16,7 +17,6 @@ const Header = async ({ locale }: HeaderProps) => {
   const t = await getTranslations({ locale, namespace: "Navigation" });
   const homeHref = getLocalizedPath(locale, "/");
   const aboutHref = getLocalizedPath(locale, "/about");
-  const localeSwitchHref = locale === "ko" ? "/en" : "/";
   const localeSwitchLabel = locale === "ko" ? t("en") : t("ko");
 
   return (
@@ -56,16 +56,7 @@ const Header = async ({ locale }: HeaderProps) => {
               {t("about")}
             </p>
           </Link>
-          <Link
-            href={localeSwitchHref}
-            lang="en"
-            className={cn(
-              "text-lg font-semibold uppercase text-google-paper",
-              hoverMineralTextGradient
-            )}
-          >
-            {localeSwitchLabel}
-          </Link>
+          <LocaleSwitchLink label={localeSwitchLabel} locale={locale} />
         </div>
         <PopoverButton label={t("openMenu")} locale={locale} />
       </nav>

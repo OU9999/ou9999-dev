@@ -1,17 +1,26 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { BackButton } from "@/components/nav/header/back-button";
-import { getLocalizedPath, type AppLocale } from "@/i18n/config";
+import {
+  defaultLocale,
+  getLocalizedPath,
+  type AppLocale,
+} from "@/i18n/config";
 import { getTagsFromPosts } from "@/utils/post-util";
 
 interface LinkButtonProps {
+  lang?: string;
   text: string;
   link: string;
 }
 
-const LinkButton = ({ text, link }: LinkButtonProps) => {
+const LinkButton = ({ lang, text, link }: LinkButtonProps) => {
   return (
-    <Link href={link} className="text-2xl font-semibold hover:text-mineral-blue">
+    <Link
+      href={link}
+      lang={lang}
+      className="text-2xl font-semibold hover:text-mineral-blue"
+    >
       {text}
     </Link>
   );
@@ -43,6 +52,8 @@ interface MobilePopoverProps {
 const MobilePopover = async ({ locale }: MobilePopoverProps) => {
   const tagsCount = await getTagsFromPosts(locale);
   const t = await getTranslations({ locale, namespace: "Navigation" });
+  const targetLocale = locale === defaultLocale ? "en" : defaultLocale;
+  const localeSwitchLabel = locale === defaultLocale ? t("en") : t("ko");
 
   return (
     <div className="fixed bottom-0 left-0 right-0 top-0 z-50 h-dvh w-dvw overflow-y-auto bg-dark-bg">
@@ -54,6 +65,11 @@ const MobilePopover = async ({ locale }: MobilePopoverProps) => {
           <LinkButton
             text={t("about")}
             link={getLocalizedPath(locale, "/about")}
+          />
+          <LinkButton
+            lang="en"
+            text={localeSwitchLabel}
+            link={getLocalizedPath(targetLocale, "/popover")}
           />
         </div>
         <p className="mb-7 mt-20 text-4xl font-bold">{t("tag")}</p>
