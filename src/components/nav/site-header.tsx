@@ -22,6 +22,7 @@ const Header = async ({ locale }: HeaderProps) => {
       <nav className="mx-auto flex h-full w-full max-w-[1632px] items-center justify-between">
         <Link
           href={homeHref}
+          lang="en"
           className={cn(
             "flex cursor-pointer items-center justify-center text-2xl font-bold md:text-3xl",
             mineralTextGradient
