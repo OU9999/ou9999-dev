@@ -33,7 +33,6 @@ const HighlightQuote = ({
         <span className="sr-only">{`“${text}”`}</span>
         <motion.span
           aria-hidden="true"
-          className="motion-reduce:!opacity-100"
           variants={textRevealContainerPreset}
           initial="hidden"
           whileInView="visible"
@@ -44,7 +43,7 @@ const HighlightQuote = ({
               <motion.span
                 key={`${token}-${index}`}
                 className={cn(
-                  "motion-reduce:!opacity-100",
+                  "max-md:!opacity-100",
                   index === 0 && "-ml-[0.46em]",
                 )}
                 variants={textRevealWordPreset}

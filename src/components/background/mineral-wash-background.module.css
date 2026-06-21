@@ -144,3 +144,36 @@
   mix-blend-mode: screen;
   transform: rotate(-14deg);
 }
+
+@media (max-width: 767px) {
+  .surface {
+    isolation: auto;
+    background:
+      radial-gradient(circle at 82% 10%, rgb(31 42 40 / 0.08), transparent 28%),
+      linear-gradient(145deg, #070707 0%, #030404 58%, #0c0d0c 100%);
+  }
+
+  .surface::before {
+    opacity: 0.08;
+    background:
+      repeating-linear-gradient(
+        108deg,
+        rgb(232 236 236 / 0.04) 0 1px,
+        transparent 1px 18px
+      );
+    filter: none;
+    mix-blend-mode: normal;
+  }
+
+  .surface::after,
+  .textureLayer,
+  .dryLine,
+  .readingField::after {
+    display: none;
+  }
+
+  .readingField {
+    width: 100%;
+    background: linear-gradient(90deg, rgb(7 7 7 / 0.96) 0%, rgb(7 7 7 / 0.84) 100%);
+  }
+}

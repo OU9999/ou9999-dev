@@ -1,7 +1,9 @@
 interface Base64Data {
   base64: string;
   img: {
+    height?: number;
     src: string;
+    width?: number;
   };
 }
 
