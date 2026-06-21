@@ -14,7 +14,7 @@ const MediaReveal = ({ children, className }: MediaRevealProps) => {
   return (
     <motion.div
       key="motion-media-reveal"
-      className={cn(className, "motion-reduce:![clip-path:inset(0%)]")}
+      className={cn(className, "max-md:![clip-path:inset(0%)]")}
       variants={viewportImagePreset}
       initial="hidden"
       whileInView="visible"

@@ -43,7 +43,7 @@ const TagPage = async ({ params }: ITagPageProps) => {
     <>
       <ContentHeader title={`TAG : ${tag}`} text="같은 맥락으로 묶인 글" main />
       <section className="w-full bg-transparent px-6 py-16 text-google-paper">
-        <div className="mx-auto w-full max-w-[1632px]">
+        <div className="mx-auto w-full max-w-[1320px]">
           <div className="mb-14 flex flex-col gap-3 md:mb-20 md:flex-row md:items-end md:justify-between">
             <h2 className="text-4xl font-normal leading-tight text-current md:text-[64px] md:leading-[67px]">
               Tagged Articles

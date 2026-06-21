@@ -15,6 +15,9 @@ interface ContentHeaderMotionProps {
   className: string;
 }
 
+const mobileStaticClassName =
+  "max-md:!transform-none max-md:!opacity-100 max-md:![clip-path:inset(0%)]";
+
 const ContentHeaderMotionRoot = ({
   children,
   className,
@@ -36,7 +39,7 @@ const ContentHeaderMotionImage = ({
 }: ContentHeaderMotionProps) => {
   return (
     <motion.div
-      className={cn(className, "motion-reduce:![clip-path:inset(0%)]")}
+      className={cn(className, mobileStaticClassName)}
       variants={heroImagePreset}
       initial="hidden"
       animate="visible"
@@ -68,10 +71,7 @@ const ContentHeaderMotionTitle = ({
 }: ContentHeaderMotionProps) => {
   return (
     <motion.h1
-      className={cn(
-        className,
-        "motion-reduce:!transform-none motion-reduce:!opacity-100",
-      )}
+      className={cn(className, mobileStaticClassName)}
       variants={heroTitlePreset}
     >
       {children}
@@ -85,10 +85,7 @@ const ContentHeaderMotionItem = ({
 }: ContentHeaderMotionProps) => {
   return (
     <motion.div
-      className={cn(
-        className,
-        "motion-reduce:!transform-none motion-reduce:!opacity-100",
-      )}
+      className={cn(className, mobileStaticClassName)}
       variants={fadeUpPreset}
     >
       {children}
