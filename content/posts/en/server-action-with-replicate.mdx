@@ -1,0 +1,405 @@
+---
+title: Building AI Text-to-Image with Next.js Server Actions
+description: Notes from building a Replicate plus Next.js Server Actions project
+date: "2024-04-11"
+tags:
+  - next.js
+  - replicate
+
+thumbnail: server-action-with-replicate
+published: true
+---
+
+## Overview
+
+<Image
+  src="/imgs/post/server-action-with-replicate/dc.png"
+  width="500"
+  height="650"
+  alt={"DCInside AI image"}
+/>
+
+While comparing monitors before buying one, I was browsing the DCInside monitor gallery and noticed something interesting.\
+They had added an AI image generation feature that did not exist before.\
+That made me curious, so I implemented a similar feature in a Next.js project and want to share the process and what I learned.
+
+## Replicate
+
+DCInside implemented its AI image generation feature with [AUTOMATIC1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui),\
+a WEB UI for using the `stability-ai` image generation model.
+
+However, AUTOMATIC1111 runs locally with an NVIDIA GPU, which did not fit my situation.\
+So I looked for a cloud service that could provide `stability-ai` in a way that fit my needs better, and found Replicate.
+
+<Image
+  src="/imgs/post/server-action-with-replicate/replicate-service.png"
+  width="800"
+  height="350"
+  alt={"Various AI models on Replicate"}
+/>
+
+Replicate lets you run machine learning models easily through the cloud.\
+You can run various open source models, and if you are highly skilled, you can deploy your own model.\
+I implemented this using the `stable-diffusion` and `sdxl` models from `stability-ai`.
+
+## Implementation
+
+### Dependencies
+
+- next.js@14.1.3
+- replicate@^0.29.1
+- react-hook-form@^7.51.2
+- zod@^3.22.4
+- react-google-recaptcha@^3.1.0
+
+### Server Actions and Replicate
+
+[Replicate Next.js docs](https://replicate.com/docs/get-started/nextjs)
+
+The official docs show an example of writing backend API code through Route Handlers.\
+I wanted to write the backend code more intuitively with Server Actions, which became stable from `next.js@14`.
+
+First, go to [Replicate](https://replicate.com/) and create an API token.\
+Then you can access the Replicate cloud easily through the `replicate` library.
+
+Here is a simple Server Action example.
+
+```tsx {5} title="app/page.tsx"
+// Server Component
+const ServerComponent = () => {
+  // Server Action
+  const handleSubmit = async (formData) => {
+    "use server";
+    console.log(formData.get("title")); // This console log only appears on the server.
+  };
+
+  return (
+    <form action={handleSubmit}>
+      <input type="text" name="title" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default ServerComponent;
+```
+
+If you write `"use server"` on the first line inside a function used as a Server Action, it becomes a server API during compilation.\
+When the code above runs, you cannot see the `console.log` output in the client browser.
+
+> Server Actions are not limited to `<form>` and can be invoked from event handlers, useEffect, third-party libraries, and other form elements like `<button>`. \
+> [Next.js docs](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#server-components)
+
+The official `next.js` docs say Server Actions can be called not only from `<form>`, but also through `useEffect` and `onClick` events.\
+However, in my version, `next@14.1.3`, these approaches caused many unexplained errors.\
+I recommend calling Server Actions through a form `action` or `submit`.
+
+Now that I understood Server Actions, I needed to look at the `replicate` library.
+
+```ts title="replicate-example.js"
+import Replicate from "replicate";
+
+const replicate = new Replicate({
+  auth: process.env.REPLICATE_API_TOKEN, // Issued API token
+});
+
+const output = await replicate.run(
+  // AI model to run
+  "stability-ai/stable-diffusion:d70beb400d223e6432425a5299910329c6050c6abcf97b8c70537d6a1fcb269a",
+  {
+    input: {
+      prompt: "multicolor hyperspace", // Input prompt
+    },
+  }
+);
+console.log(output);
+```
+
+<Image
+  src="/imgs/post/server-action-with-replicate/out-0.webp"
+  width="500"
+  height="350"
+  alt={"Output result from replicate-example.js"}
+/>
+
+If you run this code with Node.js, you can see that the output returns a string array.\
+With a small amount of code, you can access the Replicate cloud easily.
+
+From the code above, the required pieces are the AI model to run and the prompt entered by the user.\
+Now that I knew what was needed, I wrote Server Action code that receives dynamic props and runs on the server.
+
+```ts {1} title="action/replicate-action.ts"
+"use server";
+import Replicate from "replicate";
+
+type ReplicateOutPut = (
+  prompt: string,
+  model: `${string}/${string}` | `${string}/${string}:${string}`
+) => Promise<string | string[]>;
+
+export const getReplicateOutput: ReplicateOutPut = async (prompt, model) => {
+  try {
+    const replicate = new Replicate({
+      auth: process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN,
+    });
+
+    const input = {
+      prompt: prompt,
+      // Depending on the AI model, you can add options such as width, height, or negative prompt.
+    };
+
+    const output = await replicate.run(model, {
+      input,
+    });
+
+    return output;
+  } catch (err) {
+    console.log(err);
+    return String(err);
+  }
+};
+```
+
+> If you modularize a Server Action, you can use it from Client Components too.
+
+This code receives `prompt` and `model` dynamically.\
+AI models provide many different input options, so check each model's docs when using them.
+
+The backend code was ready. Next, I wrote the front-end code.
+
+### Front-end code
+
+As explained above, Server Actions should be called through a form.\
+To keep the integration concise and easy, I used `react-hook-form`.
+
+```tsx title="components/replicate-form.tsx"
+import { useForm } from "react-hook-form";
+
+const ReplicateForm = ({ submitFn }: ReplicateFormProps) => {
+  const form = useForm();
+  const onSubmit = form.handleSubmit(submitFn);
+
+  return (
+    <Form {...form}>
+      <form onSubmit={onSubmit}>
+        <Input name="prompt" placeholder="robot, cat, rainbow" />
+        <Select name="select" placeholder="Please select an AI model." />
+        <Button type="submit">Run</Button>
+      </form>
+    </Form>
+  );
+};
+
+export default ReplicateForm;
+```
+
+The form uses a text input for the prompt and a select input for the model.\
+The button type must be `submit` for the `onSubmit` function to run.
+
+```tsx title="app/page.tsx"
+"use client";
+import { getReplicateOutput } from "@/action/replicate-action";
+
+const ReplicatePage = () => {
+  const [imgSrc, setImgSrc] = useState<string[] | null>(null);
+
+  const getReplicateData = async (formData: FormCustomData) => {
+    const promptValue = formData.prompt;
+    const model = formData.select;
+
+    // Pass prompt and model to the Server Action
+    const output = await getReplicateOutput(promptValue, model);
+    setImgSrc(output);
+  };
+
+  return (
+    <GridBox>
+      <ReplicateForm submitFn={getReplicateData} />
+      {imgSrc && <Image alt="ai-image" src={imgSrc[0]} />}
+    </GridBox>
+  );
+};
+
+export default ReplicatePage;
+```
+
+After receiving `output` from the Server Action, the code sets it in the `imgSrc` state.
+
+<Image
+  src="/imgs/post/server-action-with-replicate/intro.png"
+  width="800"
+  height="350"
+  alt={"Output result through the form"}
+/>
+
+The image was generated normally from the form input.
+
+### Client-side error handling
+
+<Image
+  src="/imgs/post/server-action-with-replicate/replicate-error.png"
+  width="800"
+  height="350"
+  alt={"Result of sending a request without catching errors on the client"}
+/>
+
+The text-to-image feature worked, but there were still many things to set up.\
+The Replicate API is paid. If a bot sends too many requests in a short time or a user enters an inappropriate prompt,\
+those unexpected requests should be blocked on the client to reduce server burden.
+
+First, I used `zod` to block invalid requests before accessing the API.
+
+```tsx title="components/replicate-form.tsx"
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const FormSchema = z.object({
+  prompt: z
+    .string({
+      required_error: "Prompt cannot be empty.", // Prompt is required
+    })
+    .min(1, { message: "Prompt cannot be empty." }) // Prevent empty prompt
+    .regex(/^[a-zA-Z\s,]*$/, {
+      message: "Only English words, spaces, and commas are allowed.", // Only English words, spaces, and commas
+    }),
+  select: z.string({
+    required_error: "You must select an AI model.", // AI model is required
+  }),
+});
+
+type FormZodType = typeof FormSchema;
+
+const ReplicateForm = ({ submitFn }: ReplicateFormProps) => {
+  const form = useForm<z.infer<FormZodType>>({
+    resolver: zodResolver(FormSchema),
+  });
+  // ...
+};
+```
+
+This code does the following:
+
+1. Prevents empty prompts.
+2. Allows only English words.
+3. Uses commas to separate prompt terms.
+4. Requires selecting an AI model.
+
+After catching realtime errors with `zod`, there were still errors to check before sending a request.\
+I needed to filter NSFW words.\
+I used the [List of NSFW Words GitHub source](https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words),\
+split the prompt by commas, and checked whether inappropriate words were included before sending the request.
+
+<Video
+  src="/imgs/post/server-action-with-replicate/zod.mp4"
+  width="800"
+  height="350"
+  ariaLabel={`Client-side error handling UI`}
+/>
+
+With the `zod` setup, unnecessary or invalid requests can be blocked on the client before they are sent.\
+It also makes it easy to provide feedback in the UI.
+
+### Blocking bot access
+
+Next, I needed to block bot access and prevent one person from sending too many requests.\
+I used Google reCAPTCHA to block bots. First, I had to create keys from the [reCAPTCHA docs](https://www.google.com/recaptcha/about/).
+
+> reCAPTCHA v2 is useful for simple bot checks on the client, but it can hurt user experience because users may need to solve image challenges.\
+> v3 works through a service worker and has a better user experience, but the developer setup is more complex and it can be weaker than v2 in some ways.
+
+I used reCAPTCHA v2 for a simple implementation.\
+The `react-google-recaptcha` library makes it easy to use reCAPTCHA v2.
+
+```tsx title="components/re-captcha.tsx"
+"use client";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const sitekey = String(process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY);
+
+interface ReCaptchaProps {
+  onChange: () => void;
+}
+
+const ReCaptcha = ({ onChange }: ReCaptchaProps) => {
+  return <ReCAPTCHA theme="dark" sitekey={sitekey} onChange={onChange} />;
+};
+
+export default ReCaptcha;
+```
+
+After adding the issued site key, it can be used easily.
+
+```tsx title="app/page.tsx"
+"use client";
+import ReCaptcha from "@/components/re-captcha";
+
+const ReplicatePage = () => {
+  // Other code
+  const [isCertification, setIsCertification] = useState<boolean>(false);
+
+  const setCertificationSuccess = () => {
+    setIsCertification(true);
+    sessionStorage.setItem("certification", String(true)); // Set session storage
+  };
+
+  useEffect(() => {
+    setIsCertification(
+      Boolean(sessionStorage.getItem("certification")) || false // Access session storage on entry
+    );
+  }, []);
+
+  return (
+    <GridBox>
+      {/* Other code */}
+      {!certification && <ReCaptcha onChange={certificationSuccess} />}
+    </GridBox>
+  );
+};
+
+export default ReplicatePage;
+```
+
+The `isCertification` state checks whether the user has passed `ReCaptcha`.\
+It also stores the state in session storage to avoid asking already verified users to verify again.
+
+Next, I needed to prevent "too many requests in a short time."\
+Even if the user is not a bot, repeated requests in a short period can still be a problem.
+
+I used local storage to block users for 30 minutes if they sent more than 10 requests.
+
+<Image
+  src="/imgs/post/server-action-with-replicate/storage.png"
+  width="800"
+  height="350"
+  alt={"Blocking repeated requests in a short time"}
+/>
+
+This is the code flow for blocking repeated requests by comparing time with local storage and the `Date` object.
+
+> The logic is simple, but the implementation is long, so I only included the flow here.\
+> Check the [GitHub source](https://github.com/OU9999/ou9999-playground) link for the code.
+
+<Image
+  src="/imgs/post/server-action-with-replicate/many-request.png"
+  width="800"
+  height="350"
+  alt={"Error UI"}
+/>
+
+After writing the UI error state code, I confirmed that it worked correctly.
+
+## Closing
+
+<Image
+  src="/imgs/post/server-action-with-replicate/playground.png"
+  width="800"
+  height="350"
+  alt={"https://ou-playground.com"}
+/>
+
+Implementing the feature was important, but this project also showed me how important front-end security and error handling design can be.\
+I think I understand why companies value developers who have deployed and operated their own services.\
+You only start pursuing more efficient and better designs when you operate a service yourself, especially when your own money is involved.
+
+You can check the result through the [PLAYGROUND](https://ou-playground.com) link.\
+At first, I only planned to build an AI text-to-image toy project, but it became so interesting that I changed it into a side project for implementing UI patterns and front-end engineering ideas that caught my attention.

@@ -1,0 +1,296 @@
+---
+title: Building a Better Infinite Scroll with Virtualization
+description: Notes from implementing an infinite scroll like Bucketplace
+date: "2024-03-05"
+tags:
+  - react
+  - react-virtuoso
+thumbnail: infinite
+published: true
+---
+
+## Overview
+
+<Image
+  src="/imgs/post/better-infinite-scroll/cat.webp"
+  width="500"
+  height="350"
+  alt={`A clever console screen I noticed on Bucketplace`}
+/>
+
+I want to share the problems I ran into while developing an infinite scroll page and the solutions I used.\
+I also wanted to observe how Bucketplace, a service with many users, implements infinite scroll.
+
+## Problem
+
+A typical infinite scroll implementation uses react-query and react-intersection-observer.\
+When the user reaches the end of the scroll area, it fetches more data and adds more DOM nodes.\
+At first glance, this looks like a fine infinite scroll implementation.\
+But if a page keeps adding hundreds or thousands of items, it will render as many unnecessary DOM nodes as the number of loaded items.
+
+The page was designed to scroll infinitely, but the further the user scrolled, the slower and more janky it became.\
+That contradiction made the implementation feel wrong.
+
+## Virtualization
+
+After understanding the problem, I became curious about how infinite scroll pages are designed in services used by many people.\
+So I looked at the Bucketplace infinite scroll page, which I use often.
+
+> These are only observations from looking at the page. I am not a Bucketplace developer, so the actual implementation may be very different.
+
+At first, the Bucketplace infinite scroll page looked ordinary: as I kept scrolling, more data appeared.\
+But when I observed it with DevTools, I found that it behaved in an interesting way.
+
+```tsx {3}
+<div
+  class="virtualized-list"
+  style="padding-top: dynamic px; padding-bottom: dynamic px; transform: translateY(dynamic px);"
+>
+  <div class="item-content" />
+  {/* ... item-content stays fixed at 30 nodes */}
+  <div class="item-content" />
+</div>
+```
+
+This is the infinite scroll div. No matter how far I scrolled, the `item-content` DOM nodes stayed fixed at 30.\
+As I scrolled, the padding of `virtualized-list` changed dynamically, making it feel like an infinite scroll page.
+
+<Video
+  src="/imgs/post/better-infinite-scroll/bucketplace.mp4"
+  width="700"
+  height="350"
+  ariaLabel={`The padding y value changes dynamically while scrolling. Check the style in the top left.`}
+/>
+
+<br />
+<br />
+
+Not Rendered
+
+Not Rendered
+
+----------- viewport
+
+Rendered
+
+Rendered
+
+----------- viewport
+
+Not Rendered
+
+Not Rendered
+
+This behavior is called virtualization, also known as windowing.\
+Because the user can only see a limited area of the screen, the page avoids rendering unnecessary items.
+
+Now that I understood why virtualization was needed and how it worked, I wanted to implement it myself.
+
+## Implementation
+
+### Dependencies
+
+- tanstack/react-query@5.22.2
+- react-virtuoso@4.7
+
+### React-Virtuoso
+
+There are three major libraries for virtualization in React: `react-window`, `react-virtualized`, and `react-virtuoso`.\
+A simple comparison looks like this:
+
+|                           | **react-window** | **react-virtualized** | **react-virtuoso** |
+| :-----------------------: | :--------------: | :-------------------: | :----------------: |
+|      **Package size**     |      6.4KiB      |        27.4KiB        |      15.5KiB       |
+| **Updates (as of 03.02)** |   3 months ago   |     10 months ago     |   1 week ago       |
+|   **Built-in features**   |  Basic features  |     Many features     |   Many features    |
+|      **Configuration**    | Many required props | Many required props | Few required props |
+
+I chose `react-virtuoso` because it was actively updated and had the best official documentation.
+
+```tsx
+import { Virtuoso } from "react-virtuoso";
+
+export default function App() {
+  return (
+    <Virtuoso
+      style={{ height: "400px" }} // Total height (virtualized-list)
+      totalCount={200} // Total virtualized list index
+      itemContent={(index) => <div>item {index}</div>} // Rendered content (item-content)
+    />
+  );
+}
+```
+
+<Image
+  src="/imgs/post/better-infinite-scroll/workflow.webp"
+  width="800"
+  height="350"
+  alt={`How the basic example works`}
+/>
+
+This is the basic `react-virtuoso` example.\
+As I scroll, the index increases. Since the `virtualized-list` div has a height of 400px, the `itemContent` list only renders as much as needed for that height.\
+The `totalCount` prop lets you define the total index count of the virtualized list.
+
+Here is a more detailed implementation example.
+
+```tsx
+const { charactersData, fetchNextPage } = useRickAndMortyCharacterQuery(); // useInfiniteQueryHooks
+
+const loadMore = useCallback(() => {
+  return setTimeout(() => {
+    fetchNextPage();
+  }, 200); // Debounce
+}, []);
+
+<Virtuoso
+  style={{ height: "calc(100vh - 50px)", margin: "0px" }} // Set height
+  useWindowScroll // Use browser scrolling instead of an internal scroll area
+  totalCount={charactersData.info.count}
+  data={charactersData.pages} // Set data
+  endReached={loadMore} // Called when the end is reached
+  itemContent={(index, data) => (
+    <div>
+      <p>index {index}</p>
+      {data.results.map((character) => (
+        <CharacterBox key={"char" + character.id} />
+      ))}
+    </div>
+  )}
+/>;
+```
+
+<Image
+  src="/imgs/post/better-infinite-scroll/workflow2.webp"
+  width="800"
+  height="350"
+  alt={`REST API plus react-query implementation example`}
+/>
+
+This example uses a REST API and react-query's `useInfiniteQuery`.\
+The `data` prop receives an array and passes data as the second argument to `itemContent`.\
+It provides the data for the current index, and when `itemContent` reaches the end, it calls `loadMore` to fetch the next data and content for the next index.
+
+> You can pass `fetchNextPage` directly to the `endReached` prop, but I use `setTimeout` to prevent too many requests from being sent when scroll events fire too quickly. For more detail, see this [debounce example](https://www.freecodecamp.org/korean/news/debounce-dibaunseu-javascripteseo-hamsureul-jiyeonsikineun-bangbeob-js-es6-yeje/).
+
+Here is the result video.
+
+<Video
+  src="/imgs/post/better-infinite-scroll/scroll.mp4"
+  width="800"
+  height="350"
+  ariaLabel={`The padding y value changes dynamically while scrolling`}
+/>
+
+<Image
+  src="/imgs/post/better-infinite-scroll/layers.webp"
+  width="800"
+  height="350"
+  alt={`Layers DevTools`}
+/>
+
+Using Chrome Layers, I could confirm that only the `itemContent` elements in the current viewport were being rendered.
+
+### Scroll restoration
+
+> Infinite scroll => another page => infinite scroll
+
+If a user moves from an infinite scroll page to another page and then comes back,\
+a virtualized infinite scroll page cannot naturally remember the user's previous scroll position.\
+If users had to scroll from the top every time to reach where they were before, it would be a poor experience.
+
+So I needed a way to restore scroll position even on a virtualized infinite scroll page.\
+`react-virtuoso` provides `initialItemCount`, `initialScrollTop`, and a `scrollToIndex` method.\
+These allow you to set the initial item count, the initial scroll position, and manually move the scroll to a specific index.
+
+If I could know the current index when the user stops scrolling and enters another page, I could restore the scroll.\
+Here is the logic for calculating the current index and how it works.
+
+```tsx
+const virtuosoRef = useRef(null);
+const dataKnownSize = 6128; // itemContent height
+const currentIndex = Number(sessionStorage.getItem("index")); // Access session storage on entry
+
+const handleIndex = () => {
+  virtuosoRef.current.scrollToIndex({
+    index: currentIndex,
+    align: "start",
+  });
+}; // Move to the saved index
+
+const hadnleScroll = () => {
+  const currentIndexMath = Math.round(scrollY / dataKnownSize);
+  sessionStorage.setItem("index", String(currentIndexMath));
+}; // Save the current index in session storage
+
+useEffect(() => {
+  handleIndex();
+  const clearSessionStorage = () => sessionStorage.clear();
+  window.addEventListener("beforeunload", clearSessionStorage); // Clear session storage on refresh
+}, []);
+
+return (
+  <Virtuoso
+    ref={virtuosoRef}
+    isScrolling={() => hadnleScroll()}
+    initialItemCount={currentIndex}
+    initialScrollTop={currentIndex}
+  />
+);
+```
+
+<Image
+  src="/imgs/post/better-infinite-scroll/restore-workflow.webp"
+  width="800"
+  height="350"
+  alt={`How the current index is calculated at index 4`}
+/>
+
+1. The current height of my `itemContent` is 6128px, stored as `dataKnownSize`.
+2. The current scroll position, `window.scrollY`, is between index 3 and 4 and closer to 4, resulting in 23794px.
+3. After scrolling starts and then stops, the function runs.
+4. It divides the current scroll position by `dataKnownSize` and rounds the result to get the nearest index.
+5. It saves that value in session storage.
+6. When entering the infinite scroll page, it moves the scroll to the saved index.
+
+> Notes
+>
+> 1. If session storage is not cleared on refresh, errors can occur.
+> 2. Errors can also occur if the data is not cached.
+
+With this approach, scroll restoration worked.
+
+<Video
+  src="/imgs/post/better-infinite-scroll/restore.mp4"
+  width="800"
+  height="350"
+  ariaLabel={`Scroll restoration`}
+/>
+
+## Closing
+
+<Image
+  src="/imgs/post/better-infinite-scroll/seo.webp"
+  width="600"
+  height="350"
+  alt={`Bucketplace SEO`}
+/>
+
+I became curious about how Bucketplace handles SEO for its shopping pages.\
+Other services like Coupang and Naver Shopping use pagination instead of infinite scroll, so SEO is comparatively easier to set up.\
+But Bucketplace uses infinite scroll and virtualization, so I thought SEO would be difficult.
+
+After searching and comparing, it looked like they implemented a separate component for SEO independent of infinite scroll.\
+To be honest, it was probably recommended products, and I may have looked at it too much from a developer's perspective.
+
+I also used to wonder whether algorithms were actually useful in practical work.\
+The scroll restoration logic came from memories of solving algorithm problems.\
+That helped me understand, even in a small way, why many developers study algorithms.
+
+> References
+>
+> - [react-virtuoso](https://virtuoso.dev/virtuoso-api-reference/)
+> - [sanamumtaz](https://dev.to/sanamumtaz/react-virtualization-react-window-vs-react-virtuoso-8g)
+> - [partterns](https://www.patterns.dev/vanilla/virtual-lists)
+> - [Bucketplace](https://www.bucketplace.com/post/2020-09-10-%EC%98%A4%EB%8A%98%EC%9D%98%EC%A7%91-%EB%82%B4-%EB%AC%B4%ED%95%9C%EC%8A%A4%ED%81%AC%EB%A1%A4-%EA%B0%9C%EB%B0%9C%EA%B8%B0/)
+> - [RIDI](https://ridicorp.com/story/ridi-markdown-improvements/)

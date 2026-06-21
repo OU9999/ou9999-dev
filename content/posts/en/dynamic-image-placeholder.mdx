@@ -1,0 +1,177 @@
+---
+title: Implementing Dynamic Image Placeholders in Next.js
+description: Notes from studying image behavior in Gatsby and Discord
+date: "2024-02-08"
+tags:
+  - next.js
+thumbnail: dynamic-image-placeholder
+published: true
+---
+
+## Overview
+
+<Image
+  src="/imgs/post/dynamic-image-placeholder/discord.gif"
+  width="800"
+  height="350"
+  alt={"Discord image placeholder"}
+/>
+
+While using Discord, I noticed an interesting detail.\
+It improved the user experience by showing a dynamic placeholder in the image area, and I wanted to apply the same idea to my blog.\
+If I had built the blog with Gatsby, I could have used the `gatsby-image` plugin to get this behavior automatically.\
+But I wanted to implement it myself in Next.js using the development knowledge I had.
+
+This post shares the process of using Node.js to generate blur data from images automatically.
+
+## Design
+
+```js
+loading = "lazy"; // {lazy} | {eager}
+blurDataUrl = "~~"; // Only base64-encoded images are supported
+```
+
+Next's Image component has `loading` and `blurDataUrl` props.\
+Next.js already provides the lazy loading behavior and the placeholder behavior I wanted.\
+The remaining task was to get the dynamic base64 data needed for `blurDataUrl`.
+
+I wanted a design that used the strengths of Server Components, where logic runs on the server and users receive only the resulting UI.\
+I also wanted to keep the benefits of static export, or SSG.
+
+That meant I needed a JavaScript script that could do the following:
+
+1. Access the `imgs` folder.
+2. Generate base64 data for each image.
+3. Save the generated base64 data as JSON so components can reference it statically.
+
+To do this, I used the `fs` library, which can access the file system in a Node.js environment, and the `sharp` library for image processing.
+
+> For dynamic images, you must provide the blurDataURL property. Solutions such as Plaiceholder can help with base64 generation.\
+> [Next.js docs](https://nextjs.org/docs/app/api-reference/components/image#placeholder)
+
+The Next.js Image docs recommend Plaiceholder when you want dynamic blur data.\
+Using Plaiceholder also requires installing `sharp`.\
+I am sure the library authors released it after thinking through many cases, but if I had to use `sharp` anyway, I wanted to design the workflow myself and learn through the mistakes.
+
+## Implementation
+
+### Dependencies
+
+- next.js@14.1.0
+- sharp@0.33.2
+
+> 1. To use the latest version of `sharp`, you need to update Next.js to 14.1.0 or later to avoid errors in the Vercel deployment environment. [Next.js 14.1](https://nextjs.org/blog/next-14-1)
+> 2. This uses a Node.js library, so it only works in Server Components.
+> 3. The design is based on Next.js App Router static export.
+
+### Generating dynamic blur data
+
+> The code below may be limited or may not work in a browser environment.
+
+```js
+// generateBase64Image.mjs
+import { readdir, readFile, writeFile, mkdir } from "fs/promises";
+import sharp from "sharp";
+
+const generateAllBase64 = async (dir) => {
+  // 1. Access files
+  const imageDir = path.join(process.cwd(), "public", "imgs", dir);
+  let result = {};
+
+  // 2. Filter image files
+  let files = await readdir(path.join(imageDir));
+  files = files.filter((file) => {
+    return (
+      file.endsWith(".jpg") ||
+      file.endsWith(".jpeg") ||
+      file.endsWith(".png") ||
+      file.endsWith(".gif") ||
+      file.endsWith(".webp")
+    );
+  });
+
+  // 3. Read images and convert them to base64
+  for (const filename of files) {
+    const imageBuffer = await readFile(
+      path.join("public", "imgs", dir, filename)
+    );
+
+    const base64 = await sharp(imageBuffer)
+      .resize(10, 5)
+      .toBuffer()
+      .then((buffer) => {
+        const base64Image = `data:image/jpeg;base64,${buffer.toString(
+          "base64"
+        )}`;
+        return base64Image;
+      })
+      .catch((err) => console.error(err));
+
+    // 4. Build the result object
+    result[filename] = {
+      base64,
+      img: { src: `/imgs/${dir}/${filename}` },
+    };
+  }
+
+  // 5. Return the result object
+  return result;
+};
+```
+
+This code accesses my `imgs` folder inside `public`, reads the image files, and converts them to base64.\
+Following the Next.js recommendation, the resized image should stay under 10px.
+
+### Automation
+
+```js
+// generateBase64Image.mjs
+const init = async () => {
+  // 1. Read folder names from a specific imgs directory
+  const dirNames = getDirNames();
+  let result = {};
+
+  // 2. Convert images to base64 for each folder
+  for (const dir of dirNames) {
+    const base64Data = await generateAllBase64(dir);
+    result[dir] = base64Data;
+  }
+
+  // 3. Save base64 JSON files
+  for (const dir in result) {
+    await writeJSON(result[dir], dir);
+  }
+};
+
+init();
+```
+
+The script scans the `imgs` folder and saves a JSON file for each folder name.\
+If this JavaScript file is run before `build` through a package script, it works in production and deployment environments as well.
+
+## Closing
+
+<Image
+  src="/imgs/post/dynamic-image-placeholder/dynamic.gif"
+  width="800"
+  height="350"
+  alt={"Applied result"}
+/>
+
+This task involved many rounds of trial and error.\
+At first, I saved the data as a txt file instead of JSON and caused errors in production and deployment environments.\
+I also spent a long time trying to understand a version conflict between Next.js and `sharp`.\
+That made me realize why `--legacy-peer-deps` can be dangerous.
+
+Compared with my implementation, which was tightly scoped to my blog environment, Plaiceholder has gone through far more abstraction so that many people can use it.\
+That felt impressive.
+
+I also learned that Plaiceholder generates base64 data on every request when the environment is not static export.\
+I have never contributed to open source before, but I felt tempted to solve that part and contribute to the library.
+
+### References
+
+- https://nextjs.org/docs/app/building-your-application/optimizing/images
+- https://nextjs.org/docs/app/api-reference/components/image
+- https://medium.com/@CodingWithImran/next-js-dynamic-image-placeholder-generation-5d022bc93919
+- https://carlogino.com/blog/next-dynamic-image-placeholder
