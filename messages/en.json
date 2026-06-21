@@ -1,0 +1,33 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "about": "About",
+    "menu": "Menu",
+    "tag": "Tag",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "ko": "KO",
+    "en": "EN"
+  },
+  "HomePage": {
+    "heroTitle": "Insights",
+    "heroText": "Notes from hands-on exploration, tradeoffs, and problems worth remembering.",
+    "latestArticles": "Latest Articles",
+    "postCount": "{count, plural, =0 {0 posts} one {# post} other {# posts}}"
+  },
+  "TagPage": {
+    "headerTitle": "TAG : {tag}",
+    "headerText": "Articles grouped by the same context",
+    "heading": "Tagged Articles",
+    "postCount": "{count, plural, =0 {0 posts} one {# post} other {# posts}}"
+  },
+  "AboutPage": {
+    "title": "ABOUT | ou9999.dev",
+    "paragraph1": "My mother is the kind of person who improves even the smallest inconvenient things. That has always stayed with me. Even in a different field, I feel I share a similar instinct.",
+    "paragraph2": "My parents watched me more than they judged me. Growing up with that kind of attention made it feel natural to love the world as it is.",
+    "profile": "Yujin Oh﹒FrontEnd Developer"
+  },
+  "NotFound": {
+    "home": "GO HOME"
+  }
+}

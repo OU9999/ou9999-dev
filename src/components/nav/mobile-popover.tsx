@@ -1,19 +1,15 @@
+import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { BackButton } from "@/components/nav/header/back-button";
+import { getLocalizedPath, type AppLocale } from "@/i18n/config";
 import { getTagsFromPosts } from "@/utils/post-util";
 
-import type { Metadata } from "next";
-import Link from "next/link";
-
-export const metadata: Metadata = {
-  title: "MENU | ou9999.dev",
-};
-
-interface ILinkButtonProps {
+interface LinkButtonProps {
   text: string;
   link: string;
 }
 
-const LinkButton = ({ text, link }: ILinkButtonProps) => {
+const LinkButton = ({ text, link }: LinkButtonProps) => {
   return (
     <Link href={link} className="text-2xl font-semibold hover:text-mineral-blue">
       {text}
@@ -21,14 +17,15 @@ const LinkButton = ({ text, link }: ILinkButtonProps) => {
   );
 };
 
-interface ITagItemProps {
+interface TagItemProps {
   title: string;
   count: number;
+  locale: AppLocale;
 }
 
-const TagItem = ({ title, count }: ITagItemProps) => {
+const TagItem = ({ title, count, locale }: TagItemProps) => {
   return (
-    <Link href={`/tags/${title}`}>
+    <Link href={getLocalizedPath(locale, `/tags/${encodeURIComponent(title)}`)}>
       <div className="flex w-full items-center rounded-md px-3 py-1">
         <p className="cursor-pointer text-mineral-blue hover:underline">
           {title.toUpperCase()}
@@ -39,25 +36,34 @@ const TagItem = ({ title, count }: ITagItemProps) => {
   );
 };
 
-const MobilePopover = async () => {
-  const tagsCount = await getTagsFromPosts();
+interface MobilePopoverProps {
+  locale: AppLocale;
+}
+
+const MobilePopover = async ({ locale }: MobilePopoverProps) => {
+  const tagsCount = await getTagsFromPosts(locale);
+  const t = await getTranslations({ locale, namespace: "Navigation" });
 
   return (
     <div className="fixed bottom-0 left-0 right-0 top-0 z-50 h-dvh w-dvw overflow-y-auto bg-dark-bg">
       <div className="relative flex min-h-dvh w-full flex-col items-center justify-start">
-        <BackButton />
-        <p className="mb-7 mt-20 text-4xl font-bold">Menu</p>
+        <BackButton label={t("closeMenu")} />
+        <p className="mb-7 mt-20 text-4xl font-bold">{t("menu")}</p>
         <div className="flex flex-col items-center justify-center space-y-3">
-          <LinkButton text="Home" link="/" />
-          <LinkButton text="About" link="/about" />
+          <LinkButton text={t("home")} link={getLocalizedPath(locale, "/")} />
+          <LinkButton
+            text={t("about")}
+            link={getLocalizedPath(locale, "/about")}
+          />
         </div>
-        <p className="mb-7 mt-20 text-4xl font-bold">Tag</p>
+        <p className="mb-7 mt-20 text-4xl font-bold">{t("tag")}</p>
         <div className="flex flex-col items-center justify-center space-y-3">
           {tagsCount?.map((tag) => (
             <TagItem
               key={"POPOVERTAGITEM" + tag.tag}
               title={tag.tag}
               count={tag.count}
+              locale={locale}
             />
           ))}
         </div>
@@ -66,4 +72,4 @@ const MobilePopover = async () => {
   );
 };
 
-export default MobilePopover;
+export { MobilePopover };

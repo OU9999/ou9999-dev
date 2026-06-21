@@ -2,6 +2,11 @@ import { Tag } from "@/components/common/tag-link";
 import { mineralTextGradient } from "@/components/common/styles";
 import { formatDateToString } from "@/utils/date-util";
 import { cn } from "@/utils/tailwind-util";
+import {
+  defaultLocale,
+  getLocalizedPath,
+  type AppLocale,
+} from "@/i18n/config";
 import Link from "next/link";
 import {
   ContentHeaderMotionImage,
@@ -19,6 +24,7 @@ interface ContentHeaderProps {
   tags?: string[];
   date?: string;
   main?: boolean;
+  locale?: AppLocale;
 }
 
 const ContentHeader = ({
@@ -28,6 +34,7 @@ const ContentHeader = ({
   tags,
   date,
   main,
+  locale = defaultLocale,
 }: ContentHeaderProps) => {
   if (!main) {
     return (
@@ -39,7 +46,10 @@ const ContentHeader = ({
                 {tags.map((tag) => (
                   <Link
                     key={"POST_TAG" + tag}
-                    href={`/tags/${tag}`}
+                    href={getLocalizedPath(
+                      locale,
+                      `/tags/${encodeURIComponent(tag)}`
+                    )}
                     className="transition-colors hover:text-google-paper"
                   >
                     {tag}
@@ -68,7 +78,7 @@ const ContentHeader = ({
             <ContentHeaderMotionItem className="mx-auto mt-8 flex w-full max-w-[624px] flex-col items-start justify-start gap-1 font-mono text-xs uppercase leading-[21px] tracking-normal text-google-paper/72 md:flex-row md:gap-2 md:text-[15px] md:leading-6">
               <span>OU9999</span>
               <span className="hidden md:inline">·</span>
-              <time dateTime={date}>{formatDateToString(date)}</time>
+              <time dateTime={date}>{formatDateToString(date, locale)}</time>
             </ContentHeaderMotionItem>
           )}
 
@@ -95,7 +105,7 @@ const ContentHeader = ({
         <ContentHeaderMotionText className="w-full">
           {date && (
             <ContentHeaderMotionItem className="font-mono text-xs uppercase leading-none tracking-normal text-current md:text-base">
-              <time dateTime={date}>{formatDateToString(date)}</time>
+              <time dateTime={date}>{formatDateToString(date, locale)}</time>
             </ContentHeaderMotionItem>
           )}
           <ContentHeaderMotionTitle
@@ -119,7 +129,12 @@ const ContentHeader = ({
             {tags && (
               <div className="flex flex-wrap gap-2 md:justify-end">
                 {tags.map((tag) => (
-                  <Tag key={"ITEM" + tag} tag={tag} variant="paper" />
+                  <Tag
+                    key={"ITEM" + tag}
+                    tag={tag}
+                    variant="paper"
+                    locale={locale}
+                  />
                 ))}
               </div>
             )}
