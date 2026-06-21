@@ -16,6 +16,8 @@ const Header = async ({ locale }: HeaderProps) => {
   const t = await getTranslations({ locale, namespace: "Navigation" });
   const homeHref = getLocalizedPath(locale, "/");
   const aboutHref = getLocalizedPath(locale, "/about");
+  const localeSwitchHref = locale === "ko" ? "/en" : "/";
+  const localeSwitchLabel = locale === "ko" ? t("en") : t("ko");
 
   return (
     <header className="relative z-40 flex h-14 w-full items-center border-b-1 border-mineral-blue/10 bg-google-ink/92 px-6 text-google-paper backdrop-blur-md md:h-[100px]">
@@ -54,27 +56,16 @@ const Header = async ({ locale }: HeaderProps) => {
               {t("about")}
             </p>
           </Link>
-          <div className="flex items-center gap-3 font-mono text-xs uppercase text-google-muted">
-            <Link
-              href="/"
-              className={cn(
-                "transition-colors hover:text-google-paper",
-                locale === "ko" && "text-google-paper"
-              )}
-            >
-              {t("ko")}
-            </Link>
-            <span>/</span>
-            <Link
-              href="/en"
-              className={cn(
-                "transition-colors hover:text-google-paper",
-                locale === "en" && "text-google-paper"
-              )}
-            >
-              {t("en")}
-            </Link>
-          </div>
+          <Link
+            href={localeSwitchHref}
+            lang="en"
+            className={cn(
+              "text-lg font-semibold uppercase text-google-paper",
+              hoverMineralTextGradient
+            )}
+          >
+            {localeSwitchLabel}
+          </Link>
         </div>
         <PopoverButton label={t("openMenu")} locale={locale} />
       </nav>
