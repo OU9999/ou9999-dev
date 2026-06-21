@@ -22,6 +22,7 @@ const generateAllBase64 = async (dir) => {
     const imageBuffer = await readFile(
       path.join("public", "imgs", dir, filename)
     );
+    const metadata = await sharp(imageBuffer).metadata();
 
     const base64 = await sharp(imageBuffer)
       .resize(10, 5)
@@ -36,7 +37,11 @@ const generateAllBase64 = async (dir) => {
 
     result[filename] = {
       base64,
-      img: { src: `/imgs/${dir}/${filename}` },
+      img: {
+        height: metadata.height,
+        src: `/imgs/${dir}/${filename}`,
+        width: metadata.width,
+      },
     };
   }
 

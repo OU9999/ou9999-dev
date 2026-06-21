@@ -1,10 +1,12 @@
 import { getBase64 } from "@/utils/base64-util";
 import { cn } from "@/utils/tailwind-util";
-import Image, { ImageProps } from "next/image";
+import Image, { type ImageProps } from "next/image";
 import { MediaReveal } from "./media-reveal";
 
 const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
   const base64Data = getBase64(props.src as string);
+  const width = base64Data.img.width ?? props.width;
+  const height = base64Data.img.height ?? props.height;
 
   return (
     <div className="not-prose relative my-12 flex w-full flex-col items-start justify-center md:my-14">
@@ -13,6 +15,8 @@ const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
           {...props}
           alt={props.alt}
           className={cn("h-auto w-full rounded-lg", props.className)}
+          width={width}
+          height={height}
           sizes={props.sizes ?? "(max-width: 768px) calc(100vw - 48px), 624px"}
           placeholder="blur"
           blurDataURL={base64Data.base64}
