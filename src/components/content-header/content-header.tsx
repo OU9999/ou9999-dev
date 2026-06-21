@@ -8,6 +8,7 @@ import {
   type AppLocale,
 } from "@/i18n/config";
 import Link from "next/link";
+import { BrandBrushMark } from "./brand-brush-mark";
 import {
   ContentHeaderMotionImage,
   ContentHeaderMotionItem,
@@ -24,6 +25,7 @@ interface ContentHeaderProps {
   tags?: string[];
   date?: string;
   main?: boolean;
+  brandBrush?: boolean;
   locale?: AppLocale;
 }
 
@@ -34,6 +36,7 @@ const ContentHeader = ({
   tags,
   date,
   main,
+  brandBrush,
   locale = defaultLocale,
 }: ContentHeaderProps) => {
   if (!main) {
@@ -141,16 +144,7 @@ const ContentHeader = ({
           </ContentHeaderMotionItem>
         </ContentHeaderMotionText>
 
-        {img && (
-          <ContentHeaderMotionImage
-            className={cn(
-              "relative mt-10 aspect-[16/9] w-full overflow-hidden rounded-lg border-1 border-mineral-blue/20 bg-mineral-frame shadow-[0_28px_90px_rgb(4_8_8/0.34)] ring-1 ring-mineral-bone/5 md:mt-12",
-              main && "bg-mineral-brush-soft"
-            )}
-          >
-            <ImageWithPlaceholderHeader alt={title} img={img} preload />
-          </ContentHeaderMotionImage>
-        )}
+        {brandBrush && <BrandBrushMark />}
 
         {text && !main && (
           <ContentHeaderMotionItem className="mx-auto mt-14 max-w-[684px] text-2xl leading-snug text-google-paper/82 md:mt-20 md:text-3xl">

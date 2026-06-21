@@ -18,6 +18,7 @@ const HomePageContent = async ({ locale }: HomePageContentProps) => {
         title={t("heroTitle")}
         text={t("heroText")}
         locale={locale}
+        brandBrush
         main
       />
       <section className="w-full bg-transparent px-6 py-16 text-google-paper">

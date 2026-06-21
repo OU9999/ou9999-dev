@@ -16,7 +16,7 @@ interface ContentHeaderMotionProps {
 }
 
 const mobileStaticClassName =
-  "max-md:!transform-none max-md:!opacity-100 max-md:![clip-path:inset(0%)]";
+  "max-md:!transform-none max-md:!opacity-100 max-md:![clip-path:inset(0%)] motion-reduce:!transform-none motion-reduce:!opacity-100 motion-reduce:![clip-path:inset(0%)]";
 
 const ContentHeaderMotionRoot = ({
   children,
