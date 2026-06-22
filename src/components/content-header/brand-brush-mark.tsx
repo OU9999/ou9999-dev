@@ -7,11 +7,8 @@ import {
 } from "@/constant/motion-preset";
 import { cn } from "@/utils/tailwind-util";
 
-type BrandBrushVariant = "texture" | "clean";
-
 interface BrandBrushMarkProps {
   className?: string;
-  variant?: BrandBrushVariant;
 }
 
 interface BrushStrokeLayer {
@@ -19,10 +16,11 @@ interface BrushStrokeLayer {
   strokeMaskId: string;
   revealMaskId: string;
   strokeMaskHref: string;
-  assetHrefByVariant: Record<BrandBrushVariant, string>;
   enterX: number;
   enterY: number;
 }
+
+const brandBrushSvgHref = "/imgs/header/brand-brush-stack-clean-vector.svg";
 
 const brushStrokeLayers: BrushStrokeLayer[] = [
   {
@@ -30,10 +28,6 @@ const brushStrokeLayers: BrushStrokeLayer[] = [
     strokeMaskId: "brand-brush-stroke-mask-top",
     revealMaskId: "brand-brush-reveal-mask-top",
     strokeMaskHref: "/imgs/header/brand-brush-stroke-mask-top.svg",
-    assetHrefByVariant: {
-      texture: "/imgs/header/brand-brush-stack-vector.svg",
-      clean: "/imgs/header/brand-brush-stack-clean-vector.svg",
-    },
     enterX: -16,
     enterY: -8,
   },
@@ -42,10 +36,6 @@ const brushStrokeLayers: BrushStrokeLayer[] = [
     strokeMaskId: "brand-brush-stroke-mask-second",
     revealMaskId: "brand-brush-reveal-mask-second",
     strokeMaskHref: "/imgs/header/brand-brush-stroke-mask-second.svg",
-    assetHrefByVariant: {
-      texture: "/imgs/header/brand-brush-stack-vector.svg",
-      clean: "/imgs/header/brand-brush-stack-clean-vector.svg",
-    },
     enterX: -22,
     enterY: -3,
   },
@@ -54,10 +44,6 @@ const brushStrokeLayers: BrushStrokeLayer[] = [
     strokeMaskId: "brand-brush-stroke-mask-third",
     revealMaskId: "brand-brush-reveal-mask-third",
     strokeMaskHref: "/imgs/header/brand-brush-stroke-mask-third.svg",
-    assetHrefByVariant: {
-      texture: "/imgs/header/brand-brush-stack-vector.svg",
-      clean: "/imgs/header/brand-brush-stack-clean-vector.svg",
-    },
     enterX: -18,
     enterY: 4,
   },
@@ -66,20 +52,13 @@ const brushStrokeLayers: BrushStrokeLayer[] = [
     strokeMaskId: "brand-brush-stroke-mask-bottom",
     revealMaskId: "brand-brush-reveal-mask-bottom",
     strokeMaskHref: "/imgs/header/brand-brush-stroke-mask-bottom.svg",
-    assetHrefByVariant: {
-      texture: "/imgs/header/brand-brush-stack-vector.svg",
-      clean: "/imgs/header/brand-brush-stack-clean-vector.svg",
-    },
     enterX: -14,
     enterY: 9,
   },
 ];
 
-const BrandBrushMark = ({
-  className,
-  variant = "texture",
-}: BrandBrushMarkProps) => {
-  const idPrefix = "brand-brush-" + variant;
+const BrandBrushMark = ({ className }: BrandBrushMarkProps) => {
+  const idPrefix = "brand-brush-clean";
 
   return (
     <motion.div
@@ -88,7 +67,7 @@ const BrandBrushMark = ({
         "relative mt-10 aspect-[16/9] w-full overflow-visible motion-reduce:!transform-none motion-reduce:!opacity-100 md:mt-12",
         className
       )}
-      data-testid={"brand-brush-mark-" + variant}
+      data-testid="brand-brush-mark-clean"
       initial="hidden"
       animate="visible"
       variants={brandBrushMarkPreset}
@@ -160,7 +139,6 @@ const BrandBrushMark = ({
           const transition =
             brandBrushStrokeMaskPresets[index].visible.transition;
           const begin = transition.delay + "s";
-          const layerAssetHref = layer.assetHrefByVariant[variant];
           const initialTransform = layer.enterX + " " + layer.enterY;
           const layerOpacityDuration =
             Math.max(transition.duration * 0.46, 0.28) + "s";
@@ -170,9 +148,7 @@ const BrandBrushMark = ({
           return (
             <g
               key={layer.layerId}
-              data-testid={
-                "brand-brush-layer-" + variant + "-" + layer.layerId
-              }
+              data-testid={"brand-brush-layer-clean-" + layer.layerId}
               opacity="0"
             >
               <animate
@@ -199,7 +175,7 @@ const BrandBrushMark = ({
                 <g mask={"url(#" + strokeMaskId + ")"}>
                   <g mask={"url(#" + revealMaskId + ")"}>
                     <image
-                      href={layerAssetHref}
+                      href={brandBrushSvgHref}
                       width="1200"
                       height="675"
                       preserveAspectRatio="xMidYMid meet"
@@ -216,4 +192,3 @@ const BrandBrushMark = ({
 };
 
 export { BrandBrushMark };
-export type { BrandBrushVariant };

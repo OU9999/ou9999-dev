@@ -105,64 +105,58 @@ const ContentHeader = ({
       )}
     >
       <div className="mx-auto w-full max-w-[1320px]">
-        <ContentHeaderMotionText className="w-full">
-          {date && (
-            <ContentHeaderMotionItem className="font-mono text-xs uppercase leading-none tracking-normal text-current md:text-base">
-              <time dateTime={date}>{formatDateToString(date, locale)}</time>
+        <ContentHeaderMotionText
+          className={cn(
+            "w-full",
+            brandBrush &&
+              "grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(280px,420px)] md:items-center md:gap-10 lg:grid-cols-[minmax(0,760px)_minmax(360px,500px)]"
+          )}
+        >
+          <div className="min-w-0">
+            {date && (
+              <ContentHeaderMotionItem className="font-mono text-xs uppercase leading-none tracking-normal text-current md:text-base">
+                <time dateTime={date}>{formatDateToString(date, locale)}</time>
+              </ContentHeaderMotionItem>
+            )}
+            <ContentHeaderMotionTitle
+              className={cn(
+                "w-full text-5xl font-normal leading-none sm:text-6xl md:text-7xl lg:text-[90px] lg:leading-[0.95]",
+                mineralTextGradient,
+                date ? "mt-10 md:mt-[51px]" : "mt-0"
+              )}
+            >
+              {title}
+            </ContentHeaderMotionTitle>
+            <ContentHeaderMotionItem
+              className={cn(
+                "mt-8 flex w-full flex-col gap-6 md:flex-row md:items-end md:justify-between",
+                !main && "md:mt-16"
+              )}
+            >
+              <div className="max-w-2xl text-base text-google-paper/78 md:text-lg">
+                <p>{main ? text : "OU9999"}</p>
+              </div>
+              {tags && (
+                <div className="flex flex-wrap gap-2 md:justify-end">
+                  {tags.map((tag) => (
+                    <Tag
+                      key={"ITEM" + tag}
+                      tag={tag}
+                      variant="paper"
+                      locale={locale}
+                    />
+                  ))}
+                </div>
+              )}
+            </ContentHeaderMotionItem>
+          </div>
+
+          {brandBrush && (
+            <ContentHeaderMotionItem className="flex w-full justify-start md:justify-end">
+              <BrandBrushMark className="mt-0 w-[min(82vw,342px)] md:w-full md:max-w-[420px] lg:max-w-[500px]" />
             </ContentHeaderMotionItem>
           )}
-          <ContentHeaderMotionTitle
-            className={cn(
-              "w-full text-5xl font-normal leading-none sm:text-6xl md:text-7xl lg:text-[90px] lg:leading-[0.95]",
-              mineralTextGradient,
-              date ? "mt-10 md:mt-[51px]" : "mt-0"
-            )}
-          >
-            {title}
-          </ContentHeaderMotionTitle>
-          <ContentHeaderMotionItem
-            className={cn(
-              "mt-10 flex w-full flex-col gap-6 md:flex-row md:items-end md:justify-between",
-              !main && "md:mt-16"
-            )}
-          >
-            <div className="max-w-2xl text-base text-google-paper/78 md:text-lg">
-              <p>{main ? text : "OU9999"}</p>
-            </div>
-            {tags && (
-              <div className="flex flex-wrap gap-2 md:justify-end">
-                {tags.map((tag) => (
-                  <Tag
-                    key={"ITEM" + tag}
-                    tag={tag}
-                    variant="paper"
-                    locale={locale}
-                  />
-                ))}
-              </div>
-            )}
-          </ContentHeaderMotionItem>
         </ContentHeaderMotionText>
-
-        {brandBrush && (
-          <div
-            className="mt-10 grid w-full grid-cols-1 gap-10 md:mt-12 md:grid-cols-2 md:gap-8"
-            data-testid="brand-brush-comparison"
-          >
-            <figure className="min-w-0">
-              <figcaption className="font-mono text-xs uppercase leading-none tracking-normal text-google-paper/58">
-                Texture SVG
-              </figcaption>
-              <BrandBrushMark className="mt-4 md:mt-5" variant="texture" />
-            </figure>
-            <figure className="min-w-0">
-              <figcaption className="font-mono text-xs uppercase leading-none tracking-normal text-google-paper/58">
-                Clean Vector
-              </figcaption>
-              <BrandBrushMark className="mt-4 md:mt-5" variant="clean" />
-            </figure>
-          </div>
-        )}
 
         {text && !main && (
           <ContentHeaderMotionItem className="mx-auto mt-14 max-w-[684px] text-2xl leading-snug text-google-paper/82 md:mt-20 md:text-3xl">
