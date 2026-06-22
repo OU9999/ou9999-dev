@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 };
 
 const AboutPage = () => {
-  return <AboutMe />;
+  return <AboutMe locale="en" />;
 };
 
 export default AboutPage;

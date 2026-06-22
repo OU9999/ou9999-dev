@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { ContentHeader } from "@/components/content-header/content-header";
 import { PostBox } from "@/components/main-section/post-box";
 import {
@@ -25,7 +26,7 @@ export const generateMetadata = async ({
 export const generateStaticParams = async (): Promise<TagParams[]> => {
   const tags = new Set<string>();
 
-  getAllPosts().forEach((post) => {
+  getAllPosts("en").forEach((post) => {
     post.tags.forEach((tag) => tags.add(tag));
   });
 
@@ -36,20 +37,26 @@ export const generateStaticParams = async (): Promise<TagParams[]> => {
 
 const TagPage = async ({ params }: ITagPageProps) => {
   const resolvedParams = await params;
-  const posts = getPostsFromParamsByTag(resolvedParams);
+  const posts = getPostsFromParamsByTag(resolvedParams, "en");
   const tag = decodeURIComponent(resolvedParams.tag).toUpperCase();
+  const t = await getTranslations({ locale: "en", namespace: "TagPage" });
 
   return (
     <>
-      <ContentHeader title={`TAG : ${tag}`} text="같은 맥락으로 묶인 글" main />
+      <ContentHeader
+        title={t("headerTitle", { tag })}
+        text={t("headerText")}
+        locale="en"
+        main
+      />
       <section className="w-full bg-transparent px-6 py-16 text-google-paper">
         <div className="mx-auto w-full max-w-[1320px]">
           <div className="mb-14 flex flex-col gap-3 md:mb-20 md:flex-row md:items-end md:justify-between">
             <h2 className="text-4xl font-normal leading-tight text-current md:text-[64px] md:leading-[67px]">
-              Tagged Articles
+              {t("heading")}
             </h2>
             <p className="text-sm text-current md:text-base">
-              {posts.length} posts
+              {t("postCount", { count: posts.length })}
             </p>
           </div>
           <div className="grid w-full grid-cols-1 gap-x-6 gap-y-20 md:grid-cols-2 xl:grid-cols-3">
@@ -62,6 +69,7 @@ const TagPage = async ({ params }: ITagPageProps) => {
                 date={post.date}
                 thumbnail={post.thumbnail}
                 slug={post.slugAsParams}
+                locale="en"
               />
             ))}
           </div>

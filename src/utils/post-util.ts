@@ -1,10 +1,11 @@
 import "server-only";
 
 import { compareDesc } from "date-fns";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import type { MDXContent, MDXModule } from "mdx/types";
+import { defaultLocale, isAppLocale, locales, type AppLocale } from "@/i18n/config";
 
 const postsDirectory = path.join(process.cwd(), "content", "posts");
 const mdxExtension = /\.mdx$/;
@@ -19,6 +20,7 @@ interface Post {
   published: boolean;
   slug: string;
   slugAsParams: string;
+  locale: AppLocale;
 }
 
 interface PostFrontmatter {
@@ -44,6 +46,10 @@ interface TagCount {
 }
 
 const readPostFilePaths = (dir = postsDirectory): string[] => {
+  if (!existsSync(dir)) {
+    return [];
+  }
+
   const entries = readdirSync(dir, { withFileTypes: true });
 
   return entries
@@ -63,9 +69,36 @@ const readPostFilePaths = (dir = postsDirectory): string[] => {
     .sort();
 };
 
-const getSlugFromFilePath = (filePath: string) => {
+const getPostsDirectory = (locale: AppLocale) => {
+  if (locale === defaultLocale) {
+    return postsDirectory;
+  }
+
+  return path.join(postsDirectory, locale);
+};
+
+const isLocaleDirectory = (filePath: string) => {
+  const relativePath = path.relative(postsDirectory, filePath);
+  const [directoryName] = relativePath.split(path.sep);
+
+  return isAppLocale(directoryName) && directoryName !== defaultLocale;
+};
+
+const readPostFilePathsByLocale = (locale: AppLocale): string[] => {
+  const localeDirectory = getPostsDirectory(locale);
+
+  return readPostFilePaths(localeDirectory).filter((filePath) => {
+    if (locale !== defaultLocale) {
+      return true;
+    }
+
+    return !isLocaleDirectory(filePath);
+  });
+};
+
+const getSlugFromFilePath = (filePath: string, locale: AppLocale) => {
   return path
-    .relative(postsDirectory, filePath)
+    .relative(getPostsDirectory(locale), filePath)
     .replace(mdxExtension, "")
     .split(path.sep)
     .join("/");
@@ -126,11 +159,11 @@ const readRequiredTags = (frontmatter: PostFrontmatter, filePath: string) => {
   return value as string[];
 };
 
-const readPost = (filePath: string): Post => {
+const readPost = (filePath: string, locale: AppLocale): Post => {
   const source = readFileSync(filePath, "utf8");
   const { data } = matter(source);
   const frontmatter = data as PostFrontmatter;
-  const slugAsParams = getSlugFromFilePath(filePath);
+  const slugAsParams = getSlugFromFilePath(filePath, locale);
 
   return {
     _id: `posts/${slugAsParams}.mdx`,
@@ -142,43 +175,59 @@ const readPost = (filePath: string): Post => {
     published: readRequiredBoolean(frontmatter, "published", filePath),
     slug: `/posts/${slugAsParams}`,
     slugAsParams,
+    locale,
   };
 };
 
-const getPosts = () => readPostFilePaths().map(readPost);
+const getPosts = (locale: AppLocale = defaultLocale) => {
+  return readPostFilePathsByLocale(locale).map((filePath) =>
+    readPost(filePath, locale)
+  );
+};
 
-const getAllPosts = (): Post[] => {
-  return getPosts()
+const getAllPosts = (locale: AppLocale = defaultLocale): Post[] => {
+  return getPosts(locale)
     .filter((post) => post.published)
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
 };
 
-const getPostFromParamsBySlug = (params: PostParams): Post | undefined => {
+const getPostFromParamsBySlug = (
+  params: PostParams,
+  locale: AppLocale = defaultLocale
+): Post | undefined => {
   const slug = params.title;
 
-  return getAllPosts().find((post) => post.slugAsParams === slug);
+  return getAllPosts(locale).find((post) => post.slugAsParams === slug);
 };
 
 const getPostComponent = async (
-  slugAsParams: string
+  slugAsParams: string,
+  locale: AppLocale = defaultLocale
 ): Promise<MDXContent> => {
+  const postPath =
+    locale === defaultLocale ? slugAsParams : `${locale}/${slugAsParams}`;
   const postModule = (await import(
-    `../../content/posts/${slugAsParams}.mdx`
+    `../../content/posts/${postPath}.mdx`
   )) as MDXModule;
 
   return postModule.default;
 };
 
-const getPostsFromParamsByTag = (params: TagParams): Post[] => {
+const getPostsFromParamsByTag = (
+  params: TagParams,
+  locale: AppLocale = defaultLocale
+): Post[] => {
   const slug = decodeURI(params.tag);
 
-  return getAllPosts().filter((post) => post.tags.includes(slug));
+  return getAllPosts(locale).filter((post) => post.tags.includes(slug));
 };
 
-const getTagsFromPosts = async (): Promise<TagCount[]> => {
+const getTagsFromPosts = async (
+  locale: AppLocale = defaultLocale
+): Promise<TagCount[]> => {
   const tagsCount: { [key: string]: number } = {};
 
-  getAllPosts().forEach((post) => {
+  getAllPosts(locale).forEach((post) => {
     post.tags.forEach((tag) => {
       if (tagsCount[tag]) {
         tagsCount[tag] += 1;
@@ -213,4 +262,5 @@ export {
   getPostsFromParamsByTag,
   getTagsFromPosts,
 };
-export type { Post, PostParams, TagCount, TagParams };
+export { locales };
+export type { AppLocale, Post, PostParams, TagCount, TagParams };

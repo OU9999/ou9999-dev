@@ -1,0 +1,269 @@
+---
+title: Extracting ID Card Data with Low-Cost OCR Logic
+description: How I extracted the data I needed with CLOVA OCR's basic features
+date: "2024-06-30"
+tags:
+  - clova-ocr
+  - algorithm
+
+thumbnail: ocr
+published: true
+---
+
+## Overview
+
+<Image
+  src="/imgs/post/id-ocr/thumb.jpg"
+  width="500"
+  height="350"
+  alt={"ID card OCR"}
+/>
+
+I became interested in how many finance apps use OCR, so I implemented an OCR flow myself and want to share the problems I ran into and how I solved them.
+
+> This post is not about the basic usage of CLOVA OCR or front-end code. It is about identifying the characteristics of the data you need.
+
+## CLOVA OCR
+
+<Image
+  src="/imgs/post/id-ocr/ugly-word.png"
+  width="800"
+  height="350"
+  alt={"CLOVA OCR recognizing messy handwriting accurately"}
+/>
+
+[Naver Cloud CLOVA OCR docs](https://www.ncloud.com/product/aiService/ocr)
+
+Among the many OCR services available, I chose CLOVA OCR because it was very accurate at recognizing Korean text.\
+Google Cloud Vision is also a good option, but I found its recognition of Korean handwriting less satisfying.
+
+CLOVA OCR provides three OCR products, each with different features and pricing.
+
+|                         | **General OCR** |       **Template OCR**       |             **Document OCR**             |
+| :---------------------: | :-------------: | :--------------------------: | :--------------------------------------: |
+|   **Billing basis**     |    Per call     |     Per call, monthly plan   |           Per call, monthly plan         |
+|   **Free threshold**    |  Over 100 calls |      Over 10,000 cases       |              Over 3,000 cases            |
+|   **Price per call**    |       3 KRW     |             60 KRW           |                 80 KRW                   |
+| **Monthly base fee**    |        x        |           35,000 KRW         |              180,000 KRW                 |
+|      **Features**       | Basic features  | Field areas can be specified | Specialized models for receipts, cards, IDs, etc. |
+
+Since the OCR I wanted to implement targets receipts and credit cards, Document OCR would be a strong option.\
+However, I wanted to avoid a monthly base fee and implement it with lower costs, so I used General OCR.
+
+The next sections show how to extract ID card and credit card data with the basic feature set.
+
+## Designing the extraction logic
+
+### ID card: name and resident registration number
+
+> In a real ID card OCR flow, many pieces of data in the image may be needed.\
+> In my OCR, I only extracted the unique ID card values: name and resident registration number.
+
+<Image
+  src="/imgs/post/id-ocr/id-result.png"
+  width="800"
+  height="350"
+  alt={"CLOVA OCR result for an ID card"}
+/>
+
+This is the result of running General OCR on an ID card image.\
+The returned array is ordered from top to bottom in the image. If the y-axis is the same, it is ordered from left to right.
+
+The format of a Korean resident registration card does not change much.\
+So even if I tested another ID card image, taking the values at indexes 1 and 3 would likely extract the name and resident registration number.
+
+<Image
+  src="/imgs/post/id-ocr/id-naldo.png"
+  width="800"
+  height="350"
+  alt={"Overseas Korean resident registration card"}
+/>
+
+However, there are also resident registration cards for overseas Koreans, so extracting values only by array index can cause errors.\
+I needed to change the approach and extract values based on the characteristics of the required data.
+
+<Image
+  src="/imgs/post/id-ocr/id-name.png"
+  width="800"
+  height="350"
+  alt={"Identifying the characteristics of the name field"}
+/>
+
+The Hanja field after the name field always contains parentheses, `"()"`.\
+That means the field before the index containing `"()"` is the name field.
+
+However, fields such as `"(Overseas Korean)"` can also contain parentheses.\
+Since that value is fixed, I can create an exclusion list and validate against it to find the name field.
+
+<Image
+  src="/imgs/post/id-ocr/id-id.png"
+  width="800"
+  height="350"
+  alt={"Identifying the resident registration number field"}
+/>
+
+The resident registration number contains a `"-"` character, so it seems possible to find the field containing `"-"`.\
+However, an address may also contain `"-"`, such as `"412-3"`.
+
+So I needed another characteristic unique to the resident registration number field.\
+The characteristics are:
+
+1. After removing the `"-"` character, it is made only of numbers.
+2. The front part before `"-"` has 6 digits, and the back part has 7 digits.
+
+Using these characteristics, I can accurately find the resident registration number field.\
+Now I can write the code.
+
+```ts title="ID card example code"
+const extractNameAndId = (ocrResults) => {
+  let name = "";
+  let id = "";
+
+  // Exclusion list
+  const excludedKeywords = ["주민등록증", "(재외국민)"];
+
+  // Extract name
+  for (let i = 0; i < ocrResults.length; i++) {
+    const currentText = ocrResults[i].inferText;
+    // Check if it includes "(" and is not in the exclusion list
+    if (currentText.includes("(") && !excludedKeywords.includes(currentText)) {
+      name = ocrResults[i - 1].inferText;
+      break;
+    }
+  }
+
+  // Extract resident registration number
+  for (let i = 0; i < ocrResults.length; i++) {
+    const currentText = ocrResults[i].inferText;
+    // Check if it includes "-"
+    if (!currentText.includes("-")) {
+      continue;
+    }
+
+    const [front, behind] = currentText.split("-");
+
+    // Check digit counts and numeric values
+    if (
+      front.length === 6 &&
+      behind.length === 7 &&
+      !isNaN(Number(front)) &&
+      !isNaN(Number(behind))
+    ) {
+      id = currentText;
+      break;
+    }
+  }
+
+  if (name && id) {
+    return { name, id };
+  } else {
+    return null;
+  }
+};
+
+// Example OCR result
+const ocrResults = [
+  { inferText: "주민등록증" },
+  { inferText: "둘리" },
+  { inferText: "(杜里)" },
+  { inferText: "830422-1185600" },
+  { inferText: "부천시 원미구 상1동" },
+  { inferText: "412-3번지" },
+  { inferText: "둘리의 거리" },
+  { inferText: "2003.4.22" },
+  { inferText: "경기도 부천시장" },
+];
+
+const nameAndId = extractNameAndId(ocrResults);
+
+if (nameAndId) {
+  console.log(`Name: ${nameAndId.name} / ID number: ${nameAndId.id}`);
+  // Name: 둘리 / ID number: 830422-1185600
+} else {
+  console.log("Could not find the name and resident registration number.");
+}
+```
+
+I was able to get the values I wanted: the name and resident registration number.\
+Next, I extracted credit card data.
+
+### Credit card: card number and expiration date
+
+<Image
+  src="/imgs/post/id-ocr/card-result.png"
+  width="800"
+  height="350"
+  alt={"Credit card OCR"}
+/>
+
+> In a real credit card OCR flow, many pieces of data in the image may be needed.\
+> In my OCR, I only extracted the unique credit card values: card number and expiration date.
+
+The location of the card number and expiration date differs by card, so finding them by index is difficult.\
+Instead, I needed to identify their characteristics and extract them based on those characteristics.
+
+<Image
+  src="/imgs/post/id-ocr/card-date.png"
+  width="800"
+  height="350"
+  alt={"Expiration date characteristics"}
+/>
+
+The expiration date is the only field that contains `"/"`.\
+So if I find the field containing `"/"` among all fields, I can find the expiration date.\
+To make the extraction more reliable, I can add these characteristics:
+
+1. After removing `"/"`, it is made only of numbers.
+2. The front part before `"/"` has 2 digits, and the back part has 2 digits.
+
+<Image
+  src="/imgs/post/id-ocr/card-number.png"
+  width="800"
+  height="350"
+  alt={"Two characteristics of the card number"}
+/>
+
+As shown in the image, the card number has two characteristics.
+
+1. Four fields must have the same y-axis position.
+2. Those four fields must have the same width.
+
+CLOVA OCR provides x and y-axis values for each field, so finding four fields on the same y-axis is simple.\
+However, it does not provide width separately, so I need to calculate it.
+
+<Image
+  src="/imgs/post/id-ocr/card-width.png"
+  width="800"
+  height="350"
+  alt={"X-axis and y-axis"}
+/>
+
+By calculating the start and end x-axis positions, I can get the field width.\
+In the image, the width of the `4000` card number field is `147 - 72 = 75`, so it is 75.\
+Now I can validate whether the other fields also have a width of 75 and identify the four card number fields.
+
+Using these characteristics, I wrote the extraction logic.
+
+<Image
+  src="/imgs/post/id-ocr/algol.png"
+  width="800"
+  height="600"
+  alt={"Extracting the card number and expiration date"}
+/>
+
+> The code flow is simple, but the full code is long, so I added it as an algorithm flowchart. The code is available on [GitHub](https://github.com/OU9999/ou9999-playground).
+
+## Closing
+
+<Image
+  src="/imgs/post/id-ocr/result.png"
+  width="800"
+  height="400"
+  alt={"OCR result"}
+/>
+
+> You can check the result through the [PLAYGROUND](https://ou-playground.com) link.
+
+For services that need to support many users, Template OCR or Document OCR trained with machine learning can be the better choice, even if the cost is higher.
+
+However, if there is a logical way to identify and extract the characteristics of the data you need, General OCR's limited feature set can still be enough to get the desired data.
