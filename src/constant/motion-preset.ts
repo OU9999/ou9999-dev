@@ -105,52 +105,52 @@ const brandBrushMarkPreset = {
 const brandBrushStrokeMaskPresets = [
   {
     hidden: {
-      width: 0,
+      attrX: -1200,
     },
     visible: {
-      width: 1200,
+      attrX: 0,
       transition: {
         delay: 0.24,
-        duration: 0.92,
+        duration: 0.68,
         ease: editorialEase,
       },
     },
   },
   {
     hidden: {
-      width: 0,
+      attrX: -1200,
     },
     visible: {
-      width: 1200,
+      attrX: 0,
       transition: {
-        delay: 0.32,
-        duration: 0.96,
+        delay: 0.72,
+        duration: 0.72,
         ease: editorialEase,
       },
     },
   },
   {
     hidden: {
-      width: 0,
+      attrX: -1200,
     },
     visible: {
-      width: 1200,
+      attrX: 0,
       transition: {
-        delay: 0.4,
-        duration: 0.92,
+        delay: 1.2,
+        duration: 0.7,
         ease: editorialEase,
       },
     },
   },
   {
     hidden: {
-      width: 0,
+      attrX: -1200,
     },
     visible: {
-      width: 1200,
+      attrX: 0,
       transition: {
-        delay: 0.48,
-        duration: 0.86,
+        delay: 1.66,
+        duration: 0.66,
         ease: editorialEase,
       },
     },

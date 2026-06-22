@@ -144,7 +144,25 @@ const ContentHeader = ({
           </ContentHeaderMotionItem>
         </ContentHeaderMotionText>
 
-        {brandBrush && <BrandBrushMark />}
+        {brandBrush && (
+          <div
+            className="mt-10 grid w-full grid-cols-1 gap-10 md:mt-12 md:grid-cols-2 md:gap-8"
+            data-testid="brand-brush-comparison"
+          >
+            <figure className="min-w-0">
+              <figcaption className="font-mono text-xs uppercase leading-none tracking-normal text-google-paper/58">
+                Texture SVG
+              </figcaption>
+              <BrandBrushMark className="mt-4 md:mt-5" variant="texture" />
+            </figure>
+            <figure className="min-w-0">
+              <figcaption className="font-mono text-xs uppercase leading-none tracking-normal text-google-paper/58">
+                Clean Vector
+              </figcaption>
+              <BrandBrushMark className="mt-4 md:mt-5" variant="clean" />
+            </figure>
+          </div>
+        )}
 
         {text && !main && (
           <ContentHeaderMotionItem className="mx-auto mt-14 max-w-[684px] text-2xl leading-snug text-google-paper/82 md:mt-20 md:text-3xl">
