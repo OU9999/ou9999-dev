@@ -14,52 +14,64 @@ interface BrandBrushMarkProps {
   variant?: BrandBrushVariant;
 }
 
-interface BrushBand {
+interface BrushStrokeLayer {
   layerId: string;
-  clipId: string;
-  maskId: string;
+  strokeMaskId: string;
+  revealMaskId: string;
+  strokeMaskHref: string;
+  assetHrefByVariant: Record<BrandBrushVariant, string>;
+  enterX: number;
   enterY: number;
-  y: number;
-  height: number;
 }
 
-const brandBrushSvgHrefByVariant: Record<BrandBrushVariant, string> = {
-  texture: "/imgs/header/brand-brush-stack-vector.svg",
-  clean: "/imgs/header/brand-brush-stack-clean-vector.svg",
-};
-
-const brushBands: BrushBand[] = [
+const brushStrokeLayers: BrushStrokeLayer[] = [
   {
     layerId: "top",
-    clipId: "brand-brush-band-top",
-    maskId: "brand-brush-mask-top",
+    strokeMaskId: "brand-brush-stroke-mask-top",
+    revealMaskId: "brand-brush-reveal-mask-top",
+    strokeMaskHref: "/imgs/header/brand-brush-stroke-mask-top.svg",
+    assetHrefByVariant: {
+      texture: "/imgs/header/brand-brush-stack-vector.svg",
+      clean: "/imgs/header/brand-brush-stack-clean-vector.svg",
+    },
+    enterX: -16,
     enterY: -8,
-    y: 52,
-    height: 158,
   },
   {
     layerId: "second",
-    clipId: "brand-brush-band-second",
-    maskId: "brand-brush-mask-second",
+    strokeMaskId: "brand-brush-stroke-mask-second",
+    revealMaskId: "brand-brush-reveal-mask-second",
+    strokeMaskHref: "/imgs/header/brand-brush-stroke-mask-second.svg",
+    assetHrefByVariant: {
+      texture: "/imgs/header/brand-brush-stack-vector.svg",
+      clean: "/imgs/header/brand-brush-stack-clean-vector.svg",
+    },
+    enterX: -22,
     enterY: -3,
-    y: 184,
-    height: 182,
   },
   {
     layerId: "third",
-    clipId: "brand-brush-band-third",
-    maskId: "brand-brush-mask-third",
+    strokeMaskId: "brand-brush-stroke-mask-third",
+    revealMaskId: "brand-brush-reveal-mask-third",
+    strokeMaskHref: "/imgs/header/brand-brush-stroke-mask-third.svg",
+    assetHrefByVariant: {
+      texture: "/imgs/header/brand-brush-stack-vector.svg",
+      clean: "/imgs/header/brand-brush-stack-clean-vector.svg",
+    },
+    enterX: -18,
     enterY: 4,
-    y: 322,
-    height: 194,
   },
   {
     layerId: "bottom",
-    clipId: "brand-brush-band-bottom",
-    maskId: "brand-brush-mask-bottom",
+    strokeMaskId: "brand-brush-stroke-mask-bottom",
+    revealMaskId: "brand-brush-reveal-mask-bottom",
+    strokeMaskHref: "/imgs/header/brand-brush-stroke-mask-bottom.svg",
+    assetHrefByVariant: {
+      texture: "/imgs/header/brand-brush-stack-vector.svg",
+      clean: "/imgs/header/brand-brush-stack-clean-vector.svg",
+    },
+    enterX: -14,
     enterY: 9,
-    y: 482,
-    height: 164,
   },
 ];
 
@@ -67,7 +79,6 @@ const BrandBrushMark = ({
   className,
   variant = "texture",
 }: BrandBrushMarkProps) => {
-  const brandBrushSvgHref = brandBrushSvgHrefByVariant[variant];
   const idPrefix = "brand-brush-" + variant;
 
   return (
@@ -88,24 +99,37 @@ const BrandBrushMark = ({
         viewBox="0 0 1200 675"
       >
         <defs>
-          {brushBands.map((band) => {
-            const clipId = idPrefix + "-" + band.clipId;
+          {brushStrokeLayers.map((layer) => {
+            const strokeMaskId = idPrefix + "-" + layer.strokeMaskId;
 
             return (
-              <clipPath key={band.clipId} id={clipId}>
-                <rect x="0" y={band.y} width="1200" height={band.height} />
-              </clipPath>
+              <mask
+                key={layer.strokeMaskId}
+                id={strokeMaskId}
+                maskUnits="userSpaceOnUse"
+              >
+                <image
+                  href={layer.strokeMaskHref}
+                  width="1200"
+                  height="675"
+                  preserveAspectRatio="xMidYMid meet"
+                />
+              </mask>
             );
           })}
-          {brushBands.map((band, index) => {
-            const maskId = idPrefix + "-" + band.maskId;
+          {brushStrokeLayers.map((layer, index) => {
+            const revealMaskId = idPrefix + "-" + layer.revealMaskId;
             const transition =
               brandBrushStrokeMaskPresets[index].visible.transition;
             const begin = transition.delay + "s";
             const duration = transition.duration + "s";
 
             return (
-              <mask key={band.maskId} id={maskId} maskUnits="userSpaceOnUse">
+              <mask
+                key={layer.revealMaskId}
+                id={revealMaskId}
+                maskUnits="userSpaceOnUse"
+              >
                 <rect
                   x="-1200"
                   y="0"
@@ -130,12 +154,14 @@ const BrandBrushMark = ({
           })}
         </defs>
 
-        {brushBands.map((band, index) => {
-          const clipId = idPrefix + "-" + band.clipId;
-          const maskId = idPrefix + "-" + band.maskId;
+        {brushStrokeLayers.map((layer, index) => {
+          const strokeMaskId = idPrefix + "-" + layer.strokeMaskId;
+          const revealMaskId = idPrefix + "-" + layer.revealMaskId;
           const transition =
             brandBrushStrokeMaskPresets[index].visible.transition;
           const begin = transition.delay + "s";
+          const layerAssetHref = layer.assetHrefByVariant[variant];
+          const initialTransform = layer.enterX + " " + layer.enterY;
           const layerOpacityDuration =
             Math.max(transition.duration * 0.46, 0.28) + "s";
           const layerTransformDuration =
@@ -143,9 +169,9 @@ const BrandBrushMark = ({
 
           return (
             <g
-              key={band.layerId}
+              key={layer.layerId}
               data-testid={
-                "brand-brush-layer-" + variant + "-" + band.layerId
+                "brand-brush-layer-" + variant + "-" + layer.layerId
               }
               opacity="0"
             >
@@ -157,29 +183,28 @@ const BrandBrushMark = ({
                 from="0"
                 to="1"
               />
-              <g transform={"translate(0 " + band.enterY + ")"}>
+              <g transform={"translate(" + initialTransform + ")"}>
                 <animateTransform
                   attributeName="transform"
                   begin={begin}
                   calcMode="spline"
                   dur={layerTransformDuration}
                   fill="freeze"
-                  from={"0 " + band.enterY}
+                  from={initialTransform}
                   keySplines="0.8 0 0.2 1"
                   keyTimes="0;1"
                   to="0 0"
                   type="translate"
                 />
-                <g
-                  clipPath={"url(#" + clipId + ")"}
-                  mask={"url(#" + maskId + ")"}
-                >
-                  <image
-                    href={brandBrushSvgHref}
-                    width="1200"
-                    height="675"
-                    preserveAspectRatio="xMidYMid meet"
-                  />
+                <g mask={"url(#" + strokeMaskId + ")"}>
+                  <g mask={"url(#" + revealMaskId + ")"}>
+                    <image
+                      href={layerAssetHref}
+                      width="1200"
+                      height="675"
+                      preserveAspectRatio="xMidYMid meet"
+                    />
+                  </g>
                 </g>
               </g>
             </g>
