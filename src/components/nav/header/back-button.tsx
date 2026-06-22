@@ -3,7 +3,11 @@
 import { XIcon } from "@/components/svg/x-icon";
 import { useRouter } from "next/navigation";
 
-const BackButton = () => {
+interface BackButtonProps {
+  label: string;
+}
+
+const BackButton = ({ label }: BackButtonProps) => {
   const router = useRouter();
 
   const handleBackClick = (): void => {
@@ -13,7 +17,7 @@ const BackButton = () => {
   return (
     <button
       type="button"
-      aria-label="뒤로 가기"
+      aria-label={label}
       className="fixed right-10 top-10 h-10 w-10 fill-google-paper transition-colors hover:fill-mineral-blue"
       onClick={handleBackClick}
     >

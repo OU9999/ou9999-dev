@@ -1,11 +1,14 @@
 import { myDomain } from "@/constant/domain";
+import { getLocalizedPath } from "@/i18n/config";
 import { getAllPosts } from "@/utils/post-util";
 import RSS from "rss";
 
 export const dynamic = "force-static";
 
 export const GET = async (): Promise<Response> => {
-  const posts = getAllPosts();
+  const posts = [...getAllPosts(), ...getAllPosts("en")].sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
 
   const feed = new RSS({
     title: "ou9999.dev",
@@ -17,18 +20,21 @@ export const GET = async (): Promise<Response> => {
     pubDate: new Date(),
   });
 
-  posts.map((post) => {
+  posts.forEach((post) => {
     feed.item({
       title: post.title,
       description: post.description,
-      url: `${myDomain}/p/${post.slugAsParams}`,
+      url: `${myDomain}${getLocalizedPath(
+        post.locale,
+        `/p/${post.slugAsParams}`
+      )}`,
       date: new Date(post.date),
     });
   });
 
   return new Response(feed.xml(), {
     headers: {
-      "Content-Type": "application/atom+xml; charset=utf-8",
+      "Content-Type": "application/rss+xml; charset=utf-8",
     },
   });
 };

@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 import { Twitter } from "next/dist/lib/metadata/types/twitter-types";
+import { myDomain } from "./domain";
 
 const defaultTitle = "ou9999.dev";
 const defaultDescription =
@@ -25,4 +27,25 @@ const defaultTwitter: Twitter = {
   images: [defaultOpenGraphImage],
 };
 
-export { defaultOpenGraph, defaultTwitter };
+const siteMetadata: Metadata = {
+  metadataBase: new URL(myDomain),
+  title: "ou9999.dev",
+  description: "OU9999's blog",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    ...defaultOpenGraph,
+  },
+  twitter: {
+    ...defaultTwitter,
+  },
+  verification: {
+    google: "c08fG67rRWvc_6yY5wNMLhl__pmClidB0MxV4N-GLIw",
+    other: {
+      "naver-site-verification": "064760e130b51b3bf3bd7c0f24aa0d3892199f1f",
+    },
+  },
+};
+
+export { defaultOpenGraph, defaultTwitter, siteMetadata };

@@ -1,0 +1,228 @@
+---
+title: Building a Next.js 14 App Router Blog
+description: Why I redesigned my blog and what I learned from it
+date: "2024-02-01"
+tags:
+  - next.js
+thumbnail: blog-app-router
+published: true
+---
+
+## Overview
+
+I already had a blog, but I kept seeing problems that I wanted to fix.\
+After a few rounds of refactoring and updates, I decided that continuing to add things on top of a flawed design was not the right direction.\
+I wanted to redesign and rebuild it from the beginning.
+
+This post shares the design problems I ran into and the benefits I gained from moving to the App Router.
+
+## Problems
+
+<Image
+  src="/imgs/post/blog-app-router/old-blog.png"
+  width="800"
+  height="350"
+  alt={"The old blog main screen"}
+/>
+
+[ [Old blog GitHub](https://github.com/OU9999/ou9999-next.js-blog) , [Old blog deployment](https://ou9999-dev.vercel.app/) ]\
+I built the old blog when I had only recently started studying front-end development.\
+At that time, I chased visual impact through many animations and distinctive transitions.
+
+Now that my perspective has changed, I want to care more about the technical foundation than the surface.\
+I want to pursue performance, optimization, and the elegance that comes from simplicity.
+
+These were the main problems with my old blog.
+
+### Firebase was not a good fit
+
+The old blog fetched its data, including markdown posts, comments, and guestbook entries, from Firebase.\
+I had just learned Firebase at the time and wanted to apply it myself.
+
+For a blog built with SSG, Firebase was mostly fine in production.\
+However, during development it caused too many unnecessary database accesses, and repeatedly loading static data was a flawed design.\
+Firebase Database can be useful for apps that need realtime features or complex authentication, but I do not think it fits a blog well.
+
+### A design that missed the benefits of Next.js
+
+The old blog was built with Next.js, but I was using it in a way that barely used the strengths of Next.js.\
+I should have used the library and framework based on an understanding of how they work and why they exist.\
+Instead, I only treated them as practical tools for writing code.
+
+This is a simplified version of the old blog's pages structure.
+
+```tsx
+// Old pages structure. getStaticProps and getStaticPaths are omitted.
+
+export default function Home({ notesArr }: IHomeProps) {
+  const [MainPageMobile, setMainPageMobile] =
+    useState<React.ComponentType<IHomeProps> | null>(null);
+
+  const { isDesktopView } = useDevicehook();
+
+  useEffect(() => {
+    import("@/components/Mobile/Home/MainPageMobile").then((module) => {
+      setMainPageMobile(() => module.default);
+    });
+  }, []);
+
+  return (
+    <>
+      {isDesktopView ? (
+        <MainPage notesArr={notesArr!} />
+      ) : (
+        MainPageMobile && <MainPageMobile notesArr={notesArr} />
+      )}
+    </>
+  );
+}
+```
+
+The code checks the device size with `isDesktopView` and dynamically imports the mobile component on mobile.\
+This would not be a problem in a CSR-only app, but it fails to use SSR and SSG, which are core benefits of Next.js.
+
+The old blog was designed as an SSG site. That means the server pre-generates static HTML and sends it to the user.\
+But the blog design contradicted that approach.
+
+The mobile component was imported on the client side after a dynamic event satisfied a condition.\
+That means the mobile component was not included in the pre-generated server HTML.\
+As a result, mobile users had to load and execute both the existing JavaScript and the additional mobile component JavaScript, increasing page load time.
+
+## Notes from rebuilding the blog
+
+> This section covers my experience rebuilding the blog, but it does not go into every detail of the development process or implementation.
+
+### Dependencies
+
+- Node.js@20
+- React@18
+- Next.js@14
+- TypeScript@5
+- tailwindcss
+- next-contentlayer
+- vercel
+
+### Rendering
+
+<Image
+  src="/imgs/post/blog-app-router/routing.png"
+  width="600"
+  height="350"
+  alt={"Server and client components"}
+/>
+
+Server Components render components only on the server and send the result to the user.\
+In other words, more code can run on the server and users receive only the resulting UI.\
+That was the user-friendly approach I wanted.
+
+> Moving Client Components Down the Tree
+> To reduce the Client JavaScript bundle size, we recommend moving Client Components down your component tree.
+>
+> [Next.js docs](https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns#passing-props-from-server-to-client-components-serialization)
+
+The official Next.js docs recommend placing Client Components lower in the tree for client-side optimization.\
+I think this is a design direction worth following even outside the App Router.
+
+```tsx
+const HomePage = () => {
+  const [count, setCount] = useState(0);
+  return (
+    <>
+      <div>
+        <p>{count}</p>
+        <button onClick={() => setCount((prev) => prev + 1)}>count+1</button>
+      </div>
+      <OtherComponent1 />
+      <OtherComponent2 />
+      <OtherComponent3 />
+    </>
+  );
+};
+```
+
+This is the kind of mistake I often made when I was new to React.\
+The `HomePage` component contains a counter div and several `OtherComponent` instances that have nothing to do with the `count` state.
+
+The intended design is probably that only the `p` tag rerenders when the button changes the count.\
+But with this structure, the `OtherComponent` elements rerender too.
+
+```tsx
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={() => setCount((prev) => prev + 1)}>count+1</button>
+    </div>
+  );
+};
+
+const HomePage = () => {
+  return (
+    <>
+      <Counter />
+      <OtherComponent1 />
+      <OtherComponent2 />
+      <OtherComponent3 />
+    </>
+  );
+};
+```
+
+With this structure, changing `count` only rerenders `Counter`.\
+This pattern feels similar to the component structure encouraged by the App Router.
+
+### Routing
+
+<Image
+  src="/imgs/post/blog-app-router/dir.png"
+  width="800"
+  height="350"
+  alt={"Blog layout"}
+/>
+
+I wanted the new blog to be simple, and [Parallel Routes](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes) were very useful.\
+They made it possible to keep the basic layout stable even when the page changes.
+
+```
+app/
+├── (about-layout)/
+│   ├── about/
+│   └── layout.tsx
+├── (blog-layout)/
+│   ├── @head-section/
+│   ├── @right-section/
+│   ├── p/[title]/
+│   ├── tags/tag/
+│   ├── layout.tsx
+│   ├── page.tsx
+├── layout.tsx
+├── not-found.tsx
+```
+
+Another useful point is that a single layout is not forced across the whole app.\
+By wrapping folders in parentheses, each page group can have a different layout.
+
+The downside is that file names like `page.tsx` and `layout.tsx` are fixed.\
+When several editor tabs have the same file name open, it can feel inconvenient.
+
+### Other notes
+
+- Tailwind's destructive-looking CSS syntax can make long styles much shorter, but people seeing it for the first time may find the class names unfamiliar compared to regular CSS properties.
+- Instead of storing markdown posts in Firebase and converting them through several libraries, I could parse markdown into HTML tags with a simple next-contentlayer setup.
+- For comments, I chose giscus because it can be set up easily and does not include ads.
+
+## Closing
+
+Design, architecture, and development all matter, but the essence of a blog is writing.\
+The old blog was mostly used like a notebook for common problem-solving patterns and basic concepts.\
+Now I want to write posts that explore problems directly and explain how different behaviors work in an approachable way.
+
+> Blog design references
+>
+> - [kdy1.dev](https://kdy1.dev/)
+> - [spf13](https://spf13.com/)
+> - [evan-moon](https://evan-moon.github.io/)
+> - [timegambit](https://www.timegambit.com/)
+> - [bepyan](https://bepyan.github.io/)
