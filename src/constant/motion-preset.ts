@@ -84,79 +84,6 @@ const heroImagePreset = {
   },
 };
 
-const brandBrushMarkPreset = {
-  hidden: {
-    opacity: 0,
-    scale: 0.992,
-    y: 12,
-  },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      delay: 0.14,
-      duration: motionDuration.entrance,
-      ease: editorialEase,
-    },
-  },
-};
-
-const brandBrushStrokeMaskPresets = [
-  {
-    hidden: {
-      attrX: -1200,
-    },
-    visible: {
-      attrX: 0,
-      transition: {
-        delay: 0.24,
-        duration: 0.68,
-        ease: editorialEase,
-      },
-    },
-  },
-  {
-    hidden: {
-      attrX: -1200,
-    },
-    visible: {
-      attrX: 0,
-      transition: {
-        delay: 0.72,
-        duration: 0.72,
-        ease: editorialEase,
-      },
-    },
-  },
-  {
-    hidden: {
-      attrX: -1200,
-    },
-    visible: {
-      attrX: 0,
-      transition: {
-        delay: 1.2,
-        duration: 0.7,
-        ease: editorialEase,
-      },
-    },
-  },
-  {
-    hidden: {
-      attrX: -1200,
-    },
-    visible: {
-      attrX: 0,
-      transition: {
-        delay: 1.66,
-        duration: 0.66,
-        ease: editorialEase,
-      },
-    },
-  },
-] as const;
-
 const heroTitlePreset = {
   hidden: {
     opacity: 0,
@@ -196,8 +123,6 @@ const textRevealWordPreset = {
 };
 
 export {
-  brandBrushMarkPreset,
-  brandBrushStrokeMaskPresets,
   editorialEase,
   fadeUpPreset,
   heroImagePreset,

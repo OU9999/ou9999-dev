@@ -152,9 +152,9 @@ const ContentHeader = ({
           </div>
 
           {brandBrush && (
-            <ContentHeaderMotionItem className="flex w-full justify-start md:justify-end">
+            <div className="flex w-full justify-start md:justify-end">
               <BrandBrushMark className="mt-0 w-[min(82vw,342px)] md:w-full md:max-w-[420px] lg:max-w-[500px]" />
-            </ContentHeaderMotionItem>
+            </div>
           )}
         </ContentHeaderMotionText>
 
