@@ -8,7 +8,6 @@ import {
   type AppLocale,
 } from "@/i18n/config";
 import Link from "next/link";
-import { BrandBrushMark } from "./brand-brush-mark";
 import {
   ContentHeaderMotionImage,
   ContentHeaderMotionItem,
@@ -16,6 +15,7 @@ import {
   ContentHeaderMotionText,
   ContentHeaderMotionTitle,
 } from "./content-header-motion";
+import { HomeBrushMark } from "./home-brush-mark";
 import { ImageWithPlaceholderHeader } from "./image-with-placeholder-header";
 
 interface ContentHeaderProps {
@@ -100,7 +100,7 @@ const ContentHeader = ({
       className={cn(
         "w-full bg-transparent px-6 text-google-paper",
         main
-          ? "pb-8 pt-32 md:pb-8 md:pt-32"
+          ? "pb-6 pt-24 md:pb-8 md:pt-24"
           : "pb-16 pt-24 md:pb-24 md:pt-[126px]"
       )}
     >
@@ -108,11 +108,21 @@ const ContentHeader = ({
         <ContentHeaderMotionText
           className={cn(
             "w-full",
-            brandBrush &&
-              "grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(280px,420px)] md:items-center md:gap-10 lg:grid-cols-[minmax(0,760px)_minmax(360px,500px)]"
+            brandBrush && "relative min-h-[380px] md:min-h-[250px]"
           )}
         >
-          <div className="min-w-0">
+          {brandBrush && (
+            <div className="pointer-events-none absolute left-1/2 top-[156px] z-0 w-[310px] -translate-x-1/2 opacity-90 md:left-[330px] md:top-[-28px] md:w-[650px] md:translate-x-0 md:opacity-85 lg:left-[390px] lg:top-[-32px] lg:w-[700px]">
+              <HomeBrushMark />
+            </div>
+          )}
+
+          <div
+            className={cn(
+              "relative z-10 min-w-0",
+              brandBrush && "pt-16 md:ml-[170px] md:pt-[50px] lg:ml-[190px]"
+            )}
+          >
             {date && (
               <ContentHeaderMotionItem className="font-mono text-xs uppercase leading-none tracking-normal text-current md:text-base">
                 <time dateTime={date}>{formatDateToString(date, locale)}</time>
@@ -150,12 +160,6 @@ const ContentHeader = ({
               )}
             </ContentHeaderMotionItem>
           </div>
-
-          {brandBrush && (
-            <div className="flex w-full justify-start md:justify-end">
-              <BrandBrushMark className="mt-0 w-[min(82vw,342px)] md:w-full md:max-w-[420px] lg:max-w-[500px]" />
-            </div>
-          )}
         </ContentHeaderMotionText>
 
         {text && !main && (
