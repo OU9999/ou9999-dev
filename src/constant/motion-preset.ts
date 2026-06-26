@@ -99,6 +99,19 @@ const heroTitlePreset = {
   },
 };
 
+const homeBrushRevealPreset = {
+  hidden: {
+    clipPath: "inset(0% 100% 0% 0%)",
+  },
+  visible: {
+    clipPath: "inset(0% 0% 0% 0%)",
+    transition: {
+      duration: 0.86,
+      ease: editorialEase,
+    },
+  },
+};
+
 const textRevealContainerPreset = {
   hidden: {},
   visible: {
@@ -125,6 +138,7 @@ const textRevealWordPreset = {
 export {
   editorialEase,
   fadeUpPreset,
+  homeBrushRevealPreset,
   heroImagePreset,
   heroTitlePreset,
   motionDuration,

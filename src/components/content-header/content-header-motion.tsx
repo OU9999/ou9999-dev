@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { motion } from "motion/react";
 import {
   fadeUpPreset,
+  homeBrushRevealPreset,
   heroImagePreset,
   heroTitlePreset,
   staggerContainerPreset,
@@ -93,7 +94,24 @@ const ContentHeaderMotionItem = ({
   );
 };
 
+const ContentHeaderMotionBrush = ({
+  children,
+  className,
+}: ContentHeaderMotionProps) => {
+  return (
+    <motion.div
+      className={cn(className, "motion-reduce:![clip-path:inset(0%)]")}
+      initial="hidden"
+      animate="visible"
+      variants={homeBrushRevealPreset}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 export {
+  ContentHeaderMotionBrush,
   ContentHeaderMotionImage,
   ContentHeaderMotionItem,
   ContentHeaderMotionRoot,

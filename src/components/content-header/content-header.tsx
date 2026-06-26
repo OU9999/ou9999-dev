@@ -8,14 +8,15 @@ import {
   type AppLocale,
 } from "@/i18n/config";
 import Link from "next/link";
-import { BrandBrushMark } from "./brand-brush-mark";
 import {
+  ContentHeaderMotionBrush,
   ContentHeaderMotionImage,
   ContentHeaderMotionItem,
   ContentHeaderMotionRoot,
   ContentHeaderMotionText,
   ContentHeaderMotionTitle,
 } from "./content-header-motion";
+import { HomeBrushMark } from "./home-brush-mark";
 import { ImageWithPlaceholderHeader } from "./image-with-placeholder-header";
 
 interface ContentHeaderProps {
@@ -100,7 +101,7 @@ const ContentHeader = ({
       className={cn(
         "w-full bg-transparent px-6 text-google-paper",
         main
-          ? "pb-8 pt-32 md:pb-8 md:pt-32"
+          ? "pb-6 pt-24 md:pb-8 md:pt-20"
           : "pb-16 pt-24 md:pb-24 md:pt-[126px]"
       )}
     >
@@ -108,11 +109,21 @@ const ContentHeader = ({
         <ContentHeaderMotionText
           className={cn(
             "w-full",
-            brandBrush &&
-              "grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(280px,420px)] md:items-center md:gap-10 lg:grid-cols-[minmax(0,760px)_minmax(360px,500px)]"
+            brandBrush && "relative min-h-[230px] md:min-h-[168px]"
           )}
         >
-          <div className="min-w-0">
+          {brandBrush && (
+            <ContentHeaderMotionBrush className="pointer-events-none absolute left-[12%] top-[84px] z-0 w-[min(82vw,310px)] translate-x-0 opacity-90 md:left-[330px] md:top-[-14px] md:w-[650px] md:opacity-85 lg:left-[410px] lg:top-[7px] lg:w-[650px]">
+              <HomeBrushMark />
+            </ContentHeaderMotionBrush>
+          )}
+
+          <div
+            className={cn(
+              "relative z-10 min-w-0",
+              brandBrush && "pt-16 md:ml-[170px] md:pt-0 lg:ml-[228px]"
+            )}
+          >
             {date && (
               <ContentHeaderMotionItem className="font-mono text-xs uppercase leading-none tracking-normal text-current md:text-base">
                 <time dateTime={date}>{formatDateToString(date, locale)}</time>
@@ -129,7 +140,8 @@ const ContentHeader = ({
             </ContentHeaderMotionTitle>
             <ContentHeaderMotionItem
               className={cn(
-                "mt-8 flex w-full flex-col gap-6 md:flex-row md:items-end md:justify-between",
+                "flex w-full flex-col gap-6 md:flex-row md:items-end md:justify-between",
+                brandBrush ? "mt-3" : "mt-8",
                 !main && "md:mt-16"
               )}
             >
@@ -150,12 +162,6 @@ const ContentHeader = ({
               )}
             </ContentHeaderMotionItem>
           </div>
-
-          {brandBrush && (
-            <div className="flex w-full justify-start md:justify-end">
-              <BrandBrushMark className="mt-0 w-[min(82vw,342px)] md:w-full md:max-w-[420px] lg:max-w-[500px]" />
-            </div>
-          )}
         </ContentHeaderMotionText>
 
         {text && !main && (
