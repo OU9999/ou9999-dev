@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { defaultLocale, getLocalizedPath, locales, type AppLocale } from "@/i18n/config";
 import { myDomain } from "./domain";
 
-const siteTitle = "ou9999.dev";
+const siteTitle = "OU9999";
 const defaultDescription = "Only Clear in Hindsight";
 const defaultOpenGraphImage = "/imgs/openGraph/default-og.png";
 const twitterAccount = "@OU9999";
