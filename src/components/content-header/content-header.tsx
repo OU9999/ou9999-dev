@@ -109,11 +109,11 @@ const ContentHeader = ({
         <ContentHeaderMotionText
           className={cn(
             "w-full",
-            brandBrush && "relative min-h-[380px] md:min-h-[168px]"
+            brandBrush && "relative min-h-[230px] md:min-h-[168px]"
           )}
         >
           {brandBrush && (
-            <ContentHeaderMotionBrush className="pointer-events-none absolute left-1/2 top-[156px] z-0 w-[310px] -translate-x-1/2 opacity-90 md:left-[330px] md:top-[-28px] md:w-[650px] md:translate-x-0 md:opacity-85 lg:left-[410px] lg:top-[-7px] lg:w-[650px]">
+            <ContentHeaderMotionBrush className="pointer-events-none absolute left-[12%] top-[84px] z-0 w-[min(82vw,310px)] translate-x-0 opacity-90 md:left-[330px] md:top-[-14px] md:w-[650px] md:opacity-85 lg:left-[410px] lg:top-[7px] lg:w-[650px]">
               <HomeBrushMark />
             </ContentHeaderMotionBrush>
           )}
