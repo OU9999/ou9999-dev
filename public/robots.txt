@@ -1,5 +1,3 @@
 User-agent: *
-disallow: /imgs
-disallow: /about
-allow: /
-sitemap: https://ou9999-dev.com/sitemap.xml
+Allow: /
+Sitemap: https://ou9999-dev.com/sitemap.xml

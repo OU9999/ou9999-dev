@@ -3,7 +3,7 @@ import Image from "next/image";
 import { cn } from "@/utils/tailwind-util";
 
 export const metadata: Metadata = {
-  title: "Jagae Test | ou9999.dev",
+  title: "Jagae Test | OU9999",
   description: "Nacre gradient test page",
 };
 
