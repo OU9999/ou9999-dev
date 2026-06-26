@@ -3,7 +3,7 @@ import { cn } from "@/utils/tailwind-util";
 import styles from "./gouache.module.css";
 
 export const metadata: Metadata = {
-  title: "Gouache Test | ou9999.dev",
+  title: "Gouache Test | OU9999",
   description: "Mineral Wash gouache layer test page",
 };
 

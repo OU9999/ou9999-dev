@@ -4,7 +4,7 @@ import { HighlightBrushText } from "./highlight-brush-text";
 import styles from "./color.module.css";
 
 export const metadata: Metadata = {
-  title: "Color Test | ou9999.dev",
+  title: "Color Test | OU9999",
   description: "Mineral Wash color reference page",
 };
 

@@ -8,6 +8,7 @@ import {
   type PostParams,
 } from "@/utils/post-util";
 import { defaultLocale } from "@/i18n/config";
+import { createPostMetadata, siteTitle } from "@/constant/meta-data";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -24,20 +25,18 @@ export const generateMetadata = async ({
     return {};
   }
 
-  const title = `${post.title} | ou9999.dev`;
+  const title = `${post.title} | ${siteTitle}`;
   const thumbnail = `/imgs/openGraph/${post.thumbnail}.png`;
 
-  return {
+  return createPostMetadata({
     title,
     description: post.description,
-    openGraph: {
-      title,
-      description: post.description,
-      images: {
-        url: thumbnail,
-      },
-    },
-  };
+    image: thumbnail,
+    locale: defaultLocale,
+    pathname: `/p/${post.slugAsParams}`,
+    publishedTime: post.date,
+    tags: post.tags,
+  });
 };
 
 export const generateStaticParams = async (): Promise<PostParams[]> => {
