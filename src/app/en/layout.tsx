@@ -4,10 +4,10 @@ import { setRequestLocale } from "next-intl/server";
 import "@kfonts/line-seed-sans-kr/index.css";
 import "@/css/tailwind.css";
 import "@/css/prettyCode.css";
-import { siteMetadata } from "@/constant/meta-data";
+import { createSiteMetadata } from "@/constant/meta-data";
 import { SiteShell } from "@/components/layout/site-shell";
 
-export const metadata: Metadata = siteMetadata;
+export const metadata: Metadata = createSiteMetadata("en");
 
 const RootLayout = ({
   children,

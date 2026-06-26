@@ -6,6 +6,7 @@ import {
   getPostsFromParamsByTag,
   type TagParams,
 } from "@/utils/post-util";
+import { createPageMetadata, siteTitle } from "@/constant/meta-data";
 import type { Metadata } from "next";
 
 interface ITagPageProps {
@@ -15,12 +16,14 @@ interface ITagPageProps {
 export const generateMetadata = async ({
   params,
 }: ITagPageProps): Promise<Metadata> => {
-  const slug = decodeURI((await params).tag);
-  const title = `${slug.toUpperCase()} | ou9999.dev`;
+  const slug = decodeURIComponent((await params).tag);
+  const title = `${slug.toUpperCase()} | ${siteTitle}`;
 
-  return {
+  return createPageMetadata({
     title,
-  };
+    locale: "en",
+    pathname: `/tags/${encodeURIComponent(slug)}`,
+  });
 };
 
 export const generateStaticParams = async (): Promise<TagParams[]> => {

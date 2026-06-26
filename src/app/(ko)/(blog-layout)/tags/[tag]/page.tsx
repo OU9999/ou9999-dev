@@ -6,6 +6,7 @@ import {
   type TagParams,
 } from "@/utils/post-util";
 import { defaultLocale } from "@/i18n/config";
+import { createPageMetadata, siteTitle } from "@/constant/meta-data";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
@@ -16,12 +17,14 @@ interface ITagPageProps {
 export const generateMetadata = async ({
   params,
 }: ITagPageProps): Promise<Metadata> => {
-  const slug = decodeURI((await params).tag);
-  const title = `${slug.toUpperCase()} | ou9999.dev`;
+  const slug = decodeURIComponent((await params).tag);
+  const title = `${slug.toUpperCase()} | ${siteTitle}`;
 
-  return {
+  return createPageMetadata({
     title,
-  };
+    locale: defaultLocale,
+    pathname: `/tags/${encodeURIComponent(slug)}`,
+  });
 };
 
 export const generateStaticParams = async (): Promise<TagParams[]> => {

@@ -1,9 +1,12 @@
 import { MobilePopover } from "@/components/nav/mobile-popover";
+import { createPageMetadata, siteTitle } from "@/constant/meta-data";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "MENU | ou9999.dev",
-};
+export const metadata: Metadata = createPageMetadata({
+  title: `MENU | ${siteTitle}`,
+  locale: "en",
+  pathname: "/popover",
+});
 
 const MobilePopoverPage = () => {
   return <MobilePopover locale="en" />;
