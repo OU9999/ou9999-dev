@@ -10,8 +10,8 @@
     "en": "EN"
   },
   "HomePage": {
-    "heroTitle": "Insights",
-    "heroText": "노력과 고민을 담아 기록한 글",
+    "heroTitle": "Hindsight",
+    "heroText": "Only Clear Later",
     "latestArticles": "Latest Articles",
     "postCount": "{count, plural, =0 {0 posts} one {# post} other {# posts}}"
   },
