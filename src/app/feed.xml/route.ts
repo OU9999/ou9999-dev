@@ -1,4 +1,5 @@
 import { myDomain } from "@/constant/domain";
+import { defaultDescription, siteTitle } from "@/constant/meta-data";
 import { getLocalizedPath } from "@/i18n/config";
 import { getAllPosts } from "@/utils/post-util";
 import RSS from "rss";
@@ -11,8 +12,8 @@ export const GET = async (): Promise<Response> => {
   });
 
   const feed = new RSS({
-    title: "ou9999.dev",
-    description: "OU9999's blog",
+    title: siteTitle,
+    description: defaultDescription,
     site_url: myDomain,
     feed_url: `${myDomain}/feed.xml`,
     copyright: "@ou9999",

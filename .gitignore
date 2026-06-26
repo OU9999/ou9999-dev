@@ -50,3 +50,6 @@ testJS.mjs
 #tmp
 tmp/
 .tmp/
+
+# generated assets
+/output/
