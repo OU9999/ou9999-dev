@@ -9,6 +9,7 @@ import {
 } from "@/i18n/config";
 import Link from "next/link";
 import {
+  ContentHeaderMotionBrush,
   ContentHeaderMotionImage,
   ContentHeaderMotionItem,
   ContentHeaderMotionRoot,
@@ -100,7 +101,7 @@ const ContentHeader = ({
       className={cn(
         "w-full bg-transparent px-6 text-google-paper",
         main
-          ? "pb-6 pt-24 md:pb-8 md:pt-24"
+          ? "pb-6 pt-24 md:pb-8 md:pt-20"
           : "pb-16 pt-24 md:pb-24 md:pt-[126px]"
       )}
     >
@@ -108,19 +109,19 @@ const ContentHeader = ({
         <ContentHeaderMotionText
           className={cn(
             "w-full",
-            brandBrush && "relative min-h-[380px] md:min-h-[250px]"
+            brandBrush && "relative min-h-[380px] md:min-h-[168px]"
           )}
         >
           {brandBrush && (
-            <div className="pointer-events-none absolute left-1/2 top-[156px] z-0 w-[310px] -translate-x-1/2 opacity-90 md:left-[330px] md:top-[-28px] md:w-[650px] md:translate-x-0 md:opacity-85 lg:left-[390px] lg:top-[-32px] lg:w-[700px]">
+            <ContentHeaderMotionBrush className="pointer-events-none absolute left-1/2 top-[156px] z-0 w-[310px] -translate-x-1/2 opacity-90 md:left-[330px] md:top-[-28px] md:w-[650px] md:translate-x-0 md:opacity-85 lg:left-[410px] lg:top-[-7px] lg:w-[650px]">
               <HomeBrushMark />
-            </div>
+            </ContentHeaderMotionBrush>
           )}
 
           <div
             className={cn(
               "relative z-10 min-w-0",
-              brandBrush && "pt-16 md:ml-[170px] md:pt-[50px] lg:ml-[190px]"
+              brandBrush && "pt-16 md:ml-[170px] md:pt-0 lg:ml-[228px]"
             )}
           >
             {date && (
@@ -139,7 +140,8 @@ const ContentHeader = ({
             </ContentHeaderMotionTitle>
             <ContentHeaderMotionItem
               className={cn(
-                "mt-8 flex w-full flex-col gap-6 md:flex-row md:items-end md:justify-between",
+                "flex w-full flex-col gap-6 md:flex-row md:items-end md:justify-between",
+                brandBrush ? "mt-3" : "mt-8",
                 !main && "md:mt-16"
               )}
             >
