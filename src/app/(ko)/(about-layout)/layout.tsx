@@ -6,7 +6,7 @@ interface AboutLayoutProps {
 
 const AboutLayout = ({ children }: AboutLayoutProps) => {
   return (
-    <div className="relative h-auto min-h-dvh w-dvw overflow-hidden">
+    <div className="relative h-auto min-h-dvh w-dvw overflow-x-hidden">
       {children}
     </div>
   );

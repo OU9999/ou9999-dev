@@ -34,28 +34,24 @@ const AboutMe = async ({ locale = defaultLocale }: AboutMeProps) => {
   const t = await getTranslations({ locale, namespace: "AboutPage" });
 
   return (
-    <section className="relative min-h-dvh w-full overflow-hidden px-6 text-google-paper md:px-0">
+    <section className="relative flex min-h-[calc(100dvh-56px)] w-full items-start px-6 pb-20 pt-28 text-google-paper md:min-h-[calc(100dvh-100px)] md:px-0 md:pb-0 md:pt-[264px]">
       <div
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+        className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
         aria-hidden="true"
       >
-        <div className="absolute inset-0 max-md:hidden">
-          <Image
-            alt=""
-            src="/imgs/about/about-brush-left.png"
-            fill
-            className="object-cover opacity-80"
-            sizes="100vw"
-            preload
-          />
-        </div>
-        <div className="absolute inset-x-0 top-0 h-52 bg-gradient-to-b from-google-ink via-google-ink/82 to-transparent" />
-        <div className="absolute inset-y-0 left-[240px] right-0 hidden bg-[linear-gradient(90deg,rgb(7_7_7/0)_0%,rgb(7_7_7/0.9)_12%,rgb(7_7_7/0.96)_24%,rgb(7_7_7/0)_100%)] md:block" />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-google-ink/5 to-google-ink/18" />
+        <Image
+          alt=""
+          src="/imgs/about/about-brush-left.png"
+          width={620}
+          height={911}
+          className="absolute -left-[205px] top-36 h-[900px] w-auto max-w-none opacity-[0.34] md:-left-[320px] md:top-[178px] md:h-[1120px] md:opacity-[0.72]"
+          sizes="(min-width: 768px) 764px, 613px"
+          preload
+        />
       </div>
 
-      <div className="relative z-10 mx-auto min-h-dvh w-full max-w-[1536px] pb-16 pt-36 md:pb-0 md:pl-[386px] md:pt-[365px]">
-        <div className="grid w-full grid-cols-1 gap-12 md:grid-cols-[238px_minmax(0,540px)] md:gap-[96px]">
+      <div className="relative z-10 mx-auto w-full max-w-[1536px] md:pl-[386px]">
+        <div className="grid w-full grid-cols-1 gap-14 md:grid-cols-[238px_minmax(0,540px)] md:gap-[96px]">
           <div className="flex flex-col items-start">
             <h1 className="font-mono text-sm uppercase leading-none tracking-[0.5em] text-google-paper md:text-base">
               About
