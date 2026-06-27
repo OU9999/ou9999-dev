@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { getLocalizedPath, type AppLocale } from "@/i18n/config";
-import {
-  hoverMineralTextGradient,
-  mineralTextGradient,
-} from "../common/styles";
+import { hoverMineralTextGradient } from "../common/styles";
 import { cn } from "@/utils/tailwind-util";
 import { LocaleSwitchLink } from "./header/locale-switch-link";
 import { PopoverButton } from "./header/popover-button";
@@ -24,15 +21,13 @@ const Header = async ({ locale }: HeaderProps) => {
       <nav className="mx-auto flex h-full w-full max-w-[1632px] items-center justify-between">
         <Link
           href={homeHref}
-          lang="en"
-          className={cn(
-            "font-brand flex cursor-pointer items-center justify-center text-2xl font-bold md:text-3xl",
-            mineralTextGradient
-          )}
+          aria-label="OU9999 home"
+          className="group flex h-10 w-[72px] cursor-pointer items-center justify-center overflow-hidden md:h-14 md:w-[100px]"
         >
-          <span>&lt;</span>
-          <span className="hidden sm:inline-block">OU9999</span>
-          <span>/&gt;</span>
+          <span
+            aria-hidden="true"
+            className="block h-full w-full bg-[url('/imgs/header/ou-symbol-stamped-gouache-v1.webp')] bg-[length:126%_auto] bg-center bg-no-repeat transition-opacity group-hover:opacity-82 md:bg-[length:120%_auto]"
+          />
         </Link>
 
         <div className="hidden items-center gap-10 md:flex">
