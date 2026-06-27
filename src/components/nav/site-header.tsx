@@ -26,7 +26,7 @@ const Header = async ({ locale }: HeaderProps) => {
           href={homeHref}
           lang="en"
           className={cn(
-            "flex cursor-pointer items-center justify-center text-2xl font-bold md:text-3xl",
+            "font-brand flex cursor-pointer items-center justify-center text-2xl font-bold md:text-3xl",
             mineralTextGradient
           )}
         >

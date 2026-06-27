@@ -56,7 +56,18 @@ const config = {
           "linear-gradient(145deg, rgb(232 236 236 / 0.055), rgb(162 173 179 / 0.05) 44%, rgb(31 42 40 / 0.16))",
       },
       fontFamily: {
-        sans: ["LINE Seed Sans KR", "system-ui", "sans-serif"],
+        sans: ["var(--font-maru-buri)", "serif"],
+        serif: ["var(--font-maru-buri)", "serif"],
+        mono: [
+          "var(--font-cormorant-garamond)",
+          "var(--font-maru-buri)",
+          "serif",
+        ],
+        brand: [
+          "var(--font-cormorant-garamond)",
+          "var(--font-maru-buri)",
+          "serif",
+        ],
       },
       borderWidth: {
         "1": "1px",
