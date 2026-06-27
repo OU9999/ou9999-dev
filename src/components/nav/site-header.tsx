@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { getLocalizedPath, type AppLocale } from "@/i18n/config";
 import {
   hoverMineralTextGradient,
   mineralTextGradient,
@@ -7,7 +8,6 @@ import {
 import { cn } from "@/utils/tailwind-util";
 import { LocaleSwitchLink } from "./header/locale-switch-link";
 import { PopoverButton } from "./header/popover-button";
-import { getLocalizedPath, type AppLocale } from "@/i18n/config";
 
 interface HeaderProps {
   locale: AppLocale;
