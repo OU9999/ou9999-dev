@@ -1,11 +1,11 @@
 import Link from "next/link";
-import Image from "next/image";
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { MailIcon } from "../svg/mail-icon";
 import { GithubIcon } from "../svg/github-icon";
 import { OwlIcon } from "../svg/owl-icon";
 import { defaultLocale, type AppLocale } from "@/i18n/config";
+import { AboutBrushLayer } from "./about-brush-layer";
 
 interface IconBoxProps {
   link: string;
@@ -35,20 +35,7 @@ const AboutMe = async ({ locale = defaultLocale }: AboutMeProps) => {
 
   return (
     <section className="relative flex min-h-[calc(100dvh-56px)] w-full items-start px-6 pb-20 pt-28 text-google-paper md:min-h-[calc(100dvh-100px)] md:px-0 md:pb-0 md:pt-[264px]">
-      <div
-        className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        <Image
-          alt=""
-          src="/imgs/about/about-brush-left.png"
-          width={620}
-          height={911}
-          className="absolute -left-[205px] top-36 h-[900px] w-auto max-w-none opacity-[0.34] md:-left-[320px] md:top-[178px] md:h-[1120px] md:opacity-[0.72]"
-          sizes="(min-width: 768px) 764px, 613px"
-          preload
-        />
-      </div>
+      <AboutBrushLayer />
 
       <div className="relative z-10 mx-auto w-full max-w-[1536px] md:pl-[386px]">
         <div className="grid w-full grid-cols-1 gap-14 md:grid-cols-[238px_minmax(0,540px)] md:gap-[96px]">
