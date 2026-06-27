@@ -13,6 +13,7 @@ import { cn } from "@/utils/tailwind-util";
 interface LocaleSwitchLinkProps {
   label: string;
   locale: AppLocale;
+  className?: string;
 }
 
 const translatablePaths = new Set(["/", "/about", "/popover"]);
@@ -51,7 +52,11 @@ const getLocaleSwitchHref = (
   return getLocalizedPath(targetLocale, pathWithoutLocale);
 };
 
-const LocaleSwitchLink = ({ label, locale }: LocaleSwitchLinkProps) => {
+const LocaleSwitchLink = ({
+  label,
+  locale,
+  className,
+}: LocaleSwitchLinkProps) => {
   const pathname = usePathname();
   const localeSwitchHref = getLocaleSwitchHref(locale, pathname);
 
@@ -61,7 +66,8 @@ const LocaleSwitchLink = ({ label, locale }: LocaleSwitchLinkProps) => {
       lang="en"
       className={cn(
         "text-lg font-semibold uppercase text-google-paper",
-        hoverMineralTextGradient
+        hoverMineralTextGradient,
+        className
       )}
     >
       {label}
