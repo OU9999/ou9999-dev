@@ -5,6 +5,8 @@ import { MineralWashBackground } from "@/components/background/mineral-wash-back
 import { Footer } from "@/components/nav/site-footer";
 import { Header } from "@/components/nav/site-header";
 import type { AppLocale } from "@/i18n/config";
+import { cormorantGaramond, maruBuri } from "@/app/fonts";
+import { cn } from "@/utils/tailwind-util";
 
 interface SiteShellProps {
   children: ReactNode;
@@ -16,7 +18,13 @@ const SiteShell = async ({ children, locale }: SiteShellProps) => {
 
   return (
     <html lang={locale}>
-      <body className="min-h-dvh overflow-x-hidden bg-google-ink text-google-paper font-sans antialiased">
+      <body
+        className={cn(
+          maruBuri.variable,
+          cormorantGaramond.variable,
+          "min-h-dvh overflow-x-hidden bg-google-ink font-sans text-google-paper antialiased"
+        )}
+      >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <MineralWashBackground />
           <Header locale={locale} />

@@ -30,7 +30,7 @@ const Footer = () => {
         <div className="flex flex-col space-y-1 text-google-paper">
           <div className="flex text-sm">
             <p>{currentYear}﹒©</p>
-            <p className="font-bold">&nbsp;OU9999</p>
+            <p className="font-brand font-bold">&nbsp;OU9999</p>
           </div>
           <p className="text-xs">Powered by Next.js﹒Vercel</p>
         </div>
