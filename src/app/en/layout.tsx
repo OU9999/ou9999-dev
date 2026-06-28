@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { setRequestLocale } from "next-intl/server";
-import "@kfonts/line-seed-sans-kr/index.css";
 import "@/css/tailwind.css";
 import "@/css/prettyCode.css";
 import { createSiteMetadata } from "@/constant/meta-data";

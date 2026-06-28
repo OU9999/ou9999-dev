@@ -47,6 +47,9 @@ testJS.mjs
 .progrss/
 .playwright-cli/
 
+# local writing rules
+blog-rules/post-rule/
+
 #tmp
 tmp/
 .tmp/

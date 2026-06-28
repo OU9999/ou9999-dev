@@ -40,7 +40,10 @@
   - 자개 토큰은 `/test/jagae`와 실험 보존용이며 기본 블로그 UI에는 Mineral Wash 토큰 우선
 - 폰트
   - `font-sans`
-  - `LINE Seed Sans KR`
+  - `Maru Buri`
+  - `Cormorant Garamond`
+  - 한글·영문 혼용 텍스트는 `Maru Buri` 우선
+  - 순수 영문 브랜딩·보조 UI는 `Cormorant Garamond` 제한 사용
 - 레이아웃
   - `max-w-138`
   - `max-w-186`

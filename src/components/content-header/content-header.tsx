@@ -113,7 +113,7 @@ const ContentHeader = ({
           )}
         >
           {brandBrush && (
-            <ContentHeaderMotionBrush className="pointer-events-none absolute left-[12%] top-[84px] z-0 w-[min(82vw,310px)] translate-x-0 opacity-90 md:left-[330px] md:top-[-14px] md:w-[650px] md:opacity-85 lg:left-[410px] lg:top-[7px] lg:w-[650px]">
+            <ContentHeaderMotionBrush className="pointer-events-none absolute left-[48%] top-[48px] z-0 w-[min(60vw,240px)] translate-x-0 opacity-60 md:left-[330px] md:top-[-14px] md:w-[650px] md:opacity-85 lg:left-[410px] lg:top-[7px] lg:w-[650px]">
               <HomeBrushMark />
             </ContentHeaderMotionBrush>
           )}
@@ -131,7 +131,7 @@ const ContentHeader = ({
             )}
             <ContentHeaderMotionTitle
               className={cn(
-                "w-full text-5xl font-normal leading-none sm:text-6xl md:text-7xl lg:text-[90px] lg:leading-[0.95]",
+                "font-brand w-full text-5xl font-normal leading-none sm:text-6xl md:text-7xl lg:text-[90px] lg:leading-[0.95]",
                 mineralTextGradient,
                 date ? "mt-10 md:mt-[51px]" : "mt-0"
               )}
