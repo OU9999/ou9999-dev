@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { getLocalizedPath, type AppLocale } from "@/i18n/config";
+import { getTagsFromPosts } from "@/utils/post-util";
 import { HeaderFrame } from "./header/header-frame";
 import { HeaderNavLink } from "./header/header-nav-link";
 import { LocaleSwitchLink } from "./header/locale-switch-link";
@@ -11,7 +12,10 @@ interface HeaderProps {
 }
 
 const Header = async ({ locale }: HeaderProps) => {
-  const t = await getTranslations({ locale, namespace: "Navigation" });
+  const [t, tagsCount] = await Promise.all([
+    getTranslations({ locale, namespace: "Navigation" }),
+    getTagsFromPosts(locale),
+  ]);
   const homeHref = getLocalizedPath(locale, "/");
   const aboutHref = getLocalizedPath(locale, "/about");
   const localeSwitchLabel = locale === "ko" ? t("en") : t("ko");
@@ -37,7 +41,19 @@ const Header = async ({ locale }: HeaderProps) => {
           <LocaleSwitchLink label={localeSwitchLabel} locale={locale} />
         </div>
         <div className="relative z-10 md:hidden">
-          <PopoverButton label={t("openMenu")} locale={locale} />
+          <PopoverButton
+            aboutHref={aboutHref}
+            aboutLabel={t("about")}
+            closeLabel={t("closeMenu")}
+            homeHref={homeHref}
+            homeLabel={t("home")}
+            locale={locale}
+            localeSwitchLabel={localeSwitchLabel}
+            menuLabel={t("menu")}
+            openLabel={t("openMenu")}
+            tagLabel={t("tag")}
+            tags={tagsCount}
+          />
         </div>
       </nav>
     </header>
