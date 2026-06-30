@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils/tailwind-util";
 import {
+  headerNavActiveBrushTintClassName,
   headerNavActiveBrushUnderlineClassName,
-  headerNavActiveTextClassName,
   headerNavBrushUnderlineClassName,
   headerNavLinkClassName,
   headerNavTextClassName,
@@ -26,14 +26,7 @@ const HeaderNavLink = ({ href, label }: HeaderNavLinkProps) => {
       aria-current={isActive ? "page" : undefined}
       className={headerNavLinkClassName}
     >
-      <span
-        className={cn(
-          headerNavTextClassName,
-          isActive && headerNavActiveTextClassName
-        )}
-      >
-        {label}
-      </span>
+      <span className={headerNavTextClassName}>{label}</span>
       <span
         aria-hidden="true"
         className={cn(
@@ -41,6 +34,12 @@ const HeaderNavLink = ({ href, label }: HeaderNavLinkProps) => {
           isActive && headerNavActiveBrushUnderlineClassName
         )}
       />
+      {isActive && (
+        <span
+          aria-hidden="true"
+          className={headerNavActiveBrushTintClassName}
+        />
+      )}
     </Link>
   );
 };
