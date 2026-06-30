@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { getLocalizedPath, type AppLocale } from "@/i18n/config";
-import { hoverMineralTextGradient } from "../common/styles";
-import { cn } from "@/utils/tailwind-util";
 import { HeaderFrame } from "./header/header-frame";
+import { HeaderNavLink } from "./header/header-nav-link";
 import { LocaleSwitchLink } from "./header/locale-switch-link";
 import { PopoverButton } from "./header/popover-button";
 
@@ -32,32 +31,10 @@ const Header = async ({ locale }: HeaderProps) => {
           />
         </Link>
 
-        <div className="relative z-10 hidden items-center md:flex">
-          <Link href={homeHref} className="mr-[57px]">
-            <p
-              className={cn(
-                "translate-y-px font-brand text-xl font-normal leading-none text-google-paper",
-                hoverMineralTextGradient
-              )}
-            >
-              {t("home")}
-            </p>
-          </Link>
-          <Link href={aboutHref} className="mr-[38px]">
-            <p
-              className={cn(
-                "translate-y-px font-brand text-xl font-normal leading-none text-google-paper",
-                hoverMineralTextGradient
-              )}
-            >
-              {t("about")}
-            </p>
-          </Link>
-          <LocaleSwitchLink
-            label={localeSwitchLabel}
-            locale={locale}
-            variant="stamp"
-          />
+        <div className="relative z-10 hidden items-center gap-[54px] md:flex">
+          <HeaderNavLink href={homeHref} label={t("home")} />
+          <HeaderNavLink href={aboutHref} label={t("about")} />
+          <LocaleSwitchLink label={localeSwitchLabel} locale={locale} />
         </div>
         <div className="relative z-10 md:hidden">
           <PopoverButton label={t("openMenu")} locale={locale} />
