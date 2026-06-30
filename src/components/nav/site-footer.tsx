@@ -40,13 +40,11 @@ const Footer = () => {
 
       <div className="relative mx-auto flex w-full max-w-[1320px] flex-col gap-14 pt-36 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-40">
         <div className="max-w-[570px]">
-          <p className="font-brand text-3xl font-normal leading-none tracking-[0.18em] text-google-paper/82 md:text-[34px]">
-            Only Clear Later
+          <p className="font-brand text-3xl font-normal leading-none tracking-[0.18em] lining-nums text-google-paper/82 md:text-[34px]">
+            OU9999
           </p>
           <p className="mt-7 max-w-[560px] text-lg leading-9 text-google-paper/66 md:text-[19px]">
-            I write to understand what was, to connect what is,{" "}
-            <br className="hidden md:block" />
-            and to prepare for what&apos;s next.
+            Some thoughts only find their shape later
           </p>
         </div>
 
