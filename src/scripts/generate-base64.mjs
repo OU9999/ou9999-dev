@@ -74,6 +74,7 @@ const getDirNames = () => {
   const fileNames = mdxFiles.map((file) => "post/" + path.parse(file).name);
 
   fileNames.push("header");
+  fileNames.push("about");
 
   return fileNames;
 };

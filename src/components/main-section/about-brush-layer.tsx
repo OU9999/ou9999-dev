@@ -1,9 +1,11 @@
 "use client";
 
+import aboutBase64Data from "@/scripts/output/about/base64.json";
 import Image from "next/image";
 import { motion } from "motion/react";
 
 const brushStrokeEase = [0.68, 0, 0.18, 1] as const;
+const aboutBrushBase64Data = aboutBase64Data["about-brush-left.png"];
 
 const aboutBrushStrokePreset = {
   hidden: {
@@ -48,6 +50,8 @@ const AboutBrushLayer = () => {
           className="object-contain opacity-[0.34] md:opacity-[0.72]"
           sizes="(min-width: 768px) 764px, 613px"
           preload
+          placeholder="blur"
+          blurDataURL={aboutBrushBase64Data.base64}
         />
       </motion.div>
     </div>
