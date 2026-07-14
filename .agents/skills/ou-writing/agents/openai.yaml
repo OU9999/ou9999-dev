@@ -1,0 +1,4 @@
+interface:
+  display_name: "OU Writing"
+  short_description: "OU의 목소리와 사고 흐름으로 글을 작성·교정"
+  default_prompt: "Use $ou-writing to turn these notes into an OU-style draft without inventing details."
