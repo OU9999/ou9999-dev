@@ -1,0 +1,4 @@
+interface:
+  display_name: "Throughline Essay Writer"
+  short_description: "OU 목소리와 단일 논증을 결합한 장문 에세이 작성"
+  default_prompt: "$write-throughline-essay로 확정된 구조와 원재료를 하나의 관통 질문을 가진 장문 에세이로 작성해줘."

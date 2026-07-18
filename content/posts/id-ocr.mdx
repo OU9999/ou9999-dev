@@ -19,9 +19,9 @@ published: true
   alt={"신분증 OCR"}
 />
 
-여러 금융 어플에서 OCR 기능을 사용하는 것에 흥미가 생겨, 직접 구현해 보면서 겪었던 문제점과 해결 방법을 공유하려고 합니다.
+여러 금융 앱에서 OCR 기능을 사용하는 모습에 흥미가 생겼다. 직접 구현하면서 겪은 문제와 해결 방법을 공유한다.
 
-> 이 글은 CLOVA OCR 기본 사용법이나 프론트엔드 코드에 관한 글이 아닌, 필요한 데이터의 특징을 파악하는법에 관한 글입니다.
+> 이 글은 2024년 6월, 소수의 합성 이미지로 General OCR의 결과를 분석한 프로토타입 회고다. 아래 조건은 샘플에서 후보를 좁힌 휴리스틱이지 CLOVA OCR이 보장하는 정답 알고리즘이 아니다. 예시 이미지는 실제 개인정보가 아닌 합성 자료이며, 공개 데모에 실제 신분증이나 신용카드를 업로드해서는 안 된다.
 
 ## CLOVA OCR
 
@@ -32,32 +32,31 @@ published: true
   alt={"악필이어도 글자를 정확히 인식하는 CLOVA OCR"}
 />
 
-[Naver Cloud CLOVA OCR 공식문서](https://www.ncloud.com/product/aiService/ocr)
+[NAVER Cloud CLOVA OCR 공식 문서](https://www.ncloud.com/product/aiService/ocr)
 
-다양한 OCR 서비스중에서 CLOVA OCR을 선택한 이유는, 한글 문자 인식에 있어서 매우 정확했기 때문입니다.\
-구글의 클라우드 비전또한 괜찮은 선택지이지만, 한글 필기체 인식이 아쉬웠습니다.
+여러 OCR 서비스 중에서 CLOVA OCR을 선택한 이유는 당시 테스트한 샘플에서 한글 문자를 정확하게 인식했기 때문이다. 구글의 클라우드 비전도 괜찮은 선택지였지만 같은 샘플의 한글 필기체 인식은 아쉬웠다.
 
-CLOVA OCR이 제공하는 3가지의 OCR은 각자 기능과 요금이 다릅니다.
+CLOVA OCR이 제공하는 세 가지 방식은 역할이 다르다. General OCR은 이미지 전체에서 텍스트와 좌표를 반환하고, Template OCR은 고정된 양식에서 사용자가 지정한 영역을 추출한다. Document OCR은 신분증·신용카드·영수증처럼 정해진 문서의 값을 key-value 형태로 반환하는 특화 모델이다.
+
+아래 표는 글을 작성한 2024년 6월 30일 당시 확인한 요금이다. 현재 요금제와 API Gateway 비용은 달라질 수 있으므로 [CLOVA OCR 공식 페이지](https://www.ncloud.com/product/aiService/ocr)에서 다시 확인해야 한다.
 
 |                         | **General OCR** |       **Template OCR**       |             **Document OCR**             |
 | :---------------------: | :-------------: | :--------------------------: | :--------------------------------------: |
-|      **과금 기준**      |    호출수 당    |     호출수 당,월 요금제      |           호출수 당,월 요금제            |
+|      **과금 기준**      |     호출당      |      호출당·월 요금제       |            호출당·월 요금제             |
 |      **과금 구간**      |   100회 초과    |        10,000건 초과         |               3,000건 초과               |
 |      **호출수 당**      |       3원       |             60원             |                   80원                   |
-| **월 기본료(standard)** |        x        |           35,000원           |                180,000원                 |
-|        **기능**         |    기본 기능    | 사진에서 필드 영역 지정 가능 | 영수증,신용카드,신분증 등 특화 모델 제공 |
+| **월 기본료(standard)** |        없음        |           35,000원           |                180,000원                 |
+|        **기능**         |    기본 기능    | 사진에서 필드 영역 지정 가능 | 영수증, 신용카드, 신분증 등 특화 모델 제공 |
 
-제가 구현하려는 OCR은 영수증과 신용카드이기 때문에 Document OCR이 좋은 선택지가 될것이지만,\
-월 기본료를 내지 않고 적은 요금으로 구현하기 위해서 General OCR을 사용하여 구현할것입니다.
+내가 구현하려는 OCR은 신분증과 신용카드이기 때문에 Document OCR이 더 안정적인 선택일 수 있다. 다만 이 실험에서는 월 기본료 없이 소수의 합성 샘플로 추출 논리를 살펴보기 위해 General OCR을 사용했다.
 
-다음은 기본 기능으로 신분증과 신용카드 데이터를 가져오는 방법입니다.
+다음은 기본 기능만으로 신분증과 신용카드 데이터를 가져오는 방법이다.
 
 ## 추출 로직 구상하기
 
 ### 신분증(이름, 주민등록번호)
 
-> 실제로 신분증 OCR을 사용할때는 사진을 포함 사진속의 많은 데이터들이 필요하겠지만,\
-> 저의 OCR에서는 신분증 고유의 값인 이름과 주민번호만 추출할것입니다.
+> 이 프로토타입에서는 이름과 주민등록번호 후보만 추출한다. 실제 서비스에서 주민등록번호를 처리하려면 적법한 근거와 접근 통제가 필요하며, 원본 이미지와 인식 결과를 로그에 남기지 않고 필요한 범위만 마스킹해야 한다.
 
 <Image
   src="/imgs/post/id-ocr/id-result.png"
@@ -66,11 +65,9 @@ CLOVA OCR이 제공하는 3가지의 OCR은 각자 기능과 요금이 다릅니
   alt={"CLOVA OCR 신분증 인식 결과"}
 />
 
-신분증 사진을 General OCR 돌린 결과물입니다.\
-return 배열의 순서는 사진기준 위 부터 아래로, y축이 같다면 좌에서 우로 순서대로 채워집니다.
+신분증 사진을 General OCR로 처리한 결과다. 이 샘플의 `images[0].fields` 배열은 위에서 아래로, 같은 줄에서는 왼쪽에서 오른쪽에 가까운 순서로 들어왔다.
 
-주민등록증의 형태는 변하지 않기에, 예제 사진과 다른 주민등록증 사진으로 테스트 하더라도,\
-배열에서 1번과 3번값을 가져온다면 이름과 주민등록번호를 추출할 수 있을것입니다.
+처음에는 주민등록증의 형태가 고정되어 있으니 배열의 1번과 3번 값을 가져오면 된다고 생각했다. 하지만 공식 API는 field 배열의 정렬 순서를 계약으로 보장하지 않는다. 실제 로직에서는 `boundingPoly`의 좌표와 `lineBreak`를 사용해 행을 묶고, 허용 오차 안에서 x축 순서를 직접 정해야 한다.
 
 <Image
   src="/imgs/post/id-ocr/id-naldo.png"
@@ -79,8 +76,7 @@ return 배열의 순서는 사진기준 위 부터 아래로, y축이 같다면 
   alt={"재외국민 주민등록증"}
 />
 
-하지만 재외국민 주민등록증의 경우도 있기 때문에 배열의 index만으로 값을 추출하는건 오류가 생길것입니다.\
-필요한 데이터의 특징을 파악하여 추출하는 방식으로 방법을 바꿔야 합니다.
+하지만 재외국민 주민등록증도 있기 때문에 배열의 인덱스만으로 값을 추출하면 오류가 생길 수 있다. 필요한 데이터의 특징을 파악해 추출하는 방식으로 바꿔야 했다.
 
 <Image
   src="/imgs/post/id-ocr/id-name.png"
@@ -89,11 +85,9 @@ return 배열의 순서는 사진기준 위 부터 아래로, y축이 같다면 
   alt={"이름 field 특성 파악"}
 />
 
-이름 field 다음인 한자 field 에는 항상 "()" 괄호가 있기 때문에\
-배열에서 "()" 의 index의 전 field가 이름 field인걸 알수있습니다.
+이 샘플에서는 이름 오른쪽의 한자 field에 괄호가 있었다. 이를 이용하면 같은 행에서 괄호 field의 왼쪽에 있는 한글 문자열을 이름 후보로 좁힐 수 있다.
 
-하지만 "(재외국민)" 과 같이 괄호가 포함된 field도 존재합니다.\
-그러나 "(재외국민)" 은 고정된 값이기 때문에 제외 목록을 만들어서 검증을 하면 이름 field를 찾을 수 있습니다.
+다만 "(재외국민)"처럼 이름의 한자가 아닌 field에도 괄호가 들어간다. 따라서 고정 문자열만 제외하는 데서 끝내지 않고, 한글 이름 형식과 인식 신뢰도, 좌표상 인접 관계를 함께 확인해야 한다. 후보가 없거나 여러 개라면 억지로 하나를 고르지 않고 실패로 처리하는 편이 안전하다.
 
 <Image
   src="/imgs/post/id-ocr/id-id.png"
@@ -102,89 +96,150 @@ return 배열의 순서는 사진기준 위 부터 아래로, y축이 같다면 
   alt={"주민등록번호 field 특성 파악"}
 />
 
-주민등록번호는 "-" 문자가 존재하기 때문에 "-"가 포함된 field를 찾는다면 가능할것같지만,\
-"412-3번지" 와 같이 주소에도 "-" 문자가 포함된 경우가 있습니다.
+주민등록번호에는 "-" 문자가 있으므로 이를 포함한 field를 찾으면 될 것 같지만, "412-3번지"처럼 주소에도 "-"가 들어갈 수 있다.
 
-그렇다면, 주민등록번호 field 만의 또다른 특징을 찾아야합니다. 그 특징은 다음과 같습니다.
+그렇다면 주민등록번호처럼 보이는 후보의 형식을 더 확인해야 한다.
 
-1. "-" 문자를 제외하면 숫자로만 이루어져있다.
+1. "-" 문자를 제외하면 숫자로만 이루어져 있다.
 2. "-" 문자 기준 앞부분은 6자리, 뒷부분 7자리이다.
 
-이 특징들을 이용한다면 주민등록번호 field를 정확히 찾아낼수있습니다.\
-이제 이 특징들을 이용해 코드를 작성하겠습니다.
+이 조건은 주민등록번호처럼 생긴 문자열을 찾을 뿐 실제 주민등록번호나 본인 여부를 검증하지는 않는다. OCR이 하이픈을 누락하거나 field를 나누면 놓칠 수도 있으므로, 공백과 하이픈을 정규화하고 문서 안의 위치와 복수 후보 여부까지 확인해야 한다.
 
-```ts title="신분증 예제코드"
-const extractNameAndId = (ocrResults) => {
-  let name = "";
-  let id = "";
+```ts title="제한된 합성 샘플 예제"
+interface Vertex {
+  x: number;
+  y: number;
+}
 
-  // 제외 목록
-  const excludedKeywords = ["주민등록증", "(재외국민)"];
+interface OcrField {
+  boundingPoly: { vertices: Vertex[] };
+  inferConfidence: number;
+  inferText: string;
+}
 
-  // 이름 추출
-  for (let i = 0; i < ocrResults.length; i++) {
-    const currentText = ocrResults[i].inferText;
-    // "(" 를 포함하는지 확인 && 제외 목록에 포함되지 않는지 확인
-    if (currentText.includes("(") && !excludedKeywords.includes(currentText)) {
-      name = ocrResults[i - 1].inferText;
-      break;
-    }
-  }
+interface FieldBounds {
+  centerY: number;
+  height: number;
+  left: number;
+  right: number;
+}
 
-  // 주민등록번호 추출
-  for (let i = 0; i < ocrResults.length; i++) {
-    const currentText = ocrResults[i].inferText;
-    // "-" 를 포함하는지 확인
-    if (!currentText.includes("-")) {
+interface FieldWithBounds {
+  bounds: FieldBounds;
+  field: OcrField;
+}
+
+const getBounds = (field: OcrField): FieldBounds => {
+  const xValues = field.boundingPoly.vertices.map(({ x }) => x);
+  const yValues = field.boundingPoly.vertices.map(({ y }) => y);
+  const left = Math.min(...xValues);
+  const right = Math.max(...xValues);
+  const top = Math.min(...yValues);
+  const bottom = Math.max(...yValues);
+
+  return {
+    centerY: (top + bottom) / 2,
+    height: bottom - top,
+    left,
+    right,
+  };
+};
+
+const sortByReadingOrder = (fields: OcrField[]) => {
+  const sortedFields: FieldWithBounds[] = fields
+    .map((field) => ({ bounds: getBounds(field), field }))
+    .sort((first, second) => first.bounds.centerY - second.bounds.centerY);
+  const rows: FieldWithBounds[][] = [];
+
+  for (const current of sortedFields) {
+    const lastRow = rows.at(-1);
+
+    if (!lastRow) {
+      rows.push([current]);
       continue;
     }
 
-    const [front, behind] = currentText.split("-");
+    const rowCenterY =
+      lastRow.reduce((sum, item) => sum + item.bounds.centerY, 0) /
+      lastRow.length;
+    const rowHeight = Math.max(
+      ...lastRow.map((item) => item.bounds.height),
+      current.bounds.height,
+    );
 
-    // 자릿수 및 isNaN 체크
+    if (Math.abs(current.bounds.centerY - rowCenterY) <= rowHeight * 0.5) {
+      lastRow.push(current);
+      continue;
+    }
+
+    rows.push([current]);
+  }
+
+  return rows.flatMap((row) =>
+    row
+      .sort((first, second) => first.bounds.left - second.bounds.left)
+      .map(({ field }) => field),
+  );
+};
+
+const hasPlausibleMonthAndDay = (value: string) => {
+  const month = Number(value.slice(2, 4));
+  const day = Number(value.slice(4, 6));
+  const date = new Date(Date.UTC(2000, month - 1, day));
+
+  return date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+};
+
+const extractNameAndIdCandidates = (ocrResults: OcrField[]) => {
+  const fields = sortByReadingOrder(ocrResults);
+  let nameCandidate = "";
+
+  for (let index = 1; index < fields.length; index += 1) {
+    const current = fields[index];
+    const previous = fields[index - 1];
+    const currentBounds = getBounds(current);
+    const previousBounds = getBounds(previous);
+    const sameRow =
+      Math.abs(currentBounds.centerY - previousBounds.centerY) <=
+      Math.max(currentBounds.height, previousBounds.height) * 0.5;
+    const maxGap = Math.max(currentBounds.height, previousBounds.height) * 4;
+    const isAdjacent =
+      currentBounds.left >= previousBounds.right &&
+      currentBounds.left - previousBounds.right <= maxGap;
+    const isHanjaField = /^\([\p{Script=Han}\s]+\)$/u.test(current.inferText);
+    const isNameCandidate = /^[가-힣]{2,5}$/.test(previous.inferText);
+
     if (
-      front.length === 6 &&
-      behind.length === 7 &&
-      !isNaN(Number(front)) &&
-      !isNaN(Number(behind))
+      sameRow &&
+      isAdjacent &&
+      isHanjaField &&
+      isNameCandidate &&
+      current.inferConfidence >= 0.8 &&
+      previous.inferConfidence >= 0.8
     ) {
-      id = currentText;
+      nameCandidate = previous.inferText;
       break;
     }
   }
 
-  if (name && id) {
-    return { name, id };
-  } else {
+  const residentIdCandidates = fields
+    .filter(({ inferConfidence }) => inferConfidence >= 0.8)
+    .map(({ inferText }) => inferText.replace(/\s/g, ""))
+    .filter((value) => /^\d{6}-?\d{7}$/.test(value))
+    .filter((value) => hasPlausibleMonthAndDay(value.replace("-", "")));
+
+  if (!nameCandidate || residentIdCandidates.length !== 1) {
     return null;
   }
+
+  return {
+    idCandidate: residentIdCandidates[0],
+    nameCandidate,
+  };
 };
-
-// 예제 OCR 결과
-const ocrResults = [
-  { inferText: "주민등록증" },
-  { inferText: "둘리" },
-  { inferText: "(杜里)" },
-  { inferText: "830422-1185600" },
-  { inferText: "부천시 원미구 상1동" },
-  { inferText: "412-3번지" },
-  { inferText: "둘리의 거리" },
-  { inferText: "2003.4.22" },
-  { inferText: "경기도 부천시장" },
-];
-
-const nameAndId = extractNameAndId(ocrResults);
-
-if (nameAndId) {
-  console.log(`이름: ${nameAndId.name} / 주민등록번호: ${nameAndId.id}`);
-  // 이름 : 둘리 / 주민등록번호 : 830422-1185600
-} else {
-  console.log("이름과 주민등록번호를 찾을 수 없습니다.");
-}
 ```
 
-원하는 값인 이름과 주민등록번호를 성공적으로 얻을 수 있었습니다.\
-다음은 신용카드 데이터를 추출할것입니다.
+이 코드는 field를 행과 x좌표로 다시 정렬하고 고정 인덱스 접근을 피하며, 이름과 주민등록번호처럼 보이는 후보가 하나일 때만 값을 반환한다. 그래도 촬영 각도와 OCR의 field 분리 방식에 따라 실패할 수 있다. 운영 환경이라면 다양한 문서와 실패 입력으로 오탐률과 누락률을 측정하거나, 신분증 값을 구조화해 반환하는 Document OCR을 사용하는 편이 낫다.
 
 ### 신용카드(카드번호, 유효기간)
 
@@ -195,11 +250,9 @@ if (nameAndId) {
   alt={"신용카드 OCR"}
 />
 
-> 실제로 신용카드 OCR을 사용할때는 사진을 포함 사진속의 많은 데이터들이 필요하겠지만,\
-> 저의 OCR에서는 신용카드 고유의 값인 카드번호와 유효기간만 추출할것입니다.
+> 이 프로토타입에서는 카드번호와 유효기간 후보만 찾는다. 실제 서비스라면 원본과 전체 카드번호를 저장하거나 로그에 남기지 않고, 화면과 응답에서도 필요한 자리를 제외해 마스킹해야 한다.
 
-카드마다 카드번호와 유효기간의 위치가 다르기때문에 index기준으로 찾는것은 어렵습니다.\
-그렇기에 카드번호와 유효기간의 특징을 파악하여 추출해야합니다.
+카드마다 카드번호와 유효기간의 위치가 달라 고정 인덱스를 기준으로 찾기는 어렵다. 따라서 카드번호와 유효기간의 특징을 파악해 추출해야 한다.
 
 <Image
   src="/imgs/post/id-ocr/card-date.png"
@@ -208,12 +261,11 @@ if (nameAndId) {
   alt={"유효기간 특징"}
 />
 
-유효기간은 모든 field중 유일하게 "/" 를 포함한것을 확인할 수 있습니다.\
-그렇다면 모든 field중 "/" 문자를 포함한 field를 찾는다면 유효기간을 찾을 수 있습니다.\
-더욱 확실하게 추출하려면 다음과 같은 특징을 추가하여 찾는것도 좋습니다.
+이 샘플에서 유효기간은 "/"를 포함한 유일한 field였다. 하지만 OCR이 숫자와 슬래시를 나눠 반환할 수도 있으므로, 인접 field를 합친 후보까지 함께 확인해야 한다.
 
-1. "/" 문자를 제외하면 숫자로만 이루어져있다.
-2. "/" 문자 기준 앞부분은 2자리, 뒷부분 2자리이다.
+1. `MM/YY` 형태인지 확인한다.
+2. 월이 `01~12` 범위인지 확인한다.
+3. 숫자와 슬래시가 분리된 경우 같은 행의 인접 field를 합쳐 다시 검사한다.
 
 <Image
   src="/imgs/post/id-ocr/card-number.png"
@@ -222,13 +274,14 @@ if (nameAndId) {
   alt={"카드번호 2가지 특징"}
 />
 
-사진과 같이 카드번호는 2가지 특징이있습니다.
+사진 속 카드번호는 네 field로 나뉘었고 서로 비슷한 y축과 너비를 가졌다. 다만 이는 이 샘플에서 후보를 좁히는 보조 조건일 뿐이다.
 
-1. 4개의 필드가 y축 위치가 동일하여야한다.
-2. 그 4개의 field가 width가 같아야 한다.
+1. 회전과 원근을 보정한 뒤, field 높이에 비례한 y축 허용 오차로 같은 행을 묶는다.
+2. 같은 행의 숫자 field를 x축 순서로 합친다.
+3. 공백과 구분자를 제거한 값이 PAN의 8~19자리 범위에 들어오는지 확인한다.
+4. Luhn 검증을 통과하는지 확인하고, 여러 후보가 남으면 실패로 처리한다.
 
-CLOVA OCR은 필드마다 x,y축 값을 제공하니 동일한 y축을 4개를 찾는것은 간단합니다.\
-다만 width 값을 따로 제공하지 않으니 직접 계산해야합니다.
+CLOVA OCR은 field마다 `boundingPoly` 좌표를 제공한다. 좌표는 실수이고 촬영 각도에 따라 달라지므로 y좌표나 너비가 완전히 같은지 비교해서는 안 된다.
 
 <Image
   src="/imgs/post/id-ocr/card-width.png"
@@ -237,11 +290,9 @@ CLOVA OCR은 필드마다 x,y축 값을 제공하니 동일한 y축을 4개를 �
   alt={"x축 y축"}
 />
 
-x축 시작점과 끝점의 값을 계산하면 field의 width를 알수있습니다.\
-사진속 카드번호 4000 field의 width는 `147 - 72 = 75`로 75인것을 알수있습니다.\
-이제 다른 필드들도 75의 width를 가졌는지 검증하면 카드번호 4개의 field를 알수있습니다.
+x축의 최솟값과 최댓값으로 대략적인 field 너비를 구할 수 있다. 사진 속 `4000` field는 `147 - 72 = 75`였지만, 회전된 사각형에서는 이 값이 실제 너비와 다르고 다른 사진에도 그대로 적용되지 않는다. 너비는 비슷한 후보를 거르는 참고값으로만 사용한다.
 
-이제 이 특징들을 이용하여 코드 로직을 작성하겠습니다.
+이제 이 특징을 이용해 코드 로직을 작성한다.
 
 <Image
   src="/imgs/post/id-ocr/algol.png"
@@ -250,7 +301,7 @@ x축 시작점과 끝점의 값을 계산하면 field의 width를 알수있습�
   alt={"카드번호와 유효기간 추출"}
 />
 
-> 코드 흐름은 간단하지만, 내용이 너무 길기에 알고리즘 순서도로 올렸습니다. 코드는 [github](https://github.com/OU9999/ou9999-playground) 에서 확인 가능합니다.
+> 위 순서도는 2024년 당시 y좌표와 너비가 정확히 같다는 조건에 의존했던 초기 흐름을 담고 있다. 실제 적용에서는 좌표 허용 오차, 원근 보정, PAN 형식과 Luhn 검증, 복수 후보 실패 처리가 추가되어야 한다.
 
 ## 마치며
 
@@ -261,8 +312,15 @@ x축 시작점과 끝점의 값을 계산하면 field의 width를 알수있습�
   alt={"OCR 결과물"}
 />
 
-> [PLAYGROUND](https://ou-playground.com) 링크를 통해 결과물을 확인하실 수 있습니다.
+> 이전 공개 데모는 실제 신분증이나 카드 업로드를 막는 운영 정책과 저장·로그 처리 범위를 확인하기 어려워 링크를 남기지 않았다. 민감한 문서를 다루는 서비스라면 전송 암호화, 접근 통제, 비저장 또는 짧은 보유 기간, 즉시 삭제, 결과 마스킹을 먼저 설계해야 한다.
 
-많은 사용자들을 유지하는 서비스라면, 비용이 비쌀지라도 머신러닝을 통해 학습시킨 Template, Document OCR을 사용하는 것이 더 좋은 선택지가 될 수 있습니다.
+문서 양식이 고정되어 있다면 사용자가 영역을 지정하는 Template OCR이, 신분증과 신용카드처럼 입력 형태가 다양하고 구조화된 값이 필요하다면 Document OCR이 더 적절할 수 있다. 선택 기준은 사용자 수만이 아니라 문서의 다양성, 필요한 정확도, 실패 처리와 유지보수 비용이다.
 
-하지만 필요한 데이터의 특징을 파악하여 추출할 수 있는 논리적인 방법이 있다면, General OCR의 제한된 기능만으로도 충분히 원하는 데이터를 구할 수 있습니다.
+General OCR의 텍스트와 좌표만으로도 제한된 합성 샘플에서 원하는 후보를 찾는 프로토타입은 만들 수 있었다. 다만 운영 가능성을 말하려면 실제로 처리할 문서 유형별 데이터셋에서 정확도와 오탐률, 실패율을 측정해야 한다. 이번 작업에서 남은 것은 정답 알고리즘이 아니라, 고정 인덱스가 깨진 뒤 특징과 반례를 하나씩 찾아간 과정이었다.
+
+### 참조
+
+- [CLOVA General OCR API](https://api.ncloud-docs.com/docs/ai-application-service-ocr-ocr)
+- [CLOVA Document OCR](https://guide.ncloud-docs.com/docs/clovaocr-document)
+- [개인정보보호법 제24조의2](https://www.law.go.kr/lsLinkCommonInfo.do?lsJoLnkSeq=1006184231)
+- [PCI SSC PAN 마스킹 안내](https://www.pcisecuritystandards.org/faqs/1146/)

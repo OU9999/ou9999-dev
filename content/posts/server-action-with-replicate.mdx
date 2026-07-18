@@ -1,6 +1,6 @@
 ---
-title: NEXT.JS 서버 액션으로 AI TEXT-TO-IMAGE 구현하기
-description: Replicate + next.js 서버 액션 프로젝트 구현 과정과 후기
+title: Next.js 서버 액션으로 AI Text-to-Image 구현하기
+description: Replicate와 Next.js 서버 액션을 이용한 토이 프로젝트 회고
 date: "2024-04-11"
 tags:
   - next.js
@@ -19,17 +19,17 @@ published: true
   alt={"디시인사이드 AI 이미지"}
 />
 
-모니터를 비교하고 구매하기 위해, 관련 정보를 디시인사이드 모니터갤러리 에서 찾다가 흥미로운것을 발견했습니다.\
-예전에는 없던 AI 이미지 생성 기능이 생긴것입니다.\
-그렇게, 호기심이 생겨서 next.js 프로젝트로 직접 구현한 과정과 후기를 공유하려고 합니다.
+모니터를 비교해 구매하려고 디시인사이드 모니터갤러리에서 정보를 찾다가 흥미로운 기능을 발견했다. 예전에는 없던 AI 이미지 생성 기능이었다.
+
+호기심이 생겨 Next.js 프로젝트로 직접 구현했고, 그 과정과 후기를 공유한다.
+
+> 이 글은 2024년 4월, `next@14.1.3`과 `replicate@0.29.1`로 만든 토이 프로젝트의 회고다. 당시 사용한 모델 버전은 지금 비활성화되어 있을 수 있고, 아래 코드는 그대로 운영 환경에 적용할 수 있는 보안 예제가 아니다. 지금 다시 보면 잘못 이해했거나 서버에서 보완해야 할 부분도 함께 바로잡아 적었다.
 
 ## Replicate
 
-디시인사이드에서는 이미지 생성 모델인 `stability-ai`를 WEB-UI 로 사용할 수 있는\
-[AUTOMATIC1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui)로 AI 이미지 생성 기능을 구현하였습니다.
+당시 나는 디시인사이드의 화면과 동작을 보고, Stability AI가 공개한 모델을 [AUTOMATIC1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui) 계열 WEB-UI로 제공한 것으로 이해했다.
 
-하지만 로컬에서 NVIDIA GPU를 통해 생성하는 AUTOMATIC1111은 저의 상황에 어울리지 않았습니다.\
-그렇게, 저의 상황에 더 적절한 `stability-ai`를 클라우드로 제공해주는 Replicate 서비스를 찾았습니다.
+하지만 로컬의 NVIDIA GPU로 이미지를 생성하는 AUTOMATIC1111은 내 상황에 어울리지 않았다. 그러다 Stability AI의 모델을 클라우드에서 실행할 수 있는 Replicate를 찾았고, 이쪽이 내 상황에는 더 적절했다.
 
 <Image
   src="/imgs/post/server-action-with-replicate/replicate-service.png"
@@ -38,15 +38,15 @@ published: true
   alt={"Replicate 서비스의 다양한 AI 모델들"}
 />
 
-Replicate 서비스를 사용하면 머신러닝 모델을 클라우드를 통해 쉽게 실행할 수 있습니다.\
-다양한 오픈 소스 모델을 실행하고, 엄청난 고수라면 자신의 모델을 배포할 수 있습니다.\
-저는 이미지 생성 모델인 `stability-ai`의 `stable-diffusion`과 `sdxl` 모델을 사용하여 구현했습니다.
+Replicate를 사용하면 머신러닝 모델을 클라우드에서 실행할 수 있다. 공개된 다양한 모델을 이용하거나 직접 만든 모델을 배포할 수도 있다.
+
+나는 당시 Replicate의 `stability-ai` owner 아래에 있던 `stable-diffusion`과 `sdxl` 모델로 구현했다.
 
 ## 구현
 
 ### Dependencies
 
-- next.js@14.1.3
+- next@14.1.3
 - replicate@^0.29.1
 - react-hook-form@^7.51.2
 - zod@^3.22.4
@@ -54,15 +54,13 @@ Replicate 서비스를 사용하면 머신러닝 모델을 클라우드를 통�
 
 ### 서버 액션 / Replicate
 
-[Replicate next.js 공식문서](https://replicate.com/docs/get-started/nextjs)
+[Replicate Next.js 공식 문서](https://replicate.com/docs/get-started/nextjs)
 
-공식문서에서는 Route Handlers를 통해 백엔드 api 코드를 작성하는 예시를 보여줍니다.\
-저는 `next.js@14` 부터 안정화된 서버액션을 통해 직관적이고 알아보기 쉽게 백엔드 코드를 작성할것입니다.
+당시 Replicate 공식 문서는 Route Handlers로 백엔드 API를 작성하는 예시를 보여줬다. 나는 `next.js@14`부터 안정화된 서버 액션을 사용해 백엔드 코드를 더 직관적으로 작성해 보고 싶었다.
 
-우선, [Replicate](https://replicate.com/) 사이트에 접속하여 API token을 발급받습니다.\
-그 뒤 `replicate` 라이브러리를 통해 간단하게 Replicate 클라우드에 접근할 수 있습니다.
+우선 [Replicate](https://replicate.com/) 사이트에서 API token을 발급받는다. 그 뒤 `replicate` 라이브러리를 사용하면 Replicate 클라우드에 간단히 접근할 수 있다.
 
-아래는 간단한 서버액션 예제입니다.
+아래는 간단한 서버 액션 예제다.
 
 ```tsx {5} title="app/page.tsx"
 // 서버 컴포넌트
@@ -84,16 +82,16 @@ const ServerComponent = () => {
 export default ServerComponent;
 ```
 
-서버 액션으로 사용할 함수 내부 첫번째 줄에 `"use server"`를 작성해주시면 컴파일할때 서버 api로 만들어집니다.\
-위 코드를 실행시키면 클라이언트 브라우저에서는 `console.log`의 내용을 확인할 수 없습니다.
+비동기 함수 본문의 최상단에 `"use server"` 지시어를 두면 해당 함수가 서버 액션이 된다. 위 코드를 실행해도 클라이언트 브라우저에서는 `console.log`의 내용을 확인할 수 없다. 다만 서버에서 실행된다는 사실이 접근 권한까지 보장하지는 않으므로, 공개 API 엔드포인트와 마찬가지로 입력 검증과 권한·비용 통제를 함수 안에서 처리해야 한다.
+
+로그인 사용자만 이용하는 기능이라면 서버 액션 안에서 세션과 권한을 다시 확인해야 한다. 클라이언트가 보낸 사용자 ID나 모델 식별자를 그대로 신뢰해서는 안 된다.
 
 > Server Actions are not limited to `<form>` and can be invoked from event handlers, useEffect, third-party libraries, and other form elements like `<button>`. \
-> [Next.js docs](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#server-components)
+> [Next.js 14 docs](https://nextjs.org/docs/14/app/building-your-application/data-fetching/server-actions-and-mutations#server-components)
 
-참고로, `next.js` 공식 문서에서는 서버 액션은 `<form>` 말고도 `useEffect`, `onClick` 이벤트를 통해 서버 액션을 호출할 수 있다고 했지만 현재 제 버전인 `next@14.1.3` 에서는 원인불명 오류를 많이 일으켰습니다.\
-`<form>`의 `action` 또는 `submit` 을 통해 서버 액션을 호출하는것을 추천드립니다.
+Next.js 공식 문서에 따르면 서버 액션은 `<form>` 외에도 `useEffect`, `onClick` 같은 이벤트에서 호출할 수 있다. 다만 당시 내가 사용하던 `next@14.1.3`에서는 원인을 알 수 없는 오류를 자주 겪어, 이 프로젝트에서는 form 제출 흐름을 선택했다.
 
-서버 액션에 대해 파악했으니, `replicate` 라이브러리를 알아볼 차례입니다.
+서버 액션을 파악했으니 이제 `replicate` 라이브러리를 살펴볼 차례다.
 
 ```ts title="replicate-example.js"
 import Replicate from "replicate";
@@ -121,100 +119,204 @@ console.log(output);
   alt={"replicate-example.js output 결과"}
 />
 
-위 코드를 node.js 를 통해 실행시킨다면, output이 string 배열의 결과물을 return 하는걸 확인할 수 있습니다.\
-간단한 코드로 쉽게 Replicate 클라우드에 접근할 수 있는것입니다.
+위 코드를 Node.js로 실행했을 때, 해당 모델 버전은 이미지 URL로 이루어진 string 배열을 반환했다. 이 반환 형식은 모든 모델에 공통으로 보장되지 않으며, 모델과 Replicate 라이브러리 버전에 따라 달라진다. 예제에 사용한 모델 버전도 현재는 비활성화되어 있을 수 있다.
 
-위 코드를 봤을때 필수적인 요소는 실행시킬 ai 모델과 사용자가 입력할 prompt 라는것을 확인할 수 있습니다.\
-필요한것을 파악했으니, 동적인 props를 받아 서버에서 실행시키는 서버 액션 코드를 작성하겠습니다.
+코드에서 필요한 요소는 실행할 AI 모델과 사용자가 입력할 prompt였다. 처음에는 두 값을 그대로 서버 액션에 전달했지만, 클라이언트가 전체 모델 식별자를 정하게 두면 허용하지 않은 모델이나 비용이 큰 모델도 호출할 수 있다. 따라서 클라이언트는 제한된 선택 키만 보내고, 실제 모델 버전은 서버의 허용 목록에서 결정하도록 바꿨다.
 
 ```ts {1} title="action/replicate-action.ts"
 "use server";
 import Replicate from "replicate";
+import {
+  ReplicateRequestSchema,
+  type ReplicateRequest,
+} from "@/lib/replicate-schema";
+import { enforceRateLimit } from "@/lib/rate-limit";
+import { verifyRecaptcha } from "@/lib/recaptcha";
 
-type ReplicateOutPut = (
-  prompt: string,
-  model: `${string}/${string}` | `${string}/${string}:${string}`
-) => Promise<string | string[]>;
+type ModelVersion = `${string}/${string}:${string}`;
 
-export const getReplicateOutput: ReplicateOutPut = async (prompt, model) => {
+interface ReplicateSuccess {
+  images: string[];
+  ok: true;
+}
+
+interface ReplicateFailure {
+  code:
+    | "invalid_request"
+    | "blocked"
+    | "provider_failed"
+    | "temporarily_unavailable";
+  ok: false;
+}
+
+type ReplicateResult = ReplicateSuccess | ReplicateFailure;
+
+const modelVersions: Record<ReplicateRequest["model"], string | undefined> = {
+  stableDiffusion: process.env.REPLICATE_STABLE_DIFFUSION_VERSION,
+  sdxl: process.env.REPLICATE_SDXL_VERSION,
+};
+
+const isStringArray = (value: unknown): value is string[] => {
+  return (
+    Array.isArray(value) &&
+    value.every((item) => typeof item === "string")
+  );
+};
+
+const isModelVersion = (
+  value: string | undefined,
+): value is ModelVersion => {
+  return typeof value === "string" && /^[^/]+\/[^:]+:[^:]+$/.test(value);
+};
+
+const getReplicateOutput = async (request: unknown): Promise<ReplicateResult> => {
+  const parsed = ReplicateRequestSchema.safeParse(request);
+
+  if (!parsed.success) {
+    return { code: "invalid_request", ok: false };
+  }
+
+  const { model, prompt, recaptchaToken } = parsed.data;
+
   try {
+    // Redis나 DB처럼 클라이언트가 바꿀 수 없는 저장소에서 제한한다.
+    const requestAllowed = await enforceRateLimit();
+
+    if (!requestAllowed) {
+      return { code: "blocked", ok: false };
+    }
+
+    // 비용이 발생하는 모든 요청에서 응답 토큰을 다시 검증한다.
+    const captchaVerified = await verifyRecaptcha(recaptchaToken);
+
+    if (!captchaVerified) {
+      return { code: "blocked", ok: false };
+    }
+
+    const version = modelVersions[model];
+
+    if (!isModelVersion(version)) {
+      return { code: "invalid_request", ok: false };
+    }
+
     const replicate = new Replicate({
-      auth: process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN,
+      auth: process.env.REPLICATE_API_TOKEN,
     });
 
-    const input = {
-      prompt: prompt,
-      // width,height,negative prompt 등 ai 모델에 따라 다양한 옵션 넣기가능
-    };
-
-    const output = await replicate.run(model, {
-      input,
+    const output: unknown = await replicate.run(version, {
+      input: { prompt },
     });
 
-    return output;
-  } catch (err) {
-    console.log(err);
-    return String(err);
+    if (!isStringArray(output)) {
+      return { code: "provider_failed", ok: false };
+    }
+
+    return { images: output, ok: true };
+  } catch {
+    console.error("Image generation request failed.");
+    return { code: "temporarily_unavailable", ok: false };
   }
 };
+
+export { getReplicateOutput };
+export type { ReplicateResult };
 ```
 
-> 서버 액션을 모듈화하여 사용하면 클라이언트 컴포넌트에서도 사용 가능합니다.
+> 서버 액션을 모듈화하면 클라이언트 컴포넌트에서 호출할 수 있다. 그렇다고 비공개 함수가 되는 것은 아니므로, 검증과 비용 통제는 반드시 서버 액션 안에서 다시 수행해야 한다.
 
-prompt 와 model을 동적으로 받는 코드를 작성했습니다.\
-또한, AI 모델에따라 다양한 input option을 제공하니, 해당 모델 문서를 참조해주시길 바랍니다.
+클라이언트는 `stableDiffusion`이나 `sdxl` 같은 제한된 키만 보낸다. 서버는 환경 변수에 고정한 모델 버전으로 키를 변환하고, 모델별 input과 output 형식을 따로 검증한다. `REPLICATE_API_TOKEN`에는 `NEXT_PUBLIC_` 접두사를 붙이지 않는다. 실제 배포에서 public 접두사를 사용했다면 브라우저 번들 노출 여부를 확인하고 토큰을 폐기·재발급하는 편이 안전하다.
 
-백엔드 코드는 작성됐으니, 이제는 프론트엔드 코드를 작성할것입니다.
+백엔드 코드를 작성했으니 이제 프론트엔드로 넘어간다.
 
 ### 프론트엔드 코드
 
-위에서 설명했듯이, 서버 액션은 form을 통해 호출해야합니다.\
-간결하고 쉬운 통합을 위해 `react-hook-form` 을 사용하여 코드를 작성할것입니다.
+서버 액션은 이벤트에서도 호출할 수 있지만, 이 글에서는 제출 흐름을 명확하게 보여주기 위해 form과 `react-hook-form`을 사용한다.
 
 ```tsx title="components/replicate-form.tsx"
 import { useForm } from "react-hook-form";
+import type { ReplicateRequest } from "@/lib/replicate-schema";
 
-const ReplicateForm = ({ submitFn }: ReplicateFormProps) => {
-  const form = useForm();
-  const onSubmit = form.handleSubmit(submitFn);
+type ReplicateFormValues = Omit<ReplicateRequest, "recaptchaToken">;
+
+interface ReplicateFormProps {
+  recaptchaToken: string;
+  submitFn: (request: ReplicateRequest) => Promise<void>;
+}
+
+const ReplicateForm = ({ recaptchaToken, submitFn }: ReplicateFormProps) => {
+  const form = useForm<ReplicateFormValues>();
+
+  const handleValidSubmit = (values: ReplicateFormValues) => {
+    void submitFn({ ...values, recaptchaToken });
+  };
+
+  const handleSubmit = form.handleSubmit(handleValidSubmit);
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit}>
-        <Input name="prompt" placeholder="robot, cat, rainbow" />
-        <Select name="select" placeholder="AI 모델을 선택해주세요." />
-        <Button type="submit">실행</Button>
+      <form onSubmit={handleSubmit}>
+        <Input {...form.register("prompt")} placeholder="robot, cat, rainbow" />
+        <Select {...form.register("model")}>
+          <option value="stableDiffusion">Stable Diffusion</option>
+          <option value="sdxl">SDXL</option>
+        </Select>
+        <Button disabled={!recaptchaToken} type="submit">
+          실행
+        </Button>
       </form>
     </Form>
   );
 };
 
-export default ReplicateForm;
+export { ReplicateForm };
 ```
 
-prompt를 입력받를 text input과, 모델을 선택할 select input을 사용합니다.\
-버튼의 타입을 `submit`으로 하여야 `onSubmit` 함수가 작동합니다.
+prompt를 입력받는 text input과 서버 허용 목록에 대응하는 모델 키만 담은 select를 사용한다. reCAPTCHA 토큰이 없으면 제출 버튼도 비활성화한다. 다만 이 비활성화는 사용자 경험을 위한 장치일 뿐이고, 실제 검증은 서버에서 다시 수행한다.
 
 ```tsx title="app/page.tsx"
 "use client";
+
+import { useState } from "react";
 import { getReplicateOutput } from "@/action/replicate-action";
+import { ReCaptcha } from "@/components/re-captcha";
+import { ReplicateForm } from "@/components/replicate-form";
+import type { ReplicateRequest } from "@/lib/replicate-schema";
 
 const ReplicatePage = () => {
   const [imgSrc, setImgSrc] = useState<string[] | null>(null);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [recaptchaKey, setRecaptchaKey] = useState(0);
 
-  const getReplicateData = async (formData: FormCustomData) => {
-    const promptValue = formData.prompt;
-    const model = formData.select;
+  const handleCaptchaChange = (token: string | null) => {
+    setRecaptchaToken(token);
+  };
 
-    // 서버 액션 prompt와 model을 받음
-    const output = await getReplicateOutput(promptValue, model);
-    setImgSrc(output);
+  const handleReplicateSubmit = async (request: ReplicateRequest) => {
+    try {
+      const result = await getReplicateOutput(request);
+
+      if (!result.ok) {
+        setImgSrc(null);
+        return;
+      }
+
+      setImgSrc(result.images);
+    } catch {
+      setImgSrc(null);
+    } finally {
+      setRecaptchaToken(null);
+      setRecaptchaKey((currentKey) => currentKey + 1);
+    }
   };
 
   return (
     <GridBox>
-      <ReplicateForm submitFn={getReplicateData} />
-      {imgSrc && <Image alt="ai-image" src={imgSrc[0]} />}
+      <ReCaptcha key={recaptchaKey} onChange={handleCaptchaChange} />
+      <ReplicateForm
+        recaptchaToken={recaptchaToken ?? ""}
+        submitFn={handleReplicateSubmit}
+      />
+      {imgSrc && <GeneratedImageList srcList={imgSrc} />}
     </GridBox>
   );
 };
@@ -222,7 +324,7 @@ const ReplicatePage = () => {
 export default ReplicatePage;
 ```
 
-서버 액션으로 `output`을 받으면 `imgSrc` 상태에 set 합니다.
+서버 액션이 성공 결과를 반환했을 때만 이미지 URL을 상태에 저장한다. 제공자의 원본 오류 문자열은 브라우저로 보내지 않고, 화면에는 `invalid_request`, `blocked`, `provider_failed`, `temporarily_unavailable`처럼 미리 정한 상태에 맞는 메시지만 보여준다. reCAPTCHA 토큰은 성공 여부와 관계없이 요청 후 초기화해 다음 실행에서 새 토큰을 받도록 했다.
 
 <Image
   src="/imgs/post/server-action-with-replicate/intro.png"
@@ -231,7 +333,7 @@ export default ReplicatePage;
   alt={"form을 통한 출력 결과"}
 />
 
-form을 통해 입력한 결과, 정상적으로 사진이 나오는것을 확인할 수 있습니다.
+form을 통해 값을 입력하자 이미지가 정상적으로 출력됐다.
 
 ### 클라이언트 에러 처리
 
@@ -242,52 +344,40 @@ form을 통해 입력한 결과, 정상적으로 사진이 나오는것을 확�
   alt={"클라이언트에서 에러를 잡지 않고 요청을 보낸 결과"}
 />
 
-TEXT-TO-IMAGE 기능이 정상적으로 작동하지만 아직 추가적으로 세팅해야할것이 많습니다.\
-Replicate api는 유료입니다. 봇으로 단기간에 너무 많은 요청을 시도한다던가, 부적절한 프롬프트를 넣는\
-의도치 않은 요청을 클라이언트에서 막아야 서버의 부담을 줄일 수 있습니다.
+Text-to-Image 기능은 정상적으로 작동했지만 아직 추가로 설정할 것이 많았다. Replicate API는 유료이므로 봇이 단기간에 많은 요청을 보내거나 부적절한 프롬프트를 입력하는 상황을 통제해야 했다.
 
-우선, api에 접근하기전에 `zod`를 통해 form에서 의도치 않은 요청을 막을것입니다.
+처음에는 클라이언트의 `zod` 검증만 생각했지만, 브라우저 검증은 정상 사용자의 실수를 줄이는 사용자 경험일 뿐 보안 경계가 될 수 없다. 같은 schema를 서버 액션에서도 다시 적용해야 한다.
 
-```tsx title="components/replicate-form.tsx"
+```ts title="lib/replicate-schema.ts"
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
-const FormSchema = z.object({
+const ReplicateRequestSchema = z.object({
   prompt: z
-    .string({
-      required_error: "프롬프트는 빈칸일 수 없습니다.", // 프롬프트 작성 필수
-    })
-    .min(1, { message: "프롬프트는 빈칸일 수 없습니다." }) // 빈 프롬프트 방지
+    .string()
+    .trim()
+    .min(1, { message: "프롬프트는 비어 있을 수 없습니다." })
+    .max(500, { message: "프롬프트는 500자 이하여야 합니다." })
     .regex(/^[a-zA-Z\s,]*$/, {
-      message: "영단어, 공백, 쉼표만 사용 가능합니다.", // 영단어, 공백, 쉼표만 가능
+      message: "영단어, 공백, 쉼표만 사용할 수 있습니다.",
     }),
-  select: z.string({
-    required_error: "ai 모델을 선택해야 합니다.", // ai 선택 필수
-  }),
+  model: z.enum(["stableDiffusion", "sdxl"]),
+  recaptchaToken: z.string().min(1),
 });
 
-type FormZodType = typeof FormSchema;
+type ReplicateRequest = z.infer<typeof ReplicateRequestSchema>;
 
-const ReplicateForm = ({ submitFn }: ReplicateFormProps) => {
-  const form = useForm<z.infer<FormZodType>>({
-    resolver: zodResolver(FormSchema),
-  });
-  // ...
-};
+export { ReplicateRequestSchema };
+export type { ReplicateRequest };
 ```
 
-위 코드는 다음과 같습니다.
+위 코드의 조건은 다음과 같다.
 
-1. 빈 프롬프트를 방지합니다.
-2. 영단어만 사용 가능합니다.
-3. 프롬프트간 구분은 쉼표로 합니다.
-4. AI 모델은 필수로 선택합니다.
+1. 빈 프롬프트를 방지한다.
+2. 프롬프트의 최대 길이와 허용 문자를 제한한다.
+3. 클라이언트가 선택할 모델 키를 allowlist로 제한한다.
+4. reCAPTCHA 응답 토큰을 함께 받는다.
 
-`zod`로 실시간 에러를 잡았다면, 요청을 보내기전에 체크해야하는 에러도 있습니다.\
-NSFW(Not Safe For Work) 단어들을 필터링해야합니다.\
-[List of NSFW Words github source](https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words)
-링크에서 부적절한 단어들(en)을 가져와서 요청을 보내기전\
-프롬프트를 쉼표 단위로 구분하여 부적절한 단어가 포함됐는지 확인합니다.
+당시에는 NSFW(Not Safe For Work) 단어 목록도 적용했다. 하지만 단순 denylist는 철자 변형과 문맥을 쉽게 놓치므로 완전한 콘텐츠 정책이 될 수 없다. 필요하다면 서버 측 정책 검사의 보조 수단으로만 사용하고, 실패했을 때 Replicate 호출 자체가 실행되지 않도록 해야 한다.
 
 <Video
   src="/imgs/post/server-action-with-replicate/zod.mp4"
@@ -296,78 +386,99 @@ NSFW(Not Safe For Work) 단어들을 필터링해야합니다.\
   ariaLabel={`클라이언트 에러 처리 UI`}
 />
 
-위와 같이 `zod` 설정을 통해 클라이언트 측에서 불필요하거나 잘못된 요청을 사전에 차단할 수 있으며,\
-UI에서 피드백을 쉽게 제공할 수 있습니다.
+같은 `zod` schema를 클라이언트에서는 빠른 피드백에, 서버에서는 신뢰할 수 없는 요청을 거절하는 데 사용한다. 클라이언트 검증을 우회해도 서버 액션에서 다시 막히는 구조가 되어야 한다.
 
 ### 봇 접근 방지
 
-이제는 봇 접근과 개인이 너무 많이 접근하는걸 막을 차례입니다.\
-봇 접근은 구글 리캡챠를 이용하여 막을것입니다. 우선, [reCAPTCHA 공식문서](https://www.google.com/recaptcha/about/)에서 개인키를 발급받아야 합니다.
+이제 봇의 접근과 한 사용자가 지나치게 많이 요청하는 상황을 막을 차례다. reCAPTCHA를 사용하려면 브라우저에 공개해도 되는 site key와 서버에만 보관할 secret key를 각각 발급받아야 한다.
 
-> reCAPTCHA v2는 클라이언트에서 간단하게 봇 체크를 할때 유용하지만, \
-> 그림을 맞추는 형식이기 때문에 사용자 경험이 떨어질수 있습니다.\
-> v3 버전을 사용하면 서비스 워커로 작동하기때문에 사용자 경험이 좋아지지만,\
-> 개발자 설정이 복잡해지고 v2에 비하면 보안이 약해질것입니다.
+> reCAPTCHA v2는 checkbox 또는 invisible 방식으로 challenge를 수행한다. v3는 서비스 워커로 작동하는 기능이 아니라, 사용자 상호작용을 요구하지 않고 요청별 위험 점수와 action을 반환하는 방식이다. 어느 버전이 더 안전하다고 단정하기보다 서버에서 토큰을 검증하고 결과에 맞는 정책을 적용하는 일이 중요하다.
 
-저는 간단한 구현을 위해 reCAPTCHA v2를 사용할 것이고,\
-`react-google-recaptcha` 라이브러리로 쉽게 reCAPTCHA v2를 사용할 수 있습니다.
+나는 간단한 구현을 위해 reCAPTCHA v2를 선택했고, `react-google-recaptcha`로 브라우저에서 응답 토큰을 받았다.
 
 ```tsx title="components/re-captcha.tsx"
 "use client";
 import ReCAPTCHA from "react-google-recaptcha";
 
-const sitekey = String(process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY);
-
 interface ReCaptchaProps {
-  onChange: () => void;
+  onChange: (token: string | null) => void;
 }
 
 const ReCaptcha = ({ onChange }: ReCaptchaProps) => {
-  return <ReCAPTCHA theme="dark" sitekey={sitekey} onChange={onChange} />;
-};
+  const siteKey = process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY;
 
-export default ReCaptcha;
-```
+  if (!siteKey) {
+    return null;
+  }
 
-발급받은 개인키를 넣어주면 쉽게 사용할 수 있습니다.
-
-```tsx title="app/page.tsx"
-"use client";
-import ReCaptcha from "@/components/re-captcha";
-
-const ReplicatePage = () => {
-  // 나머지 코드
-  const [isCertification, setIsCertification] = useState<boolean>(false);
-
-  const setCertificationSuccess = () => {
-    setIsCertification(true);
-    sessionStorage.setItem("certification", String(true)); // 세션 스토리지 설정
+  const handleReset = () => {
+    onChange(null);
   };
 
-  useEffect(() => {
-    setIsCertification(
-      Boolean(sessionStorage.getItem("certification")) || false // 진입시 세션 스토리지 접근
-    );
-  }, []);
-
   return (
-    <GridBox>
-      {/* 나머지 코드 */}
-      {!certification && <ReCaptcha onChange={certificationSuccess} />}
-    </GridBox>
+    <ReCAPTCHA
+      theme="dark"
+      sitekey={siteKey}
+      onChange={onChange}
+      onErrored={handleReset}
+      onExpired={handleReset}
+    />
   );
 };
 
-export default ReplicatePage;
+export { ReCaptcha };
 ```
 
-`isCertification` 상태를 선언하여 `ReCaptcha` 인증을 받았는지 파악합니다. \
-그리고 세션 스토리지에 상태를 저장하여 이미 인증받은 사용자에게 중복해서 인증을 받는것을 방지합니다.
+`NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY`는 공개 가능한 site key다. callback으로 받은 token은 boolean으로 바꾸거나 `sessionStorage`에 인증 상태로 저장하지 않고, 비용이 발생하는 요청마다 서버로 전달한다. reCAPTCHA 응답 토큰은 2분 안에 한 번만 검증할 수 있기 때문이다. [Google 서버 검증 문서](https://developers.google.com/recaptcha/docs/verify)
 
-이제는 "짧은시간에 너무 많은 요청을 보내는 상황"을 방지할것입니다.\
-봇이 아니더라도, 사람이 짧은시간에 반복적으로 많은 요청을 보내는건 문제가 있습니다.
+```ts title="lib/recaptcha.ts"
+import { z } from "zod";
 
-저는 로컬 스토리지를 이용하여 10번이상 요청을 보낸 사람한테 30분동안 요청을 막을것입니다.
+const RecaptchaResponseSchema = z.object({
+  hostname: z.string().optional(),
+  success: z.boolean(),
+});
+
+const verifyRecaptcha = async (token: string): Promise<boolean> => {
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  const expectedHostname = process.env.RECAPTCHA_HOSTNAME;
+
+  if (!secret || !expectedHostname) {
+    return false;
+  }
+
+  try {
+    const body = new URLSearchParams({ response: token, secret });
+    const response = await fetch(
+      "https://www.google.com/recaptcha/api/siteverify",
+      { body, method: "POST" },
+    );
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const result: unknown = await response.json();
+    const parsed = RecaptchaResponseSchema.safeParse(result);
+
+    return (
+      parsed.success &&
+      parsed.data.success &&
+      parsed.data.hostname === expectedHostname
+    );
+  } catch {
+    return false;
+  }
+};
+
+export { verifyRecaptcha };
+```
+
+브라우저에서 위젯을 통과했다는 사실만으로는 충분하지 않다. 서버 액션은 Google의 `siteverify`에 token과 secret key를 보내고, `success`와 `hostname`을 확인한 뒤에만 Replicate를 호출한다. v3를 사용한다면 `score`와 `action`도 함께 검증해야 한다.
+
+다음으로 "짧은 시간에 너무 많은 요청을 보내는 상황"을 막아야 했다. 봇이 아니더라도 한 사람이 짧은 시간에 반복해서 많은 요청을 보내는 것은 문제였다.
+
+당시에는 로컬 스토리지에 요청 횟수와 시간을 기록해, 10번 넘게 요청한 사용자의 추가 요청을 30분 동안 막았다.
 
 <Image
   src="/imgs/post/server-action-with-replicate/storage.png"
@@ -376,10 +487,11 @@ export default ReplicatePage;
   alt={"짧은시간 반복 요청 막기"}
 />
 
-로컬 스토리지와 `Date` 객체로 시간을 비교하여 반복적인 요청을 막는 코드 흐름입니다.
+하지만 로컬 스토리지는 사용자가 직접 지우거나 바꿀 수 있고, 다른 브라우저나 자동화 요청은 식별하지 못한다. 정상 사용자가 실수로 연속 제출하는 일을 줄이는 UI 장치일 뿐 실제 rate limit은 아니었다.
 
-> 이 코드는 로직은 간단하지만 작성 내용은 길기 때문에 블로그 글에 작성하지 않고 간단한 코드 흐름만 적어두겠습니다.\
-> 코드는 [github source](https://github.com/OU9999/ou9999-playground) 링크를 확인바랍니다.
+실제 제한은 서버가 신뢰하는 Redis나 DB 같은 저장소에서 계정·세션을 우선 식별하고 IP를 보조 키로 사용해 적용해야 한다. 횟수뿐 아니라 동시 실행 수와 일별 사용량도 제한하고, Replicate의 결제 한도와 알림을 별도로 설정해야 비용 사고를 줄일 수 있다. Replicate 자체의 API rate limit은 서비스의 남용 방지 정책을 대신하지 않는다. 앞선 `enforceRateLimit`은 이 서버 측 검사를 가리킨다.
+
+오래 걸리는 실행은 HTTP 요청의 대기 시간만 끝낸다고 중단되지 않을 수 있다. 운영 환경에서는 prediction deadline을 설정하거나 취소 API를 호출해 제공자 측 작업도 종료해야 한다. [Replicate prediction deadline 문서](https://replicate.com/docs/topics/predictions/create-a-prediction#prediction-deadlines)
 
 <Image
   src="/imgs/post/server-action-with-replicate/many-request.png"
@@ -388,7 +500,7 @@ export default ReplicatePage;
   alt={"에러 UI"}
 />
 
-UI 에러 상태 코드를 작성하여 정상적으로 작동하는것을 확인할 수 있습니다.
+UI 에러 상태를 작성해 제한에 걸린 사용자에게 피드백을 줄 수 있다. 다만 UI가 보인다는 사실은 서버에서 요청이 차단됐다는 증거가 아니므로, 개발자 도구나 직접 요청으로 서버 액션의 거절 결과까지 확인해야 한다.
 
 ## 마치며
 
@@ -399,10 +511,15 @@ UI 에러 상태 코드를 작성하여 정상적으로 작동하는것을 확�
   alt={"https://ou-playground.com"}
 />
 
-기능 구현도 중요하지만, 프론트엔드에서의 보안과 에러 처리 설계가 얼마나 중요한지 알게 됐습니다.\
-왜 회사에서 직접 서비스를 배포하고 운영해본 개발자들을 원하는지 알것같습니다.\
-직접 서비스를 운영해봐야 ~(본인의 돈이 걸렸기때문에)~ 더 효율적이고 더 나은 설계를 추구할것이기 때문입니다.
+기능 구현도 중요하지만 유료 API를 공개할 때는 브라우저의 UI보다 서버의 보안과 비용 경계가 더 중요했다. 당시에는 reCAPTCHA 위젯과 로컬 스토리지를 붙인 뒤 요청을 막았다고 생각했지만, 지금 다시 보면 정상적인 사용 흐름만 제한했을 뿐이었다.
 
-[PLAYGROUND](https://ou-playground.com) 링크를 통해 결과물을 확인하실 수 있습니다.\
-사실, AI TEXT-TO-IMAGE 토이 프로젝트를 구현하려고 했지만 하다보니까 너무 재밌어졌기에,\
-흥미로웠던 UI들이나 프론트 엔지니어링을 직접 구현하는 사이드 프로젝트로 바꿨습니다.
+이전 구현에는 서버 측 검증과 rate limit이 빠져 있어 공개 데모 링크는 남기지 않았다. 운영한다면 서버 입력 검증, reCAPTCHA token 검증, 모델 allowlist, rate limit, 동시성 제한, timeout과 비용 알림을 먼저 갖춰야 한다.
+
+처음에는 AI Text-to-Image 토이 프로젝트를 구현하려고 했지만, 만들다 보니 너무 재미있어졌다. 결국 흥미로웠던 UI와 프론트 엔지니어링을 직접 구현하는 사이드 프로젝트로 바꿨고, 운영을 생각하려면 작동하는 화면 다음에 더 많은 일이 남는다는 것도 알게 됐다.
+
+### 참고
+
+- [Next.js 14 Server Actions 보안](https://nextjs.org/docs/14/app/building-your-application/data-fetching/server-actions-and-mutations#security)
+- [Google reCAPTCHA 서버 검증](https://developers.google.com/recaptcha/docs/verify)
+- [Replicate API rate limits](https://replicate.com/docs/topics/predictions/rate-limits)
+- [Replicate HTTP API와 prediction 취소](https://replicate.com/docs/reference/http/)

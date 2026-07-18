@@ -3,7 +3,16 @@ import { cn } from "@/utils/tailwind-util";
 import Image, { type ImageProps } from "next/image";
 import { MediaReveal } from "./media-reveal";
 
-const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
+interface ImageWithPlaceholderOptions {
+  showCaption?: boolean;
+}
+
+type ImageWithPlaceholderProps = ImageProps & ImageWithPlaceholderOptions;
+
+const ImageWithPlaceholder: React.FC<ImageWithPlaceholderProps> = ({
+  showCaption = true,
+  ...props
+}) => {
   const base64Data = getBase64(props.src as string);
   const width = base64Data.img.width ?? props.width;
   const height = base64Data.img.height ?? props.height;
@@ -22,7 +31,7 @@ const ImageWithPlaceholder: React.FC<ImageProps> = (props) => {
           blurDataURL={base64Data.base64}
         />
       </MediaReveal>
-      {props.alt && (
+      {showCaption && props.alt && (
         <p className="my-1 text-sm text-google-muted">
           {props.alt}
         </p>
