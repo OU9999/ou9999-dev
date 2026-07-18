@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Throughline"
+  short_description: "하나의 핵심 질문으로 긴 글의 구조와 빈칸을 설계"
+  default_prompt: "Use $build-throughline to find one core question and build a structure worksheet from these notes."

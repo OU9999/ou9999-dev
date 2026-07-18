@@ -50,6 +50,9 @@ testJS.mjs
 # local writing rules
 blog-rules/post-rule/
 
+# local writing drafts
+/content/drafts/
+
 #tmp
 tmp/
 .tmp/
