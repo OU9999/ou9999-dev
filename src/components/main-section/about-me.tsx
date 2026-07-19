@@ -6,6 +6,7 @@ import { GithubIcon } from "../svg/github-icon";
 import { OwlIcon } from "../svg/owl-icon";
 import { defaultLocale, type AppLocale } from "@/i18n/config";
 import { AboutBrushLayer } from "./about-brush-layer";
+import { AboutCopyMotion, type AboutCopySegment } from "./about-copy-motion";
 
 interface IconBoxProps {
   link: string;
@@ -32,6 +33,28 @@ interface AboutMeProps {
 
 const AboutMe = async ({ locale = defaultLocale }: AboutMeProps) => {
   const t = await getTranslations({ locale, namespace: "AboutPage" });
+  const statementLines: AboutCopySegment[] = [
+    {
+      prefix: t("statement.line1.prefix"),
+      highlight: t("statement.line1.highlight"),
+      suffix: t("statement.line1.suffix"),
+    },
+    {
+      prefix: t("statement.line2.prefix"),
+      highlight: t("statement.line2.highlight"),
+      suffix: t("statement.line2.suffix"),
+    },
+    {
+      prefix: t("statement.line3.prefix"),
+      highlight: t("statement.line3.highlight"),
+      suffix: t("statement.line3.suffix"),
+    },
+  ];
+  const meaningLine2: AboutCopySegment = {
+    prefix: t("meaning.line2.prefix"),
+    highlight: t("meaning.line2.highlight"),
+    suffix: t("meaning.line2.suffix"),
+  };
 
   return (
     <section className="relative flex min-h-[calc(100dvh-56px)] w-full items-start px-6 pb-20 pt-28 text-google-paper md:min-h-[calc(100dvh-100px)] md:px-0 md:pb-0 md:pt-[264px]">
@@ -53,18 +76,21 @@ const AboutMe = async ({ locale = defaultLocale }: AboutMeProps) => {
           </div>
 
           <div className="w-full max-w-[540px] md:-mt-2">
-            <div className="flex flex-col gap-10 text-[17px] font-normal leading-[31px] text-google-paper/92 md:text-lg md:leading-[34px]">
-              <p>{t("paragraph1")}</p>
-              <p>{t("paragraph2")}</p>
-            </div>
+            <AboutCopyMotion
+              statementLines={statementLines}
+              meaningLine1={t("meaning.line1")}
+              meaningLine2={meaningLine2}
+            />
 
-            <p className="mt-14 font-mono text-sm leading-none tracking-normal text-mineral-blue md:text-base">
-              {t("profile")}
-            </p>
-            <div className="mt-6 flex items-center gap-5">
-              <IconBox icon={<GithubIcon />} link="https://github.com/OU9999" />
-              <IconBox icon={<OwlIcon />} link="https://ou-playground.com/" />
-              <IconBox icon={<MailIcon />} link="mailto:omh232323@gmail.com" />
+            <div data-testid="about-profile">
+              <p className="mt-14 font-mono text-sm leading-none tracking-normal text-mineral-blue md:text-base">
+                {t("profile")}
+              </p>
+              <div className="mt-6 flex items-center gap-5">
+                <IconBox icon={<GithubIcon />} link="https://github.com/OU9999" />
+                <IconBox icon={<OwlIcon />} link="https://ou-playground.com/" />
+                <IconBox icon={<MailIcon />} link="mailto:omh232323@gmail.com" />
+              </div>
             </div>
           </div>
         </div>
