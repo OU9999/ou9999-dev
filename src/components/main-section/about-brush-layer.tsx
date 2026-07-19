@@ -42,7 +42,7 @@ const AboutBrushLayer = () => {
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
       <motion.div
-        className="absolute -left-[205px] top-36 h-[900px] w-[613px] max-w-none motion-reduce:!translate-y-0 motion-reduce:![clip-path:inset(0%)] motion-reduce:!opacity-100 md:-left-[320px] md:top-[178px] md:h-[1120px] md:w-[762px]"
+        className="absolute -left-[205px] top-36 h-[900px] w-[613px] max-w-none motion-reduce:!transform-none motion-reduce:![clip-path:inset(0%)] motion-reduce:!opacity-100 md:-left-[320px] md:top-[178px] md:h-[1120px] md:w-[762px]"
         data-loaded={isBrushLoaded}
         data-testid="about-brush-reveal-layer"
         initial="hidden"
