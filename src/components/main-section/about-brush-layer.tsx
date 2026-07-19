@@ -1,11 +1,10 @@
 "use client";
 
-import aboutBase64Data from "@/scripts/output/about/base64.json";
 import Image from "next/image";
 import { motion } from "motion/react";
+import { useState, type ReactEventHandler } from "react";
 
 const brushStrokeEase = [0.68, 0, 0.18, 1] as const;
-const aboutBrushBase64Data = aboutBase64Data["about-brush-left.png"];
 
 const aboutBrushStrokePreset = {
   hidden: {
@@ -31,6 +30,12 @@ const aboutBrushStrokePreset = {
 };
 
 const AboutBrushLayer = () => {
+  const [isBrushLoaded, setIsBrushLoaded] = useState(false);
+
+  const handleBrushLoad: ReactEventHandler<HTMLImageElement> = () => {
+    setIsBrushLoaded(true);
+  };
+
   return (
     <div
       aria-hidden="true"
@@ -38,9 +43,10 @@ const AboutBrushLayer = () => {
     >
       <motion.div
         className="absolute -left-[205px] top-36 h-[900px] w-[613px] max-w-none motion-reduce:!translate-y-0 motion-reduce:![clip-path:inset(0%)] motion-reduce:!opacity-100 md:-left-[320px] md:top-[178px] md:h-[1120px] md:w-[762px]"
+        data-loaded={isBrushLoaded}
         data-testid="about-brush-reveal-layer"
         initial="hidden"
-        animate="visible"
+        animate={isBrushLoaded ? "visible" : "hidden"}
         variants={aboutBrushStrokePreset}
       >
         <Image
@@ -50,8 +56,7 @@ const AboutBrushLayer = () => {
           className="object-contain opacity-[0.34] md:opacity-[0.72]"
           sizes="(min-width: 768px) 764px, 613px"
           preload
-          placeholder="blur"
-          blurDataURL={aboutBrushBase64Data.base64}
+          onLoad={handleBrushLoad}
         />
       </motion.div>
     </div>
