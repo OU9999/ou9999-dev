@@ -1,94 +1,373 @@
-# Design
+# 블로그 디자인 설명서
 
-블로그 디자인·스타일링 기준. 구현 시 `tailwind.config.js` 토큰 우선.
+개인 회고와 기술 에세이를 위한 다크 에디토리얼 디자인 기준.
 
-## Mode
+## 목적
 
-- Mineral Wash 컬러 우선
-- 거의 검정에 가까운 graphite black 배경과 cool off-white 텍스트를 기본 표면으로 사용
-- 링크·행동 색상은 Blue Steel 기반의 저채도 cool gray-blue 계열 사용
-- 강조 색상은 Blue Steel silver-blue를 기본으로 사용하고, graphite/oxide 계열은 보조 질감으로만 제한
-- 테마 모드 명칭보다 레퍼런스 색상 일치 우선
-- 브라우저 기본 UI는 dark color-scheme 기준
+- 긴 글의 가독성 우선
+- 글과 이미지 사이의 조용한 긴장감
+- 회고와 기술 글을 함께 묶는 단일 시각 언어
+- 장식보다 내용, 색상보다 명도, 효과보다 질감 우선
 
-## Tokens
+## 시각 정체성
 
-- 배경
-  - `bg-google-ink`
-  - `bg-google-paper`
-  - `bg-mineral-canvas`
-  - `bg-mineral-frame`
-- 색상
-  - `text-google-ink`
-  - `text-google-paper`
-  - `text-google-blue`
-  - `text-google-muted`
-  - `text-google-yellow`
-  - `text-mineral-teal`
-  - `text-mineral-blue`
-  - `text-mineral-bone`
-- 텍스트 그라데이션
-  - `bg-mineral-wash`
-  - `bg-mineral-lettering`
-  - `bg-nacre-moonlit`
-  - `bg-clip-text`
-  - `text-transparent`
-  - Mineral Wash 표면 그라데이션은 거의 단색의 black/graphite 범위로 제한
-  - 텍스트 그라데이션은 `bg-mineral-lettering`으로 분리하고 Blue Steel 기준의 silver-blue 명도 차만 사용
-  - 붓질 질감은 fixed viewport 배경 레이어 또는 프레임에 낮은 opacity로 제한하고, 텍스트에는 선택된 하이라이트 hover stroke에만 사용
-  - 자개 그라데이션은 흰 자개·연분홍·연보라·은청색 비중을 높이고 강한 청록·네온 블루는 제한
-  - 자개 토큰은 `/test/jagae`와 실험 보존용이며 기본 블로그 UI에는 Mineral Wash 토큰 우선
-- 폰트
-  - `font-sans`
-  - `Maru Buri`
-  - `Cormorant Garamond`
-  - 한글·영문 혼용 텍스트는 `Maru Buri` 우선
-  - 순수 영문 브랜딩·보조 UI는 `Cormorant Garamond` 제한 사용
-- 레이아웃
-  - `max-w-138`
-  - `max-w-186`
-  - `max-w-276`
-  - `w-276`
-- 보더
-  - `border-1`
+- 기본 방향: Mineral Wash 기반 다크 에디토리얼
+- 기본 표면: 거의 검정에 가까운 흑연색
+- 기본 텍스트: 차가운 미색
+- 강조 색상: 저채도 은청색 계열의 Blue Steel
+- 대표 이미지: 간접적 구아슈 에디토리얼 아트
+- 장식 언어: 종이결, 넓은 워시, 마른 붓 가장자리
+- 전체 인상: 조용함, 절제, 여백, 물성, 회고적 거리
 
-## Layout
+### 제외 방향
+
+- 라이트 테마
+- 고채도 브랜드 컬러
+- 네온 블루·청록 중심의 디지털 그래픽
+- 노랑·금색·주황·갈색 중심의 따뜻한 팔레트
+- 유광·금속·3D 렌더 질감
+- 본문 가독성을 방해하는 장식 밀도
+
+## 기준 경로
+
+| 범위 | 기준 |
+| --- | --- |
+| 색상·그라데이션·폰트·크기 토큰 | `tailwind.config.js` |
+| 전역 Mineral Wash 표면 | `src/components/background/mineral-wash-background.module.css` |
+| 공통 텍스트 그라데이션 | `src/components/common/styles.ts` |
+| 공통 모션 값 | `src/constant/motion-preset.ts` |
+| 구아슈 이미지 생성·변환 절차 | `.agents/skills/gouache-thumbnail/SKILL.md` |
+| 디자인 변경 검증 | `blog-rules/work-rule/work-rule.md` |
+
+- 이 문서: 시각 원칙과 판단 기준
+- 기준 경로: 구현값과 작업 절차
+- `.progress/`: 결정 이력, 현행 규범에서 제외
+
+## 색상
+
+### 기본 팔레트
+
+| 역할 | 토큰 | 색상 |
+| --- | --- | --- |
+| 페이지 배경 | `google-ink`, `mineral-ink` | `#070707` |
+| 가장 깊은 그림자 | `mineral-soot` | `#020303` |
+| 프레임·상승 표면 | `mineral-graphite` | `#101211` |
+| 기본 텍스트 | `google-paper`, `mineral-bone` | `#E8ECEC` |
+| 보조 텍스트 | `google-muted`, `mineral-muted` | `#8B9290` |
+| 링크·행동·강조 | `google-blue`, `mineral-blue` | `#A2ADB3` |
+| 워시 그림자 | `mineral-teal` | `#1F2A28` |
+| 차가운 깊이 | `mineral-indigo` | `#202632` |
+
+- `mineral-teal`, `mineral-indigo`: 배경 질감과 그림자 전용
+- `mineral-oxide`, `mineral-clay`: 낮은 투명도의 보조 질감 전용
+- 링크·버튼·focus 강조: `mineral-blue` 우선
+- 본문 텍스트: `google-paper` 우선
+- 메타데이터·캡션: `google-muted` 우선
+
+### 표면 그라데이션
+
+- 토큰: `bg-mineral-wash`
+- 방향: `112deg`
+- 색상: `#0A0B0A 0%` → `#101211 48%` → `#080909 100%`
+- 용도: 거의 단색으로 보이는 검정·흑연색 표면
+- 금지: 표면에서 식별 가능한 무지개색 변화
+
+### 텍스트 그라데이션
+
+- 토큰: `bg-mineral-lettering`
+- 방향: `112deg`
+- 색상: `#F8FBFB 0%` → `#D4E5EC 24%` → `#A2ADB3 48%` → `#E5EEF1 72%` → `#FFFFFF 100%`
+- 조합: `bg-mineral-lettering bg-clip-text text-transparent`
+- 용도: 주요 제목, 본문 링크, 선택된 hover 강조
+- 금지: 일반 본문 전체와 작은 메타데이터
+
+### 실험 그라데이션
+
+- `bg-nacre-moonlit`: `/test/jagae` 전용
+- 자개 색상: 운영 UI 적용 금지
+- 실험 토큰의 운영 전환: 이 문서와 구현 토큰 동시 갱신
+
+## Mineral Wash 표면
+
+- 화면 영역 고정 배경
+- 검정·흑연색 기반의 낮은 명도 차
+- 넓은 방사형·원뿔형 워시
+- 낮은 투명도의 종이결과 불균일한 안료 얼룩
+- SVG 난류 필터 기반의 종이·붓털 질감
+- 본문 뒤쪽의 어두운 읽기 영역
+- 콘텐츠보다 낮은 z축
+- 클릭을 막지 않는 `pointer-events-none`
+
+### 데스크톱
+
+- 종이 필터와 붓털 변위 허용
+- 좌하단·우상단 중심의 비대칭 워시
+- 낮은 농도의 마른 붓 선 허용
+- 배경과 콘텐츠 사이의 충분한 명도 대비
+
+### 모바일
+
+- 필터와 레이어 수 축소
+- 워시 투명도 하향
+- 마른 붓 선과 보조 안개 레이어 제거
+- 전체 폭 읽기 영역
+- 텍스트 가독성과 스크롤 성능 우선
+
+### 금지
+
+- 반복선이 먼저 보이는 격자 질감
+- 균일하게 반복되는 점무늬 입자
+- 본문 글자 위의 직접 텍스처
+- 섹션마다 끊기는 별도 배경
+- 썸네일보다 강한 배경 색상
+- 누런 종이·갈색 안료 중심의 표면
+
+## 구아슈 에디토리얼 이미지
+
+대표 썸네일과 MDX 본문 이미지를 하나의 아트 디렉션으로 통일.
+
+### 역할
+
+- 본문 문장의 직접 삽화보다 두 번째 의미 층
+- 사건 설명보다 감정·관계·거리·잔상의 표현
+- 기술 주제의 직접적인 UI 재현보다 구조와 흐름의 은유
+- 어두운 UI 위에서 시선을 여는 밝은 시각적 초점
+
+### 재료감
+
+- 질감 있는 종이 위의 불투명 무광 구아슈
+- 눈에 보이는 붓질
+- 마른 붓 가장자리
+- 겹쳐 쌓인 안료
+- 손으로 칠한 불균일한 면
+- 사진·3D 렌더와 구분되는 평면적 회화성
+
+### 장면 구성
+
+- 이미지당 구체적 상황 단서 한 개
+- 여백, 거리, 반사, 그림자, 가려진 사물 중심
+- 사건 이전·사이·이후의 흔적 우선
+- 인물보다 공간·사물·빛 우선
+- 넓은 가로 구도와 명확한 중심 형태
+- 반응형 잘라내기를 견디는 중심 안전 영역
+- 글 제목·설명과 역할이 겹치지 않는 무문자 이미지
+
+### 인물
+
+- 인물 없는 장면 우선
+- 필요 시 그림자, 반사, 뒷모습, 잘린 실루엣 순서
+- 턱선 바깥 윤곽과 머리 모양만 허용
+- 눈·눈썹·코·입·귀·표정·피부 결 금지
+- 정면·반측면 인물화 금지
+- 배경 군중을 포함한 모든 이목구비 금지
+
+### 이미지 팔레트
+
+- 강조광: Blue Steel 다섯 색상만 사용
+  - `#F8FBFB`
+  - `#D4E5EC`
+  - `#A2ADB3`
+  - `#E5EEF1`
+  - `#FFFFFF`
+- 배경·그림자: 중성 흑연색 검정
+- 형태 차별화: 새 색상보다 구도·여백·붓질 우선
+
+### 이미지 금지 요소
+
+- 포토리얼리즘
+- 3D 렌더
+- 읽을 수 있는 글자·코드·UI
+- 로고·워터마크
+- 사건 전체의 1:1 재현
+- 임의 브랜드 컬러
+- 고채도 파랑·청록·네온 시안
+- 보라·노랑·금색
+- 베이지·크림·주황·갈색
+
+### 표시 원칙
+
+- 대표 원본과 본문 이미지: 가로형 16:9 기준
+- 홈 카드: 16:9, `object-cover`
+- 글 상세 대표 이미지: 넓은 프레임의 반응형 잘라내기
+- OpenGraph: 제목 없는 이미지 중심 구성
+- 제목·설명·메타데이터: 이미지가 아닌 HTML 텍스트
+- 생성·변환·검증: `.agents/skills/gouache-thumbnail/SKILL.md`
+
+## 붓질 언어
+
+| 종류 | 역할 | 표현 |
+| --- | --- | --- |
+| 배경 워시 | 공간의 깊이 | 넓고 흐린 면, 낮은 투명도, 비대칭 배치 |
+| 장식 붓질 | 브랜드 리듬 | 단단한 초크 질감, 마른 가장자리, 은청색·미색 |
+| 인터랙션 획 | 선택 상태 | 텍스트 뒤·주변의 왼쪽에서 오른쪽으로 그려지는 획 |
+| 이미지 붓질 | 구아슈 물성 | 보이는 붓털, 안료 겹침, 불균일한 면 |
+
+### 배경 워시
+
+- 화면 영역 전체를 잇는 하나의 연속 표면
+- 읽기 영역 밖에서 더 뚜렷한 형태
+- 본문 영역에서 낮아지는 대비
+- 반복 패턴보다 큰 안료 덩어리 우선
+
+### 장식 붓질
+
+- 홈 히어로, 헤더 프레임, 내비게이션 밑줄, 푸터 경계 중심
+- 텍스트를 가리지 않는 뒤쪽 레이어
+- 한 영역의 지배적 붓질 한 개 우선
+- 같은 붓 이미지를 쓸 때 크기·잘라내기·투명도로 위계 구분
+
+### 인터랙션 획
+
+- 선택된 하이라이트 hover에만 제한
+- `motion/react`와 SVG `pathLength` 기반
+- 텍스트 내부 채움 금지
+- 텍스트 주변·뒤쪽 획 레이어
+- 일반 hover·focus의 색상 전환과 구분
+
+## 타이포그래피
+
+### 서체
+
+- 한글·영문 혼용: Maru Buri
+- 본문·제목 기본: `font-sans`
+- 순수 영문 브랜드·보조 UI: Cormorant Garamond
+- 영문 브랜드: `font-brand`
+- 긴 한글 문장에 Cormorant Garamond 단독 사용 금지
+
+### 크기와 행간
+
+| 용도 | 모바일 | 데스크톱 |
+| --- | --- | --- |
+| 홈 히어로 | `48px / 1` | 최대 `90px / 0.95` |
+| 홈 섹션 제목 | `36px / 1.25` | `64px / 67px` |
+| 글 상세 제목 | `32px / 36px` | `48px / 1` |
+| 본문 | `15px / 24px` | `17px / 27px` |
+| 강조 인용문 | `58px / 1.05` | `90px / 0.95` |
+
+- 제목 굵기: `font-normal` 우선
+- 긴 제목: 자연스러운 줄바꿈 우선
+- 본문 letter spacing: 기본값
+- 화면 영역 비례 글자 크기 금지
+- 메타데이터: 작은 크기, 낮은 대비, 영문 에디토리얼 리듬
+
+## 레이아웃
 
 - 모바일 우선
-- 본문 최대폭 유지
-- 불필요한 wrapper 지양
-- 클릭 가능한 UI는 `button` 또는 `a` 우선
-- 카드 내부 중첩 카드 지양
+- 기본 콘텐츠 좌우 여백: `24px`
+- 홈 콘텐츠 최대폭: `1320px`
+- 글 상세 대표 영역 최대폭: `976px`
+- 글 본문 최대폭: `624px`
+- 강조 인용문 최대폭: `1032px`
+- 큰 제목과 이미지 사이의 넓은 수직 여백
+- 불필요한 감싸기 요소와 중첩 카드 제외
 
-## Components
+### 홈
 
-- 조건부 className 조합은 `cn` 사용
-- 일반 hover·focus 상태는 Tailwind className으로 표현
-- 붓칠처럼 그려지는 hover 인터랙션은 `motion/react`로 상태와 stroke 진행을 제어
-- inline style 금지
-- SVG 고정 색상은 SVG 속성 사용
+- 글 카드 그리드: 모바일 1열, 중간 화면 2열, 큰 화면 3열
+- 카드 이미지: 16:9
+- 카드 간 세로 간격: 정보 밀도보다 개별 글의 호흡 우선
+- 이미지 위 제목·태그 겹침 금지
 
-## Motion
+### 글 상세
 
-- React 애니메이션 패키지 `motion` 사용
-- import 경로 `motion/react` 사용
-- 진입, stagger, viewport reveal, overlay 전환에 Motion 사용
-- 하이라이트 붓칠 hover는 SVG stroke를 `pathLength`로 그리는 방식 우선
-- 하이라이트 붓칠 hover는 텍스트 내부를 덧칠하지 않고 텍스트 주변/뒤쪽 stroke 레이어로 표현
-- 사진 reveal은 `clip-path: inset(0% 0% 100%)` → `inset(0%)` 마스크 방식 우선
-- 글 상세 대표 이미지는 preload 후 reveal 적용
-- 짧은 텍스트 인용문 reveal은 Figma pull quote처럼 데스크톱 `90px/0.95`, 최대 `1032px`, 중앙 정렬 사용
-- 텍스트 인용문은 opening quote → 단어 → closing quote 순서로 opacity stagger 적용
-- MDX 텍스트 reveal은 서버 wrapper에서 적용 가능 여부를 판정하고 client 컴포넌트에는 문자열만 전달
-- 단순 hover·focus transition은 Tailwind 우선
-- 기본 preset: `/Users/ou9999/Documents/My Project/simple-blog/src/constant/motion-preset.ts`
-- `prefers-reduced-motion` 대응은 SSR hydration mismatch 방지를 위해 마크업 분기 없이 `motion-reduce:!` className 우선
+- 태그 → 제목 → 대표 이미지 → 메타데이터 → 설명 → 본문 순서
+- 대표 이미지보다 좁은 본문 폭
+- 본문 흐름을 끊지 않는 이미지·인용문 간격
+- 넓은 요소의 화면 중앙 정렬
 
-## Redesign Notes
+## 표면과 컴포넌트
 
-- Figma 스타일 개편 TODO: `/Users/ou9999/Documents/My Project/simple-blog/.progress/260613/figma-blog-redesign-todo.md`
-- Figma 레퍼런스 탐색 기록: `/Users/ou9999/Documents/My Project/simple-blog/.progress/260613/figma-blog-style.md`
-- Figma 비주얼 아이덴티티: `/Users/ou9999/Documents/My Project/simple-blog/.progress/260613/figma-visual-identity.md`
-- `/test/color`의 Mineral Wash와 Blue Steel 하이라이트를 기본 블로그 컬러 방향으로 적용
-- `/test/color`의 붓칠 hover는 하이라이트 인터랙션 후보로 보존하고, 전역 적용 전 해당 페이지에서 검증
-- `/test/jagae`는 보존용 실험 페이지, `/test/gouache`는 fixed gouache layer 기준 확인 페이지로 유지
+### 이미지 프레임
+
+- `rounded-lg`
+- `mineral-blue` 기반 1px 저대비 경계
+- `bg-mineral-frame` 대체 표면
+- 어두운 저채도 그림자
+- hover에서 작은 수직 이동과 경계 대비 상승
+
+### 글 카드
+
+- 카드 전체의 불필요한 채움 배경 제외
+- 이미지 중심의 시각적 위계
+- 제목 hover에 Blue Steel 텍스트 그라데이션
+- 날짜·설명·태그의 단계적 대비
+
+### 태그
+
+- 투명 배경과 완전히 둥근 얇은 경계
+- 작은 영문 에디토리얼 라벨
+- hover에서 Blue Steel 경계 강조
+- 썸네일과 제목보다 낮은 시각적 우선순위
+
+### 헤더와 푸터
+
+- 흑연색 표면 위의 얇은 붓 프레임
+- 본문보다 높은 z축
+- 과도하지 않은 흐림과 투명도
+- 브랜드 심벌·영문 링크 중심
+- 푸터 상단의 넓고 낮은 붓질 경계
+
+### 본문
+
+- 미색 기본 텍스트
+- Blue Steel 링크
+- 저채도 코드블록·인라인 코드 표면
+- 이미지와 코드블록의 동일한 프레임 언어
+- 텍스트 뒤 장식 질감 금지
+
+## 모션
+
+### 원칙
+
+- 읽기 흐름을 안내하는 한 번의 드러남
+- 상시 반복보다 진입·선택·전환 중심
+- 큰 이동보다 투명도·clip-path·짧은 y축 이동
+- 모션 없는 상태에서도 완성되는 레이아웃
+
+### 기본 값
+
+| 구분 | 값 |
+| --- | --- |
+| 빠른 반응 | `0.2s` |
+| 기본 전환 | `0.4s` |
+| 진입·이미지 드러남 | `0.7s` |
+| 촘촘한 시차 | `0.08s` |
+| 기본 시차 | `0.12s` |
+| 가속 곡선 | `[0.8, 0, 0.2, 1]` |
+
+### 적용
+
+- 진입: 투명도와 짧은 y축 이동
+- 이미지: `clip-path: inset(0% 0% 100%)` → `inset(0%)`
+- 글 상세 대표 이미지: preload 후 드러남
+- 홈 장식 붓질: 왼쪽에서 오른쪽으로 드러남
+- 강조 인용문: 여는 따옴표 → 단어 → 닫는 따옴표 투명도 시차
+- 덮개: 짧은 투명도 전환
+- 일반 hover·focus: Tailwind transition
+
+### 접근성
+
+- `prefers-reduced-motion` 대응
+- SSR 마크업 분기 금지
+- `motion-reduce:!` className 우선
+- 콘텐츠 접근을 지연시키는 모션 금지
+
+## 실험 페이지
+
+- `/test/color`: Mineral Wash 팔레트와 Blue Steel 강조 기준
+- `/test/gouache`: 전역 고정 구아슈 레이어 기준
+- `/test/jagae`: 자개 실험 보존
+- 실험 결과의 운영 적용 전 이 문서 갱신
+- 운영 기준과 실험 기준의 혼용 금지
+
+## 디자인 변경 점검
+
+- Mineral Wash·Blue Steel 방향 유지
+- 운영 토큰 사용
+- 밝은 텍스트와 어두운 표면의 대비 확보
+- 구아슈 이미지의 간접 장면·이목구비 배제 원칙 준수
+- 표면·장식·인터랙션·이미지 붓질의 역할 분리
+- 이미지 내부 글자·로고·워터마크 부재
+- 모바일 질감 축소와 본문 가독성 확인
+- 데스크톱·모바일 대표 화면 시각 검증
+- 세부 검증 절차: `blog-rules/work-rule/work-rule.md`

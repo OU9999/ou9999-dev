@@ -23,8 +23,31 @@
   },
   "AboutPage": {
     "title": "ABOUT | OU9999",
-    "paragraph1": "어머니가 작고 사소한 일이라도 불편한 부분이 있다면 개선하시는 사람이라는 것. 그것은 나에게 특별한 감정을 불러일으킨다. 다른 분야일지라도, 나는 어머니와 비슷한 부분이 많다고 느낀다.",
-    "paragraph2": "부모님은 아들을 평가하시기보다는 감상하셨다. 감상을 우선으로 받고 자랐기에, 있는 그대로의 세상을 사랑하는 건 어쩌면 당연했던 것 같다.",
+    "statement": {
+      "line1": {
+        "prefix": "쉬운 ",
+        "highlight": "오해",
+        "suffix": "와"
+      },
+      "line2": {
+        "prefix": "힘든 ",
+        "highlight": "이해",
+        "suffix": "로"
+      },
+      "line3": {
+        "prefix": "",
+        "highlight": "믿음",
+        "suffix": "을 저버리지 말자."
+      }
+    },
+    "meaning": {
+      "line1": "이해는 내게 사치가 아니다.",
+      "line2": {
+        "prefix": "세상을 살아가기 위한 ",
+        "highlight": "도구",
+        "suffix": "다."
+      }
+    },
     "profile": "오유진 · FrontEnd Developer"
   },
   "NotFound": {
