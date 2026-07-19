@@ -6,8 +6,7 @@
     linear-gradient(145deg, #070707 0%, #030404 48%, #0c0d0c 100%);
 }
 
-.surface::before,
-.surface::after {
+.surface::before {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -30,18 +29,6 @@
     );
   filter: url("#mineral-gouache-paper") contrast(1.18);
   mix-blend-mode: soft-light;
-}
-
-.surface::after {
-  z-index: 2;
-  opacity: 0.18;
-  background:
-    radial-gradient(circle at 18% 42%, rgb(232 236 236 / 0.18) 0 1px, transparent 1px 5px),
-    radial-gradient(circle at 78% 18%, rgb(162 173 179 / 0.14) 0 1px, transparent 1px 6px);
-  background-size:
-    10px 10px,
-    15px 15px;
-  mix-blend-mode: screen;
 }
 
 .textureLayer {
@@ -94,27 +81,6 @@
   border-radius: 58% 42% 52% 44%;
   mix-blend-mode: screen;
   transform: rotate(-13deg);
-}
-
-.dryLine {
-  position: absolute;
-  right: -8%;
-  top: 0;
-  z-index: 6;
-  width: 44%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.11;
-  background:
-    repeating-linear-gradient(
-      103deg,
-      transparent 0 20px,
-      rgb(232 236 236 / 0.16) 22px 24px,
-      transparent 26px 54px
-    );
-  filter: url("#mineral-gouache-bristle") blur(1px);
-  mix-blend-mode: screen;
-  transform: rotate(3deg);
 }
 
 .readingField {
@@ -171,18 +137,6 @@
     mix-blend-mode: normal;
   }
 
-  .surface::after {
-    display: block;
-    opacity: 0.12;
-    background:
-      radial-gradient(circle at 18% 42%, rgb(232 236 236 / 0.2) 0 1px, transparent 1px 7px),
-      radial-gradient(circle at 78% 18%, rgb(162 173 179 / 0.18) 0 1px, transparent 1px 8px);
-    background-size:
-      13px 13px,
-      19px 19px;
-    mix-blend-mode: normal;
-  }
-
   .textureLayer {
     filter: none;
     mix-blend-mode: normal;
@@ -211,7 +165,6 @@
   }
 
   .shellMist,
-  .dryLine,
   .readingField::after {
     display: none;
   }

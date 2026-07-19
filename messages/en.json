@@ -23,8 +23,31 @@
   },
   "AboutPage": {
     "title": "ABOUT | OU9999",
-    "paragraph1": "My mother is the kind of person who improves even the smallest inconvenient things. That has always stayed with me. Even in a different field, I feel I share a similar instinct.",
-    "paragraph2": "My parents watched me more than they judged me. Growing up with that kind of attention made it feel natural to love the world as it is.",
+    "statement": {
+      "line1": {
+        "prefix": "Let neither easy ",
+        "highlight": "misunderstanding",
+        "suffix": ""
+      },
+      "line2": {
+        "prefix": "nor difficult ",
+        "highlight": "understanding",
+        "suffix": ""
+      },
+      "line3": {
+        "prefix": "make us abandon ",
+        "highlight": "trust",
+        "suffix": "."
+      }
+    },
+    "meaning": {
+      "line1": "Understanding is not a luxury to me.",
+      "line2": {
+        "prefix": "It is a ",
+        "highlight": "tool",
+        "suffix": " for living in this world."
+      }
+    },
     "profile": "Yujin Oh · FrontEnd Developer"
   },
   "NotFound": {

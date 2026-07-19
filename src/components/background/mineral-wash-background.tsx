@@ -61,7 +61,6 @@ const MineralWashBackground = () => {
       <div className={cn(styles.textureLayer, styles.lacquerBloom)} />
       <div className={cn(styles.textureLayer, styles.nacreVeil)} />
       <div className={cn(styles.textureLayer, styles.shellMist)} />
-      <div className={styles.dryLine} />
       <div className={styles.readingField} />
       <div className="absolute inset-x-0 top-0 h-52 bg-gradient-to-b from-google-ink via-google-ink/80 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-google-ink via-google-ink/75 to-transparent" />
