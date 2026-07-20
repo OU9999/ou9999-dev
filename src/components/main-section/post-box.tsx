@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { hoverMineralTextGradient } from "../common/styles";
-import { Tag } from "../common/tag-link";
 import { formatDateToString } from "@/utils/date-util";
 import { cn } from "@/utils/tailwind-util";
 import { ImageWithPlaceholderHeader } from "../content-header/image-with-placeholder-header";
@@ -59,8 +58,13 @@ const PostBox = ({
         <p>{description}</p>
       </div>
       <div className="mt-5 flex w-full flex-wrap gap-2">
-        {tags.map((tag, idx) => (
-          <Tag key={"tag" + idx} tag={tag} variant="paper" locale={locale} />
+        {tags.map((tag) => (
+          <span
+            key={tag}
+            className="rounded-full border border-mineral-blue/32 px-3 py-1.5 font-mono text-base uppercase leading-none text-google-paper"
+          >
+            {tag}
+          </span>
         ))}
       </div>
     </article>
