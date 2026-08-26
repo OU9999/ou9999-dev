@@ -95,7 +95,7 @@ const AboutHighlightedText = ({
       {children}
       <motion.span
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-0.5 left-0 h-[3px] w-full bg-mineral-blue opacity-82 [mask-image:url('/imgs/header/home-brush-hard-chalk-steel-v1.png')] [mask-position:center] [mask-repeat:no-repeat] [mask-size:100%_100%] motion-reduce:![clip-path:inset(0%)] [-webkit-mask-image:url('/imgs/header/home-brush-hard-chalk-steel-v1.png')] [-webkit-mask-position:center] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:100%_100%]"
+        className="pointer-events-none absolute -bottom-0.5 left-0 h-[3px] w-full bg-google-paper opacity-72 [mask-image:url('/imgs/header/home-brush-hard-chalk-steel-v1.png')] [mask-position:center] [mask-repeat:no-repeat] [mask-size:100%_100%] motion-reduce:![clip-path:inset(0%)] [-webkit-mask-image:url('/imgs/header/home-brush-hard-chalk-steel-v1.png')] [-webkit-mask-position:center] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:100%_100%]"
         custom={timing}
         data-testid={testId}
         initial="hidden"

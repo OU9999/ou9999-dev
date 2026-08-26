@@ -31,7 +31,7 @@ const Header = async ({ locale }: HeaderProps) => {
         >
           <span
             aria-hidden="true"
-            className="block h-full w-full bg-[url('/imgs/header/ou-symbol-negative-space-v1.webp')] bg-[length:116%_auto] bg-center bg-no-repeat transition-opacity group-hover:opacity-82 md:bg-[length:112%_auto]"
+            className="block h-full w-full bg-[url('/imgs/header/ou-symbol-negative-space-v1.webp')] bg-[length:116%_auto] bg-center bg-no-repeat grayscale brightness-110 transition-[filter] duration-200 group-hover:brightness-125 md:bg-[length:112%_auto]"
           />
         </Link>
 

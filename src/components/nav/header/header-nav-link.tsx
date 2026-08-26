@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils/tailwind-util";
 import {
-  headerNavActiveBrushTintClassName,
+  headerNavActiveBrushHighlightClassName,
   headerNavActiveBrushUnderlineClassName,
   headerNavBrushUnderlineClassName,
   headerNavLinkClassName,
@@ -37,7 +37,7 @@ const HeaderNavLink = ({ href, label }: HeaderNavLinkProps) => {
       {isActive && (
         <span
           aria-hidden="true"
-          className={headerNavActiveBrushTintClassName}
+          className={headerNavActiveBrushHighlightClassName}
         />
       )}
     </Link>

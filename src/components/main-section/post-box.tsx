@@ -34,7 +34,7 @@ const PostBox = ({
     <article className="w-full flex flex-col">
       <Link
         href={postHref}
-        className="relative block aspect-[16/9] w-full overflow-hidden rounded-lg border-1 border-mineral-blue/18 bg-mineral-frame shadow-[0_18px_60px_rgb(4_8_8/0.28)] transition duration-200 hover:-translate-y-1 hover:border-mineral-blue/34 hover:shadow-[0_22px_70px_rgb(66_83_79/0.24)]"
+        className="relative block aspect-[16/9] w-full overflow-hidden rounded-lg border-1 border-google-paper/16 bg-mineral-frame shadow-[0_18px_60px_rgb(0_0_0/0.32)] transition duration-200 hover:-translate-y-1 hover:border-google-paper/32 hover:shadow-[0_22px_70px_rgb(0_0_0/0.42)]"
       >
         <ImageWithPlaceholderHeader alt={title} img={thumbnail} />
         <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-mineral-soot/24 via-transparent to-mineral-bone/5" />
@@ -61,7 +61,7 @@ const PostBox = ({
         {tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-full border border-mineral-blue/32 px-3 py-1.5 font-mono text-base uppercase leading-none text-google-paper"
+            className="rounded-full border border-google-paper/24 px-3 py-1.5 font-mono text-base uppercase leading-none text-google-paper"
           >
             {tag}
           </span>

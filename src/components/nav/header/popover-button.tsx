@@ -91,7 +91,7 @@ const MobileMenuLink = ({
     <Link
       href={href}
       lang={lang}
-      className="font-brand text-[32px] font-normal leading-none text-google-paper/86 transition-colors hover:text-mineral-blue"
+      className="font-brand text-[32px] font-normal leading-none text-google-paper/86 transition-colors hover:text-white"
       onClick={onClick}
     >
       {text}
@@ -103,11 +103,11 @@ const TagItem = ({ count, locale, onClick, title }: TagItemProps) => {
   return (
     <Link
       href={getLocalizedPath(locale, "/tags/" + encodeURIComponent(title))}
-      className="group inline-flex items-baseline gap-2 px-2 py-1 font-brand leading-none text-google-paper/58 transition-colors hover:text-mineral-blue"
+      className="group inline-flex items-baseline gap-2 px-2 py-1 font-brand leading-none text-google-paper/58 transition-colors hover:text-white"
       onClick={onClick}
     >
       <span className="text-lg uppercase">{title}</span>
-      <span className="text-sm text-google-muted transition-colors group-hover:text-mineral-blue/72">
+      <span className="text-sm text-google-paper/42 transition-colors group-hover:text-white/72">
         ({count})
       </span>
     </Link>
@@ -182,7 +182,7 @@ const PopoverButton = ({
         aria-controls={mobileMenuPanelId}
         aria-expanded={isOpen}
         aria-label={openLabel}
-        className="inline-flex h-11 w-11 items-center justify-center text-current opacity-80 transition-opacity hover:opacity-100"
+        className="inline-flex h-11 w-11 items-center justify-center text-google-paper/88 transition-colors hover:text-white"
         onClick={handleOpenClick}
       >
         <svg width="24" height="24">
@@ -215,14 +215,14 @@ const PopoverButton = ({
                 >
                   <span
                     aria-hidden="true"
-                    className="block h-full w-full bg-[url('/imgs/header/ou-symbol-negative-space-v1.webp')] bg-[length:116%_auto] bg-center bg-no-repeat"
+                    className="block h-full w-full bg-[url('/imgs/header/ou-symbol-negative-space-v1.webp')] bg-[length:116%_auto] bg-center bg-no-repeat grayscale brightness-110"
                   />
                 </Link>
                 <button
                   ref={closeButtonRef}
                   type="button"
                   aria-label={closeLabel}
-                  className="inline-flex h-11 w-11 items-center justify-center fill-google-paper/82 transition-colors hover:fill-mineral-blue"
+                  className="inline-flex h-11 w-11 items-center justify-center fill-google-paper/88 transition-colors hover:fill-white"
                   onClick={handleCloseClick}
                 >
                   <XIcon />

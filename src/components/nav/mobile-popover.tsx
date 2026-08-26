@@ -19,7 +19,7 @@ const LinkButton = ({ lang, text, link }: LinkButtonProps) => {
     <Link
       href={link}
       lang={lang}
-      className="text-2xl font-semibold hover:text-mineral-blue"
+      className="text-2xl font-semibold text-google-paper transition-colors hover:text-white"
     >
       {text}
     </Link>
@@ -36,7 +36,7 @@ const TagItem = ({ title, count, locale }: TagItemProps) => {
   return (
     <Link href={getLocalizedPath(locale, `/tags/${encodeURIComponent(title)}`)}>
       <div className="flex w-full items-center rounded-md px-3 py-1">
-        <p className="cursor-pointer text-mineral-blue hover:underline">
+        <p className="cursor-pointer text-google-paper/64 transition-colors hover:text-white hover:underline">
           {title.toUpperCase()}
         </p>
         <p className="text-xs text-google-muted">&nbsp;({count})</p>
@@ -56,7 +56,7 @@ const MobilePopover = async ({ locale }: MobilePopoverProps) => {
   const localeSwitchLabel = locale === defaultLocale ? t("en") : t("ko");
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 top-0 z-50 h-dvh w-dvw overflow-y-auto bg-dark-bg">
+    <div className="fixed bottom-0 left-0 right-0 top-0 z-50 h-dvh w-dvw overflow-y-auto bg-dark-bg text-google-paper">
       <div className="relative flex min-h-dvh w-full flex-col items-center justify-start">
         <BackButton label={t("closeMenu")} />
         <p className="mb-7 mt-20 text-4xl font-bold">{t("menu")}</p>

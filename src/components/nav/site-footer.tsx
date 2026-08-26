@@ -14,9 +14,9 @@ const FooterLink = ({ icon, label, link }: FooterLinkProps) => {
   return (
     <Link
       href={link}
-      className="group flex items-center gap-3 font-brand text-lg leading-none text-google-paper/76 transition-colors hover:text-mineral-blue md:text-xl"
+      className="group flex items-center gap-3 font-brand text-lg leading-none text-google-paper/72 transition-colors hover:text-white md:text-xl"
     >
-      <div className="h-5 w-5 fill-google-paper/78 transition-colors group-hover:fill-mineral-blue md:h-6 md:w-6">
+      <div className="h-5 w-5 fill-google-paper/72 transition-colors group-hover:fill-white md:h-6 md:w-6">
         {icon}
       </div>
       <span>{label}</span>
@@ -28,7 +28,7 @@ const FooterBrush = () => {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute left-1/2 top-[-36px] h-32 w-[188vw] -translate-x-1/2 scale-y-[0.42] bg-[url('/imgs/header/home-brush-hard-chalk-steel-v1.png')] bg-[length:100%_100%] bg-center bg-no-repeat opacity-32 md:top-[-78px] md:h-60 md:w-[168vw] md:scale-y-[0.48]"
+      className="pointer-events-none absolute left-1/2 top-[-36px] h-32 w-[188vw] -translate-x-1/2 scale-y-[0.42] bg-[url('/imgs/header/home-brush-hard-chalk-steel-v1.png')] bg-[length:100%_100%] bg-center bg-no-repeat opacity-28 grayscale brightness-110 md:top-[-78px] md:h-60 md:w-[168vw] md:scale-y-[0.48]"
     />
   );
 };
@@ -62,7 +62,7 @@ const Footer = () => {
               link="mailto:omh232323@gmail.com"
             />
           </div>
-          <div className="mt-7 h-px w-full bg-mineral-blue/24" />
+          <div className="mt-7 h-px w-full bg-google-paper/16" />
           <p className="mt-6 text-right font-brand text-base leading-none text-google-paper/42 md:text-lg">
             Built with Next.js + Vercel
           </p>

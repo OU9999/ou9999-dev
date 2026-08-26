@@ -8,7 +8,7 @@ const BlockQuote = ({ children, className, ...props }: BlockQuoteProps) => {
     <blockquote
       {...props}
       className={cn(
-        "not-prose my-10 rounded-r-sm border-l-[3px] border-mineral-blue/70 bg-mineral-frame px-5 py-5 text-[15px] font-normal leading-6 text-google-paper/90 md:my-12 md:px-6 md:py-6 md:text-[17px] md:leading-[27px] [&>p]:my-0 [&>p+p]:mt-4",
+        "not-prose my-10 rounded-r-sm border-l-[3px] border-google-paper/42 bg-mineral-frame px-5 py-5 text-[15px] font-normal leading-6 text-google-paper/90 md:my-12 md:px-6 md:py-6 md:text-[17px] md:leading-[27px] [&>p]:my-0 [&>p+p]:mt-4",
         className,
       )}
     >

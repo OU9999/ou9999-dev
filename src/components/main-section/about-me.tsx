@@ -17,8 +17,8 @@ interface IconBoxProps {
 const IconBox = ({ link, icon, subText }: IconBoxProps) => {
   return (
     <Link href={link}>
-      <div className="flex cursor-pointer items-center justify-center space-x-1 rounded-md p-2 transition-colors hover:bg-mineral-teal/22">
-        <div className="h-5 w-5 fill-mineral-blue">
+      <div className="group flex cursor-pointer items-center justify-center space-x-1 rounded-md p-2 transition-colors hover:bg-google-paper/8">
+        <div className="h-5 w-5 fill-google-paper/72 transition-colors group-hover:fill-white">
           {icon}
         </div>
         {subText && <p className="font-xs relative top-[-2px] ">{subText}</p>}
@@ -67,10 +67,10 @@ const AboutMe = async ({ locale = defaultLocale }: AboutMeProps) => {
               About
             </h1>
             <span
-              className="mt-6 h-1 w-[74px] rounded-full bg-google-paper/84 shadow-[0_0_12px_rgb(162_173_179/0.18)]"
+              className="mt-6 h-1 w-[74px] rounded-full bg-google-paper/84 shadow-[0_0_12px_rgb(255_255_255/0.14)]"
               aria-hidden="true"
             />
-            <p className="mt-6 font-mono text-base leading-none tracking-[0.12em] text-mineral-blue md:text-lg">
+            <p className="mt-6 font-mono text-base leading-none tracking-[0.12em] text-google-paper/66 md:text-lg">
               Only Clear Later
             </p>
           </div>
@@ -83,7 +83,7 @@ const AboutMe = async ({ locale = defaultLocale }: AboutMeProps) => {
             />
 
             <div data-testid="about-profile">
-              <p className="mt-14 font-mono text-sm leading-none tracking-normal text-mineral-blue md:text-base">
+              <p className="mt-14 font-mono text-sm leading-none tracking-normal text-google-paper/66 md:text-base">
                 {t("profile")}
               </p>
               <div className="mt-6 flex items-center gap-5">
