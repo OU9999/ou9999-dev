@@ -32,30 +32,41 @@ git diff --cached
 
 ### 3. 커밋 메시지 생성
 
-`<type>: <한국어 설명>` 형식의 커밋 메시지 생성.
+`<type>: <한국어 설명>` 또는 `<type>(<scope>): <한국어 설명>` 형식의 커밋 메시지 생성.
 
 **type 목록:**
 
-| Type       | 설명                         |
-| ---------- | ---------------------------- |
-| `feat`     | 새 기능 추가                 |
-| `fix`      | 버그 수정                    |
-| `refactor` | 리팩토링                     |
-| `style`    | UI/스타일 변경               |
-| `chore`    | 설정, 빌드 등 (harness 범위 제외)                                  |
-| `docs`     | 문서 수정                                                          |
-| `harness`  | 에이전트 하네스 관련 모든 변경 (AGENTS.md, .agents/, 스킬, MCP 설정 등) |
-| `perf`     | 성능 개선                    |
-| `test`     | 테스트                       |
-| `ci`       | CI/CD                        |
-| `deps`     | 의존성 업데이트              |
-| `remove`   | 기능 제거                    |
+| Type       | 설명            |
+| ---------- | --------------- |
+| `feat`     | 새 기능 추가    |
+| `fix`      | 버그 수정       |
+| `refactor` | 리팩토링        |
+| `style`    | UI/스타일 변경  |
+| `chore`    | 설정, 빌드 등   |
+| `docs`     | 문서 수정       |
+| `perf`     | 성능 개선       |
+| `test`     | 테스트          |
+| `ci`       | CI/CD           |
+| `deps`     | 의존성 업데이트 |
+| `remove`   | 기능 제거       |
+
+**harness scope:**
+
+- 에이전트 하네스 관련 변경은 type 대신 `harness` scope 사용
+- 대상: `AGENTS.md`, `.agents/`, 스킬, MCP 및 에이전트 설정
+- 변경 성격에 따라 type 선택
+  - 기능·동작 추가: `feat(harness)`
+  - 오류 수정: `fix(harness)`
+  - 동작 추가 없는 구조 개선: `refactor(harness)`
+  - 문서만 수정: `docs(harness)`
+  - 단순 유지보수: `chore(harness)`
 
 **작성 규칙:**
 
 - "~함", "~추가", "~구현" 같은 간결한 문체 사용
 - 변경의 핵심만 1문장으로 요약
 - 여러 변경이 있으면 가장 중요한 변경을 기준으로 type 결정
+- harness 대상 변경은 scope 생략 금지
 
 ### 4. 커밋 실행
 
@@ -64,7 +75,7 @@ git diff --cached
 ```bash
 git add <해당 단위의 파일들>
 git commit -m "$(cat <<'EOF'
-<type>: <한국어 설명>
+<생성한 커밋 메시지>
 EOF
 )"
 ```
