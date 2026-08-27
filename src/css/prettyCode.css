@@ -9,6 +9,7 @@
   display: none;
 }
 .prose pre {
+  @apply border border-google-paper/12;
   font-family:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
@@ -42,7 +43,7 @@
 }
 
 .prose code span[data-highlighted-line] {
-  @apply rounded-sm bg-mineral-blue/10;
+  @apply rounded-sm bg-google-paper/8;
 }
 
 .prose :not(pre) > code::before,
@@ -51,9 +52,9 @@
 }
 
 .prose :not(pre) > code {
-  @apply rounded border border-mineral-blue/18 bg-mineral-teal/14 px-1 py-0.5 align-middle text-sm font-normal;
+  @apply rounded border border-google-paper/14 bg-google-paper/5 px-1 py-0.5 align-middle text-sm font-normal;
 }
 
 figcaption[data-rehype-pretty-code-title] {
-  @apply translate-y-1 rounded-t-md border-b-1 border-b-mineral-blue/16 bg-mineral-teal/16 px-6 py-2 text-google-muted;
+  @apply translate-y-1 rounded-t-md border-b-1 border-b-google-paper/14 bg-google-paper/5 px-6 py-2 text-google-muted;
 }

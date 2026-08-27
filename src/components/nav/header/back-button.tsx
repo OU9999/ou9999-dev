@@ -18,7 +18,7 @@ const BackButton = ({ label }: BackButtonProps) => {
     <button
       type="button"
       aria-label={label}
-      className="fixed right-10 top-10 h-10 w-10 fill-google-paper transition-colors hover:fill-mineral-blue"
+      className="fixed right-10 top-10 h-10 w-10 fill-google-paper/88 transition-colors hover:fill-white"
       onClick={handleBackClick}
     >
       <XIcon />

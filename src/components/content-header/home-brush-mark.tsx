@@ -16,7 +16,7 @@ const HomeBrushMark = ({ className }: HomeBrushMarkProps) => {
         alt=""
         src="/imgs/header/home-brush-hard-chalk-steel-v1.png"
         fill
-        className="object-contain"
+        className="object-contain grayscale brightness-110"
         sizes="(min-width: 1024px) 820px, (min-width: 768px) 720px, 320px"
         preload
       />

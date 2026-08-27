@@ -20,7 +20,7 @@ const withMDX = createMDX({
       [
         "rehype-pretty-code",
         {
-          theme: "material-theme",
+          theme: "min-dark",
         },
       ],
     ],

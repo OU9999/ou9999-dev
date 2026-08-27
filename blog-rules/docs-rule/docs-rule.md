@@ -5,12 +5,18 @@
 ## 대상
 
 - `AGENTS.md`
-- `CLAUDE.md`
 - `blog-rules/` 하위 규칙 문서
 - `.agents/skills/` 하위 스킬·에이전트 파일
-- `.claude/` 하위 문서·스킬·에이전트 파일
 - `.codex/` 하위 문서·스킬·에이전트 파일
 - 루트 Markdown 문서
+
+## 에이전트 원본
+
+- 프로젝트 규칙 원본 `AGENTS.md`
+- 프로젝트 스킬 원본 `.agents/skills/`
+- `CLAUDE.md` → `AGENTS.md` symlink 유지
+- `.claude/skills` → `../.agents/skills` symlink 유지
+- symlink 경로 직접 수정 금지
 
 ## 원칙
 
@@ -18,7 +24,7 @@
 - 목록 항목은 한 항목 한 내용
 - 같은 개념은 같은 용어로 통일
 - 상세 절차는 scope 문서 또는 skill로 이동
-- `AGENTS.md`, `CLAUDE.md`에는 상시 라우팅 규칙만 유지
+- `AGENTS.md`에는 상시 라우팅 규칙만 유지
 
 ## 스킬·규칙 작성
 
