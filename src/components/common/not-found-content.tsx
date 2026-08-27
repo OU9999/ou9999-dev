@@ -16,7 +16,7 @@ const NotFoundContent = async ({ locale }: NotFoundContentProps) => {
       </p>
       <Link
         href={getLocalizedPath(locale, "/")}
-        className="rounded-lg border-1 border-mineral-blue/22 bg-content-header-black px-5 py-3 font-bold text-google-paper transition-colors hover:border-mineral-blue/60 hover:text-mineral-blue"
+        className="rounded-lg border-1 border-google-paper/22 bg-content-header-black px-5 py-3 font-bold text-google-paper transition-colors hover:border-google-paper/60 hover:text-white"
       >
         {t("home")}
       </Link>

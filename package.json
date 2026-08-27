@@ -46,7 +46,8 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.9",
     "tailwindcss": "^4.3.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vercel": "59.7.0"
   },
   "overrides": {
     "postcss": "8.5.15",

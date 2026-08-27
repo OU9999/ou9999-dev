@@ -19,7 +19,7 @@ const ImageWithPlaceholder: React.FC<ImageWithPlaceholderProps> = ({
 
   return (
     <div className="not-prose relative my-12 flex w-full flex-col items-start justify-center md:my-14">
-      <MediaReveal className="flex w-full overflow-hidden rounded-lg bg-mineral-frame shadow-[0_18px_60px_rgb(4_8_8/0.3)] ring-1 ring-mineral-blue/18">
+      <MediaReveal className="flex w-full overflow-hidden rounded-lg bg-mineral-frame shadow-[0_18px_60px_rgb(0_0_0/0.34)] ring-1 ring-google-paper/16">
         <Image
           {...props}
           alt={props.alt}
