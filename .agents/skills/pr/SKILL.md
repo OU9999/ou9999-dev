@@ -68,7 +68,14 @@ PR 제목과 본문 작성 전 `check-list.md` 읽기와 체크리스트 작성.
 - `style: 스타일 변경 설명` - UI/스타일 변경
 - `chore: 작업 설명` - 설정, 빌드 등
 - `docs: 문서 변경 설명` - 문서 수정
-- `harness: 에이전트 하네스 설정` - 에이전트 설정
+
+에이전트 하네스 관련 변경은 `harness`를 type이 아닌 scope로 사용:
+
+- `feat(harness): 에이전트 기능 추가` - 기능·동작 추가
+- `fix(harness): 에이전트 오류 수정` - 오류 수정
+- `refactor(harness): 에이전트 구조 개선` - 동작 추가 없는 구조 개선
+- `docs(harness): 에이전트 문서 수정` - 문서만 수정
+- `chore(harness): 에이전트 설정 정리` - 단순 유지보수
 
 ### 4. PR 본문 생성
 
@@ -100,9 +107,9 @@ PR 제목과 본문 작성 전 `check-list.md` 읽기와 체크리스트 작성.
 
 ### 5. 라벨 결정
 
-제목 prefix 기준 라벨 결정:
+제목 type 기준 라벨 결정:
 
-| Prefix     | Label         | 설명            |
+| Type       | Label         | 설명            |
 | ---------- | ------------- | --------------- |
 | feat       | feat          | 새로운 기능     |
 | fix        | fix           | 코드 수정       |
@@ -116,7 +123,11 @@ PR 제목과 본문 작성 전 `check-list.md` 읽기와 체크리스트 작성.
 | deps       | dependencies  | 의존성 업데이트 |
 | security   | security      | 보안 관련       |
 | remove     | remove        | 기능 제거       |
-| harness    | harness       | 에이전트 설정   |
+
+`harness` scope가 있으면 type 라벨에 `harness` 라벨 추가:
+
+- `feat(harness)` → `feat`, `harness`
+- `refactor(harness)` → `refactoring`, `harness`
 
 ### 6. PR 내용 확인 (필수)
 
