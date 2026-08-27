@@ -90,6 +90,10 @@ RELEASE_BEFORE_SHA="$(git rev-parse origin/release)"
 git diff --stat "${RELEASE_BEFORE_SHA}" "${DEVELOP_SHA}"
 git diff --name-status "${RELEASE_BEFORE_SHA}" "${DEVELOP_SHA}"
 git cherry -v "${RELEASE_BEFORE_SHA}" "${DEVELOP_SHA}"
+git log --cherry-pick --right-only --no-merges --reverse \
+  --format='%h%x09%ad%x09%s' \
+  --date=short \
+  "${RELEASE_BEFORE_SHA}...${DEVELOP_SHA}"
 
 if git diff --quiet "${RELEASE_BEFORE_SHA}" "${DEVELOP_SHA}"; then
   echo "release 대상 없음"
@@ -118,6 +122,7 @@ printf 'develop_sha=%s\nrelease_before_sha=%s\nrelease_mode=%s\n' \
 
 - `git diff` empty → PR 없이 종료
 - `git cherry -v`의 `-` → patch-equivalent commit
+- `git log --cherry-pick --right-only` → PR 본문 분석 대상 유효 commit
 - `git log origin/release..origin/develop` 단독 판정 금지
 - merge 결과 tree와 `DEVELOP_TREE` 불일치 → Promotion PR
 - `merge-tree=conflict` 또는 GitHub `mergeStateStatus=DIRTY` → Promotion PR
@@ -134,22 +139,34 @@ PR 생성 전 사용자에게 다음 항목 공유 후 승인 수집.
 
 승인 전 PR 생성, promotion commit, push 금지.
 
-PR title은 `release: YYYY-MM-DD`. Preview와 PR 생성에 같은 본문 변수 사용:
+PR title은 `release: YYYY-MM-DD`.
+
+### PR 본문 작성
+
+유효 commit 이력과 tree diff를 교차 확인해 실제 Production 변경사항 작성.
+
+- `git cherry -v`의 `+`와 `git log --cherry-pick --right-only` 결과만 본문 후보로 사용
+- `git cherry -v`의 `-`는 이미 release에 반영된 patch-equivalent이므로 제외
+- 사용자에게 보이는 기능, UI, 콘텐츠와 Production 동작 변화 중심으로 그룹화
+- 각 그룹에 근거가 되는 PR 번호 또는 short SHA를 `관련 commit`으로 표기
+- 패키지·빌드·배포 변경은 Production 동작이나 안정성에 미치는 영향이 있을 때만 포함
+- 에이전트 하네스, 스킬, commit·PR convention, 내부 규칙과 관리 문서는 기본 제외
+- 내부 변경을 사용자가 명시적으로 요청하거나 Production 동작에 직접 영향이 있을 때만 포함
+- `develop 변경사항 승격` 같은 범용 설명만으로 요약·변경사항 구성 금지
+- 유효 commit 수를 적을 경우 본문에서 제외한 내부 commit이 있음을 함께 구분
+
+본문 작성 후 다음 품질 조건 확인:
+
+- 모든 변경사항 항목이 유효 commit 또는 tree diff로 입증 가능
+- patch-equivalent나 현재 tree에 없는 기능 언급 없음
+- 사용자 관점의 실제 변경 없이 배포 절차만 반복하는 섹션 없음
+- preview 본문과 PR 생성 본문 완전 일치
+
+Preview에 표시할 실제 본문을 `RELEASE_PR_BODY`에 저장. 아래 placeholder를 PR에 그대로 사용 금지:
 
 ```bash
 RELEASE_PR_BODY="$(cat <<'BODY'
-## 요약
-
-- develop 변경사항을 release로 승격
-- CI와 Vercel Production 배포 검증 진행
-
-### Release 승격
-
-- develop의 검증된 변경사항을 release 브랜치에 반영함
-
-### 배포 검증
-
-- merge 후 release SHA 기준 CI, deploy job, production target, 공개 URL을 확인함
+<유효 commit 이력과 tree diff에서 작성한 실제 PR 본문>
 BODY
 )"
 ```
