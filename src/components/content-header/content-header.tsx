@@ -73,7 +73,7 @@ const ContentHeader = ({
           </ContentHeaderMotionText>
 
           {img && (
-            <ContentHeaderMotionImage className="relative mt-10 aspect-[342/186] w-full overflow-hidden rounded-lg bg-mineral-frame shadow-[0_28px_90px_rgb(4_8_8/0.34)] ring-1 ring-mineral-blue/20 md:mt-14 md:aspect-[61/30]">
+            <ContentHeaderMotionImage className="relative mt-10 aspect-[342/186] w-full overflow-hidden rounded-lg bg-mineral-frame shadow-[0_28px_90px_rgb(0_0_0/0.38)] ring-1 ring-google-paper/16 md:mt-14 md:aspect-[61/30]">
               <ImageWithPlaceholderHeader alt={title} img={img} preload />
             </ContentHeaderMotionImage>
           )}

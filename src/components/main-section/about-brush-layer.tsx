@@ -53,7 +53,7 @@ const AboutBrushLayer = () => {
           alt=""
           src="/imgs/about/about-brush-left.png"
           fill
-          className="object-contain opacity-[0.34] md:opacity-[0.72]"
+          className="object-contain opacity-[0.34] grayscale md:opacity-[0.72]"
           sizes="(min-width: 768px) 764px, 613px"
           preload
           onLoad={handleBrushLoad}

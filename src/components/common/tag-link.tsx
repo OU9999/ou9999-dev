@@ -26,7 +26,7 @@ const Tag = ({ tag, variant = "paper", locale = defaultLocale }: TagProps) => {
               "border-mineral-ink/40 text-mineral-ink hover:bg-mineral-ink hover:text-mineral-bone",
             variant === "paper" &&
               cn(
-                "border-mineral-blue/32 text-google-paper hover:border-mineral-blue/70",
+                "border-google-paper/24 text-google-paper hover:border-google-paper/56",
                 hoverMineralTextGradient
               )
           )}
